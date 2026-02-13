@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Setup &amp; Technologies — Gungru Khangtsen (Internal)</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        /* Internal page overrides */
+        .internal-banner {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: rgba(255,255,255,0.9); text-align: center;
+            padding: 10px 24px; font-size: 12px; font-weight: 600;
+            letter-spacing: 0.05em; position: fixed; top: 60px; left: 0; right: 0; z-index: 999;
+        }
+        .internal-banner span { opacity: 0.6; }
+        .hero--internal { padding-top: 130px; }
+
+        .toc { max-width: 800px; margin: 0 auto 32px; padding: 0 24px; }
+        .toc__list {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 8px; list-style: none;
+        }
+        .toc__list a {
+            display: flex; align-items: center; gap: 8px; padding: 10px 14px;
+            background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+            font-size: 13px; font-weight: 500; color: var(--text-soft); transition: all var(--transition);
+        }
+        .toc__list a:hover { border-color: var(--gold); color: var(--maroon); transform: translateX(4px); }
+        .toc__list .toc-num {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 22px; height: 22px; background: rgba(123,26,44,0.06);
+            border-radius: 50%; font-size: 11px; font-weight: 700; color: var(--maroon); flex-shrink: 0;
+        }
+
+        .doc-section { padding: 32px 24px; max-width: 900px; margin: 0 auto; }
+        .doc-section + .doc-section { padding-top: 0; }
+        .doc-section h2 {
+            font-size: 1.6rem; color: var(--maroon-deep); margin-bottom: 8px;
+            padding-bottom: 12px; border-bottom: 2px solid var(--border);
+        }
+        .doc-section h3 { font-size: 1.15rem; color: var(--dark); margin: 20px 0 8px; }
+        .doc-section p { font-size: 14px; color: var(--text-soft); line-height: 1.8; margin-bottom: 12px; }
+        .doc-section ul, .doc-section ol { font-size: 14px; color: var(--text-soft); line-height: 1.8; margin: 0 0 16px 20px; }
+        .doc-section li { margin-bottom: 4px; }
+        .doc-section strong { color: var(--text); }
+        .doc-section code {
+            background: var(--cream-warm); border: 1px solid var(--border-light);
+            padding: 1px 6px; border-radius: 4px; font-size: 13px; font-family: 'DM Sans', monospace;
+        }
+
+        .service-card {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--radius-lg); padding: 24px; margin-bottom: 16px;
+            position: relative; overflow: hidden;
+        }
+        .service-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
+            background: linear-gradient(180deg, var(--gold), var(--maroon)); border-radius: 4px 0 0 4px;
+        }
+        .service-card__header {
+            display: flex; align-items: center; gap: 12px; margin-bottom: 12px;
+        }
+        .service-card__icon {
+            width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, rgba(123,26,44,0.06), rgba(212,168,67,0.08));
+            border-radius: 10px; font-size: 20px; flex-shrink: 0;
+        }
+        .service-card__name { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 600; color: var(--dark); }
+        .service-card__role { font-size: 12px; color: var(--text-muted); font-weight: 500; }
+        .service-card__status {
+            display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px;
+            border-radius: 100px; font-size: 11px; font-weight: 700; letter-spacing: 0.03em;
+        }
+        .status--active { background: rgba(46,125,50,0.08); color: var(--success); border: 1px solid rgba(46,125,50,0.15); }
+        .status--planned { background: rgba(21,101,192,0.08); color: var(--info); border: 1px solid rgba(21,101,192,0.15); }
+        .status--manual { background: rgba(240,160,48,0.08); color: #b8860b; border: 1px solid rgba(240,160,48,0.2); }
+
+        .fee-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 13px; margin: 12px 0 16px; }
+        .fee-table th {
+            text-align: left; padding: 10px 14px; background: var(--cream-warm);
+            border-bottom: 2px solid var(--border); font-weight: 700; color: var(--text-soft); font-size: 12px;
+            letter-spacing: 0.03em; text-transform: uppercase;
+        }
+        .fee-table td { padding: 10px 14px; border-bottom: 1px solid var(--border-light); color: var(--text-soft); }
+        .fee-table tr:last-child td { border-bottom: none; }
+        .fee-table .fee-amount { font-weight: 600; color: var(--text); font-family: 'DM Sans', monospace; }
+        .fee-table .fee-free { font-weight: 600; color: var(--success); }
+
+        .setup-steps {
+            counter-reset: setup-step; list-style: none; margin: 12px 0 20px; padding: 0;
+        }
+        .setup-steps li {
+            counter-increment: setup-step; position: relative; padding: 12px 0 12px 44px;
+            border-bottom: 1px solid var(--border-light); font-size: 14px; color: var(--text-soft); line-height: 1.6;
+        }
+        .setup-steps li:last-child { border-bottom: none; }
+        .setup-steps li::before {
+            content: counter(setup-step); position: absolute; left: 0; top: 12px;
+            width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
+            background: rgba(123,26,44,0.06); border-radius: 50%;
+            font-size: 12px; font-weight: 700; color: var(--maroon);
+        }
+
+        .callout {
+            padding: 16px 20px; border-radius: var(--radius); margin: 16px 0;
+            font-size: 13px; line-height: 1.7;
+        }
+        .callout--info { background: rgba(21,101,192,0.05); border: 1px solid rgba(21,101,192,0.12); color: #1565C0; }
+        .callout--warn { background: rgba(240,160,48,0.06); border: 1px solid rgba(240,160,48,0.15); color: #b8860b; }
+        .callout--tip { background: rgba(46,125,50,0.05); border: 1px solid rgba(46,125,50,0.12); color: var(--success); }
+        .callout strong { font-weight: 700; }
+
+        .cost-summary {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--radius-xl); padding: 28px; margin: 24px 0;
+        }
+        .cost-summary__title { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 600; color: var(--maroon-deep); margin-bottom: 16px; }
+        .cost-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border-light); font-size: 14px; }
+        .cost-row:last-child { border-bottom: none; }
+        .cost-row__label { color: var(--text-soft); }
+        .cost-row__value { font-weight: 600; color: var(--text); font-family: 'DM Sans', monospace; }
+        .cost-row--total { border-top: 2px solid var(--border); padding-top: 14px; margin-top: 4px; }
+        .cost-row--total .cost-row__label { font-weight: 700; color: var(--text); }
+        .cost-row--total .cost-row__value { color: var(--maroon); font-size: 16px; }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="site-nav" id="siteNav">
+        <div class="site-nav__inner">
+            <a href="index.html" class="site-nav__brand">
+                <img src="../assets/images/logo.png" alt="Gungru Khangtsen">
+                <span>Gungru Khangtsen</span>
+            </a>
+            <button class="nav-toggle" onclick="document.querySelector('.site-nav__links').classList.toggle('open')" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="site-nav__links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="general-understanding.html">General Understanding</a></li>
+                <li><a href="donate.html" class="site-nav__cta">
+                    <span>&#9825;</span>
+                    <span>Donate</span>
+                </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Internal Banner -->
+    <div class="internal-banner">
+        <span>&#128274;</span> Internal Documentation &mdash; Not for public distribution
+    </div>
+
+    <!-- Hero -->
+    <section class="hero hero--small hero--internal">
+        <div class="hero__content">
+            <div class="hero__location">
+                <span>&#128736;</span>
+                <span>Internal</span>
+            </div>
+            <h1 class="hero__title" style="font-size: clamp(1.6rem, 4vw, 2.4rem);">
+                Payment Technologies<br>
+                <em>&amp; Setup Guide</em>
+            </h1>
+            <p class="hero__tagline">
+                Complete reference for payment services, costs, configuration, and QR code strategy for the Gungru Khangtsen donation platform.
+            </p>
+        </div>
+    </section>
+
+    <!-- Table of Contents -->
+    <div class="toc">
+        <ul class="toc__list">
+            <li><a href="#overview"><span class="toc-num">1</span> Platform Overview</a></li>
+            <li><a href="#services"><span class="toc-num">2</span> Payment Services</a></li>
+            <li><a href="#costs"><span class="toc-num">3</span> Cost Breakdown</a></li>
+            <li><a href="#support-services"><span class="toc-num">4</span> Support Services</a></li>
+            <li><a href="#qr-codes"><span class="toc-num">5</span> QR Code Strategy</a></li>
+            <li><a href="#setup"><span class="toc-num">6</span> Setup Checklist</a></li>
+        </ul>
+    </div>
+
+    <!-- 1. Platform Overview -->
+    <div class="doc-section" id="overview">
+        <h2>1. Platform Overview</h2>
+        <p>
+            The donation platform is a serverless system hosted on <strong>GitHub Pages</strong> (free) with <strong>Supabase</strong> handling the backend (database, edge functions, auth). Payments are processed through <strong>Razorpay</strong> as the primary gateway, with direct UPI, bank transfer, PayPal, and cryptocurrency as alternative channels.
+        </p>
+
+        <div class="service-card">
+            <div class="service-card__header">
+                <div class="service-card__icon">&#127760;</div>
+                <div>
+                    <div class="service-card__name">System Architecture</div>
+                    <div class="service-card__role">End-to-end donation flow</div>
+                </div>
+            </div>
+            <p style="font-size:13px; color: var(--text-soft); line-height: 1.7; margin: 0;">
+                <strong>Donor</strong> visits static donation page (GitHub Pages) &rarr; selects amount &amp; method &rarr; <strong>Razorpay Checkout</strong> opens (for card/UPI/netbanking) &rarr; payment processed &rarr; <strong>Supabase Edge Function</strong> receives webhook &rarr; verifies Razorpay signature &rarr; writes to <code>transactions</code> table &rarr; triggers <strong>Resend</strong> email receipt &amp; <strong>Telnyx</strong> SMS confirmation &rarr; donor sees success page.
+            </p>
+        </div>
+
+        <h3>What Each Service Enables</h3>
+        <table class="fee-table">
+            <thead>
+                <tr><th>Service</th><th>Role</th><th>What It Enables</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Razorpay</strong></td>
+                    <td>Payment gateway</td>
+                    <td>Credit/debit cards, UPI, netbanking, wallets, international cards, recurring donations</td>
+                </tr>
+                <tr>
+                    <td><strong>UPI (Direct)</strong></td>
+                    <td>India instant payments</td>
+                    <td>Zero-fee peer-to-peer payments via Google Pay, PhonePe, Paytm, any UPI app</td>
+                </tr>
+                <tr>
+                    <td><strong>PayPal</strong></td>
+                    <td>International alternative</td>
+                    <td>Familiar option for Western donors who prefer PayPal over entering card details</td>
+                </tr>
+                <tr>
+                    <td><strong>Bank / SWIFT</strong></td>
+                    <td>Large transfers</td>
+                    <td>Wire transfers for large donations, corporate grants, institutional funding</td>
+                </tr>
+                <tr>
+                    <td><strong>Cryptocurrency</strong></td>
+                    <td>Digital assets</td>
+                    <td>Bitcoin/Ethereum donations from crypto-native donors, tax-efficient giving in some jurisdictions</td>
+                </tr>
+                <tr>
+                    <td><strong>Supabase</strong></td>
+                    <td>Backend platform</td>
+                    <td>Database (donor records, transactions), edge functions (webhook handlers), authentication</td>
+                </tr>
+                <tr>
+                    <td><strong>Resend</strong></td>
+                    <td>Email service</td>
+                    <td>Automated thank-you emails, 80G tax receipts for Indian donors, donation confirmations</td>
+                </tr>
+                <tr>
+                    <td><strong>Telnyx</strong></td>
+                    <td>SMS service</td>
+                    <td>Instant donation confirmation SMS, delivery to 200+ countries</td>
+                </tr>
+                <tr>
+                    <td><strong>GitHub Pages</strong></td>
+                    <td>Hosting</td>
+                    <td>Free static site hosting with SSL, global CDN, custom domain support</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 2. Payment Services Detail -->
+    <div class="doc-section" id="services">
+        <h2>2. Payment Services &mdash; Detailed Breakdown</h2>
+
+        <!-- Razorpay -->
+        <div class="service-card">
+            <div class="service-card__header">
+                <div class="service-card__icon">&#128179;</div>
+                <div>
+                    <div class="service-card__name">Razorpay</div>
+                    <div class="service-card__role">Primary Payment Gateway</div>
+                </div>
+                <span class="service-card__status status--planned">Setup Required</span>
+            </div>
+
+            <p>Razorpay is India's leading payment gateway, supporting 100+ payment methods. It handles both domestic Indian payments and international card payments through a single integration.</p>
+
+            <h3>Supported Payment Methods (via Razorpay)</h3>
+            <ul>
+                <li><strong>Cards:</strong> Visa, Mastercard, Amex, Diners, RuPay (domestic + international)</li>
+                <li><strong>UPI:</strong> All UPI apps (Google Pay, PhonePe, Paytm, BHIM, etc.)</li>
+                <li><strong>Netbanking:</strong> 58+ Indian banks</li>
+                <li><strong>Wallets:</strong> Paytm, PhonePe, Amazon Pay, Freecharge, etc.</li>
+                <li><strong>EMI:</strong> Credit card EMI for larger donations</li>
+                <li><strong>International:</strong> Visa, Mastercard, Amex from any country</li>
+            </ul>
+
+            <h3>Transaction Fees</h3>
+            <table class="fee-table">
+                <thead>
+                    <tr><th>Method</th><th>Fee</th><th>GST (18%)</th><th>Effective Total</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>UPI (via Razorpay)</td>
+                        <td class="fee-amount">0%</td>
+                        <td>&mdash;</td>
+                        <td class="fee-free">Free</td>
+                    </tr>
+                    <tr>
+                        <td>Domestic cards</td>
+                        <td class="fee-amount">2%</td>
+                        <td>+0.36%</td>
+                        <td class="fee-amount">2.36%</td>
+                    </tr>
+                    <tr>
+                        <td>Netbanking</td>
+                        <td class="fee-amount">2%</td>
+                        <td>+0.36%</td>
+                        <td class="fee-amount">2.36%</td>
+                    </tr>
+                    <tr>
+                        <td>Wallets</td>
+                        <td class="fee-amount">2%</td>
+                        <td>+0.36%</td>
+                        <td class="fee-amount">2.36%</td>
+                    </tr>
+                    <tr>
+                        <td>International cards</td>
+                        <td class="fee-amount">3%</td>
+                        <td>+0.54%</td>
+                        <td class="fee-amount">3.54%</td>
+                    </tr>
+                    <tr>
+                        <td>Subscriptions (recurring)</td>
+                        <td class="fee-amount">2&ndash;3%</td>
+                        <td>+GST</td>
+                        <td class="fee-amount">2.36&ndash;3.54%</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="callout callout--tip">
+                <strong>Nonprofit Pricing:</strong> Razorpay offers special rates for registered nonprofits/NGOs. Fees can be reduced to ~1.5% for domestic and ~2.5% for international. Contact Razorpay's nonprofit team at nonprofits@razorpay.com with your 80G/12A registration.
+            </div>
+
+            <h3>Recurring Donations (Subscriptions)</h3>
+            <p>Razorpay Subscriptions allows automated monthly donations. Donors authorize once, and Razorpay charges their card/UPI automatically on the billing date. Supports pause, resume, and cancellation. Requires Razorpay Standard plan or above.</p>
+
+            <h3>Setup Requirements</h3>
+            <ol class="setup-steps">
+                <li>Create Razorpay account at <code>dashboard.razorpay.com</code></li>
+                <li>Complete KYC verification (PAN, bank account, organization documents)</li>
+                <li>Note your <strong>Key ID</strong> and <strong>Key Secret</strong> from Settings &rarr; API Keys</li>
+                <li>Add Key ID to frontend code and Key Secret as a Supabase secret: <code>RAZORPAY_KEY_SECRET</code></li>
+                <li>Configure webhook URL in Razorpay Dashboard &rarr; Webhooks: <code>https://axnongwefdafwflekysk.supabase.co/functions/v1/process-square-payment</code></li>
+                <li>Deploy the Supabase Edge Function: <code>supabase functions deploy process-square-payment</code></li>
+                <li>Set the webhook secret as a Supabase secret: <code>RAZORPAY_WEBHOOK_SECRET</code></li>
+            </ol>
+        </div>
+
+        <!-- UPI Direct -->
+        <div class="service-card">
+            <div class="service-card__header">
+                <div class="service-card__icon">&#128241;</div>
+                <div>
+                    <div class="service-card__name">UPI (Direct)</div>
+                    <div class="service-card__role">Zero-Fee India Payments</div>
+                </div>
+                <span class="service-card__status status--active">Active</span>
+            </div>
+
+            <p>Direct UPI payments bypass Razorpay entirely, meaning <strong>zero transaction fees</strong>. The donor scans a QR code or enters the UPI ID directly in their banking app. This is the most cost-effective method for Indian donors.</p>
+
+            <table class="fee-table">
+                <thead>
+                    <tr><th>Item</th><th>Cost</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Transaction fee</td><td class="fee-free">Free (0%)</td></tr>
+                    <tr><td>Monthly fee</td><td class="fee-free">Free</td></tr>
+                    <tr><td>Settlement time</td><td>Instant to bank account</td></tr>
+                    <tr><td>Transaction limit</td><td>Up to &#8377;1,00,000 per transaction</td></tr>
+                </tbody>
+            </table>
+
+            <div class="callout callout--warn">
+                <strong>Limitation:</strong> Direct UPI payments are not automatically tracked in the database. Donors using this method will need manual reconciliation unless you implement a UPI payment notification listener (e.g., via bank SMS parsing).
+            </div>
+
+            <h3>Current Configuration</h3>
+            <ul>
+                <li><strong>UPI ID:</strong> <code>gungru@upi</code></li>
+                <li>Compatible with all UPI apps: Google Pay, PhonePe, Paytm, BHIM, etc.</li>
+            </ul>
+        </div>
+
+        <!-- PayPal -->
+        <div class="service-card">
+            <div class="service-card__header">
+                <div class="service-card__icon">&#128176;</div>
+                <div>
+                    <div class="service-card__name">PayPal</div>
+                    <div class="service-card__role">International Donor Alternative</div>
+                </div>
+                <span class="service-card__status status--manual">Manual</span>
+            </div>
+
+            <p>PayPal provides a familiar, trusted checkout for international donors, especially those in the US, EU, and Australia. Donations arrive in the PayPal account and can be withdrawn to SBI.</p>
+
+            <table class="fee-table">
+                <thead>
+                    <tr><th>Fee Type</th><th>Amount</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Receiving donations (standard)</td><td class="fee-amount">2.99% + $0.49 per transaction</td></tr>
+                    <tr><td>Nonprofits (with PayPal Giving Fund)</td><td class="fee-amount">1.99% + $0.49 per transaction</td></tr>
+                    <tr><td>Currency conversion (USD &rarr; INR)</td><td class="fee-amount">3&ndash;4% spread above mid-market rate</td></tr>
+                    <tr><td>Withdrawal to Indian bank</td><td class="fee-free">Free (above $200 balance)</td></tr>
+                    <tr><td>Withdrawal fee (below $200)</td><td class="fee-amount">$5.00</td></tr>
+                </tbody>
+            </table>
+
+            <div class="callout callout--info">
+                <strong>Note:</strong> PayPal in India has restrictions on receiving personal payments. Use a PayPal Business account linked to the monastery's PAN and bank account. Apply for PayPal Giving Fund status for reduced nonprofit rates.
+            </div>
+
+            <h3>Current Configuration</h3>
+            <ul>
+                <li><strong>PayPal.me link:</strong> <code>paypal.me/gungru</code></li>
+                <li>Payments are manual &mdash; not tracked automatically in the database</li>
+            </ul>
+        </div>
+
+        <!-- Bank / SWIFT -->
+        <div class="service-card">
+            <div class="service-card__header">
+                <div class="service-card__icon">&#127974;</div>
+                <div>
+                    <div class="service-card__name">Bank Transfer / SWIFT</div>
+                    <div class="service-card__role">Large Donations &amp; Institutional Grants</div>
+                </div>
+                <span class="service-card__status status--active">Active</span>
+            </div>
+
+            <p>Direct bank transfers are the best option for large donations (>$1,000), corporate gifts, and institutional grants. No payment gateway fees, though banks charge for SWIFT processing.</p>
+
+            <table class="fee-table">
+                <thead>
+                    <tr><th>Fee Type</th><th>Cost</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Domestic NEFT/RTGS (sender)</td><td class="fee-free">Free (NEFT) / &#8377;2&ndash;50 (RTGS)</td></tr>
+                    <tr><td>Receiving domestic transfer</td><td class="fee-free">Free</td></tr>
+                    <tr><td>Receiving international SWIFT</td><td class="fee-amount">&#8377;150&ndash;500 (~$2&ndash;6) per transaction</td></tr>
+                    <tr><td>Currency conversion (SBI rate)</td><td class="fee-amount">~1&ndash;1.5% spread from mid-market</td></tr>
+                    <tr><td>Correspondent bank charges</td><td class="fee-amount">$10&ndash;25 (deducted by intermediary banks)</td></tr>
+                </tbody>
+            </table>
+
+            <div class="callout callout--tip">
+                <strong>Best for:</strong> Donations above &#8377;50,000 / $600 where the fixed SWIFT fees are small relative to the amount. Advise international donors to select "OUR" charging option (sender pays all fees) to maximize the donation received.
+            </div>
+
+            <h3>Current Configuration</h3>
+            <ul>
+                <li><strong>Bank:</strong> State Bank of India</li>
+                <li><strong>Account:</strong> XXXX XXXX 1234 (masked on public site)</li>
+                <li><strong>IFSC:</strong> SBIN0001234</li>
+                <li><strong>SWIFT:</strong> SBININBB</li>
+                <li>Payments are manual &mdash; reconciled from bank statements</li>
+            </ul>
+        </div>
+
+        <!-- Cryptocurrency -->
+        <div class="service-card">
+            <div class="service-card__header">
+                <div class="service-card__icon">&#8383;</div>
+                <div>
+                    <div class="service-card__name">Cryptocurrency</div>
+                    <div class="service-card__role">Bitcoin &amp; Ethereum Donations</div>
+                </div>
+                <span class="service-card__status status--manual">Manual</span>
+            </div>
+
+            <p>Crypto donations appeal to a niche but generous donor segment. Donors send BTC or ETH directly to wallet addresses. Conversion to INR requires a crypto exchange account (e.g., WazirX, CoinDCX).</p>
+
+            <table class="fee-table">
+                <thead>
+                    <tr><th>Item</th><th>Cost</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Receiving BTC</td><td class="fee-free">Free (no fee to receive)</td></tr>
+                    <tr><td>Receiving ETH</td><td class="fee-free">Free (no fee to receive)</td></tr>
+                    <tr><td>BTC network fee (paid by sender)</td><td class="fee-amount">~$1&ndash;5 (varies with network congestion)</td></tr>
+                    <tr><td>ETH gas fee (paid by sender)</td><td class="fee-amount">~$0.50&ndash;10 (varies with network congestion)</td></tr>
+                    <tr><td>Exchange to INR (WazirX/CoinDCX)</td><td class="fee-amount">0.1&ndash;0.3% trading fee</td></tr>
+                    <tr><td>Withdrawal from exchange to bank</td><td class="fee-amount">&#8377;5&ndash;15 per withdrawal</td></tr>
+                    <tr><td>Tax (India, 1% TDS on crypto)</td><td class="fee-amount">1% TDS deducted at exchange</td></tr>
+                </tbody>
+            </table>
+
+            <div class="callout callout--warn">
+                <strong>Tax Implications:</strong> India taxes crypto gains at 30% flat rate. Since donations are received as crypto and sold for INR, any appreciation between receipt and sale is taxable. Consult a tax advisor. The 1% TDS applies on the sale transaction at the exchange.
+            </div>
+
+            <h3>Current Configuration</h3>
+            <ul>
+                <li><strong>BTC Address:</strong> <code>bc1qxy2kgdygjrsqtzq2n0yrf...</code></li>
+                <li><strong>ETH Address:</strong> <code>0x742d35Cc6634C0532925a3b...</code></li>
+                <li>Payments are manual &mdash; monitor wallet addresses periodically</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 3. Cost Breakdown -->
+    <div class="doc-section" id="costs">
+        <h2>3. Complete Cost Breakdown</h2>
+
+        <h3>Monthly Fixed Costs</h3>
+        <div class="cost-summary">
+            <div class="cost-summary__title">Recurring Platform Costs</div>
+            <div class="cost-row">
+                <span class="cost-row__label">GitHub Pages hosting</span>
+                <span class="cost-row__value" style="color: var(--success);">$0/mo</span>
+            </div>
+            <div class="cost-row">
+                <span class="cost-row__label">Supabase (Free tier: 500MB DB, 1GB storage, 500K edge invocations)</span>
+                <span class="cost-row__value" style="color: var(--success);">$0/mo</span>
+            </div>
+            <div class="cost-row">
+                <span class="cost-row__label">Razorpay (no monthly fee, pay-per-transaction)</span>
+                <span class="cost-row__value" style="color: var(--success);">$0/mo</span>
+            </div>
+            <div class="cost-row">
+                <span class="cost-row__label">Resend (Free tier: 3,000 emails/month)</span>
+                <span class="cost-row__value" style="color: var(--success);">$0/mo</span>
+            </div>
+            <div class="cost-row">
+                <span class="cost-row__label">Telnyx SMS (pay-per-message, ~$0.004/SMS to India)</span>
+                <span class="cost-row__value">~$0.004/SMS</span>
+            </div>
+            <div class="cost-row">
+                <span class="cost-row__label">Custom domain (optional, via GitHub Pages)</span>
+                <span class="cost-row__value" style="color: var(--success);">$0/mo</span>
+            </div>
+            <div class="cost-row cost-row--total">
+                <span class="cost-row__label">Total Monthly Fixed Cost</span>
+                <span class="cost-row__value">$0</span>
+            </div>
+        </div>
+
+        <div class="callout callout--tip">
+            <strong>The platform runs at $0/month fixed cost</strong> on free tiers. The only costs are per-transaction fees from payment processors and per-message SMS charges. At typical volumes (&lt;100 donations/month), everything stays within free tier limits.
+        </div>
+
+        <h3>Per-Transaction Cost Comparison</h3>
+        <p>How much of each &#8377;1,000 (~$12) donation reaches the monastery:</p>
+        <table class="fee-table">
+            <thead>
+                <tr><th>Payment Method</th><th>Fees on &#8377;1,000</th><th>Monastery Receives</th><th>Best For</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>UPI (Direct)</strong></td>
+                    <td class="fee-free">&#8377;0</td>
+                    <td class="fee-free"><strong>&#8377;1,000</strong></td>
+                    <td>Indian donors (any amount)</td>
+                </tr>
+                <tr>
+                    <td><strong>Bank (NEFT/RTGS)</strong></td>
+                    <td class="fee-free">&#8377;0</td>
+                    <td class="fee-free"><strong>&#8377;1,000</strong></td>
+                    <td>Large domestic donations</td>
+                </tr>
+                <tr>
+                    <td><strong>UPI via Razorpay</strong></td>
+                    <td class="fee-free">&#8377;0</td>
+                    <td class="fee-free"><strong>&#8377;1,000</strong></td>
+                    <td>Automated tracking + receipt</td>
+                </tr>
+                <tr>
+                    <td><strong>Domestic card (Razorpay)</strong></td>
+                    <td class="fee-amount">&#8377;23.60</td>
+                    <td><strong>&#8377;976.40</strong></td>
+                    <td>Indian card users</td>
+                </tr>
+                <tr>
+                    <td><strong>International card (Razorpay)</strong></td>
+                    <td class="fee-amount">&#8377;35.40</td>
+                    <td><strong>&#8377;964.60</strong></td>
+                    <td>Foreign donors with cards</td>
+                </tr>
+                <tr>
+                    <td><strong>PayPal ($12 donation)</strong></td>
+                    <td class="fee-amount">~&#8377;70</td>
+                    <td><strong>~&#8377;930</strong></td>
+                    <td>Donors who prefer PayPal</td>
+                </tr>
+                <tr>
+                    <td><strong>SWIFT ($12 wire)</strong></td>
+                    <td class="fee-amount">~&#8377;2,000+</td>
+                    <td style="color: var(--maroon);"><strong>Not viable</strong></td>
+                    <td>Only for large amounts ($500+)</td>
+                </tr>
+                <tr>
+                    <td><strong>Bitcoin</strong></td>
+                    <td class="fee-amount">~&#8377;300&ndash;400</td>
+                    <td><strong>~&#8377;600&ndash;700</strong></td>
+                    <td>Crypto-native donors, larger amounts</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Revenue Optimization Recommendation</h3>
+        <ol>
+            <li><strong>Prioritize UPI</strong> for Indian donors &mdash; zero fees, instant settlement</li>
+            <li><strong>Razorpay Checkout</strong> for card payments and international donors &mdash; best fee-to-convenience ratio</li>
+            <li><strong>PayPal</strong> as secondary international option &mdash; higher fees but familiar to donors</li>
+            <li><strong>Bank/SWIFT</strong> only for donations above ~$500 &mdash; fixed fees make small transfers uneconomical</li>
+            <li><strong>Crypto</strong> for niche donors &mdash; mention it but don't prioritize</li>
+        </ol>
+    </div>
+
+    <!-- 4. Support Services -->
+    <div class="doc-section" id="support-services">
+        <h2>4. Support Services</h2>
+
+        <!-- Supabase -->
+        <div class="service-card">
+            <div class="service-card__header">
+                <div class="service-card__icon">&#128451;</div>
+                <div>
+                    <div class="service-card__name">Supabase</div>
+                    <div class="service-card__role">Backend Platform (Database + Edge Functions + Auth)</div>
+                </div>
+                <span class="service-card__status status--active">Active</span>
+            </div>
+
+            <p>Supabase provides the entire backend: PostgreSQL database for storing donor records and transactions, Edge Functions for processing webhooks, and Row Level Security for access control.</p>
+
+            <table class="fee-table">
+                <thead><tr><th>Tier</th><th>Cost</th><th>Includes</th></tr></thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Free</strong></td>
+                        <td class="fee-free">$0/mo</td>
+                        <td>500MB database, 1GB storage, 500K edge function invocations, 50K auth users</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Pro</strong></td>
+                        <td class="fee-amount">$25/mo</td>
+                        <td>8GB database, 100GB storage, 2M edge invocations, daily backups, email support</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="callout callout--tip">
+                <strong>Current plan: Free tier.</strong> With expected donation volumes (&lt;100/month), the free tier is more than sufficient. Upgrade to Pro only if you need daily backups or exceed storage limits.
+            </div>
+
+            <h3>Key Configuration</h3>
+            <ul>
+                <li><strong>Project Ref:</strong> <code>axnongwefdafwflekysk</code></li>
+                <li><strong>Edge Functions to deploy:</strong> <code>process-square-payment</code> (Razorpay handler), <code>send-email</code> (Resend), <code>send-sms</code> (Telnyx), <code>telnyx-webhook</code></li>
+                <li><strong>Secrets needed:</strong> <code>RAZORPAY_KEY_SECRET</code>, <code>RAZORPAY_WEBHOOK_SECRET</code>, <code>RESEND_API_KEY</code>, Telnyx keys</li>
+            </ul>
+        </div>
+
+        <!-- Resend -->
+        <div class="service-card">
+            <div class="service-card__header">
+                <div class="service-card__icon">&#128231;</div>
+                <div>
+                    <div class="service-card__name">Resend</div>
+                    <div class="service-card__role">Email Receipts &amp; Notifications</div>
+                </div>
+                <span class="service-card__status status--planned">Setup Required</span>
+            </div>
+
+            <p>Resend sends automated thank-you emails with donation confirmations and 80G tax receipts for Indian donors. Triggered by the Supabase Edge Function after a successful payment.</p>
+
+            <table class="fee-table">
+                <thead><tr><th>Tier</th><th>Cost</th><th>Includes</th></tr></thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Free</strong></td>
+                        <td class="fee-free">$0/mo</td>
+                        <td>3,000 emails/month, 100 emails/day, 1 custom domain</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Pro</strong></td>
+                        <td class="fee-amount">$20/mo</td>
+                        <td>50,000 emails/month, dedicated IP, multiple domains</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Setup Requirements</h3>
+            <ol class="setup-steps">
+                <li>Create account at <code>resend.com</code></li>
+                <li>Verify sending domain (add DNS records for <code>gadengungru.com</code>)</li>
+                <li>Generate API key and store as Supabase secret: <code>RESEND_API_KEY</code></li>
+                <li>Deploy the <code>send-email</code> edge function</li>
+                <li>Create email templates (donation confirmation, 80G receipt)</li>
+            </ol>
+        </div>
+
+        <!-- Telnyx -->
+        <div class="service-card">
+            <div class="service-card__header">
+                <div class="service-card__icon">&#128172;</div>
+                <div>
+                    <div class="service-card__name">Telnyx</div>
+                    <div class="service-card__role">SMS Notifications</div>
+                </div>
+                <span class="service-card__status status--planned">Setup Required</span>
+            </div>
+
+            <p>Telnyx sends SMS donation confirmations to donors worldwide. Pay-per-message pricing with no monthly minimums.</p>
+
+            <table class="fee-table">
+                <thead><tr><th>Destination</th><th>Cost per SMS</th></tr></thead>
+                <tbody>
+                    <tr><td>India</td><td class="fee-amount">~$0.004 (~&#8377;0.33)</td></tr>
+                    <tr><td>United States</td><td class="fee-amount">~$0.004</td></tr>
+                    <tr><td>United Kingdom</td><td class="fee-amount">~$0.04</td></tr>
+                    <tr><td>Australia</td><td class="fee-amount">~$0.06</td></tr>
+                    <tr><td>Other countries</td><td class="fee-amount">$0.01&ndash;0.10</td></tr>
+                </tbody>
+            </table>
+
+            <div class="callout callout--info">
+                <strong>Cost estimate:</strong> At 50 donations/month, SMS costs would be approximately $0.20&ndash;2.00/month depending on destination mix.
+            </div>
+
+            <h3>Setup Requirements</h3>
+            <ol class="setup-steps">
+                <li>Create Telnyx account at <code>portal.telnyx.com</code></li>
+                <li>Purchase a phone number or use alphanumeric sender ID</li>
+                <li>Create a Messaging Profile</li>
+                <li>Store API key and profile ID in the <code>telnyx_config</code> database table</li>
+                <li>Deploy edge functions: <code>send-sms</code> and <code>telnyx-webhook</code> (with <code>--no-verify-jwt</code>)</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- 5. QR Code Strategy -->
+    <div class="doc-section" id="qr-codes">
+        <h2>5. QR Code Strategy for Multi-Method Donations</h2>
+
+        <p>QR codes are the most effective way to drive donations at in-person events (sand mandala tours, temple visits, events). Here's how to set up an optimal multi-method QR code approach.</p>
+
+        <h3>Recommended QR Code Setup</h3>
+
+        <div class="service-card">
+            <div class="service-card__header">
+                <div class="service-card__icon">&#9638;</div>
+                <div>
+                    <div class="service-card__name">Primary QR: Donation Page Link</div>
+                    <div class="service-card__role">Best for all audiences</div>
+                </div>
+            </div>
+
+            <p>A single QR code that links to the donation page. This is the <strong>recommended primary approach</strong> because it lets donors choose their preferred payment method from the full range of options.</p>
+
+            <ul>
+                <li><strong>URL:</strong> <code>https://gadengungru.github.io/Gungru/en/donate.html</code></li>
+                <li><strong>Advantages:</strong> Works for all donors (Indian + international), all payment methods available, tracks visits</li>
+                <li><strong>Generate with:</strong> Any QR code generator (e.g., <code>qr-code-generator.com</code>). Use high error correction (Level H) for print materials.</li>
+            </ul>
+
+            <div class="callout callout--tip">
+                <strong>Pro tip:</strong> Use a URL shortener like <code>bit.ly/gungru-donate</code> to create a trackable, memorable link. This also lets you update the destination URL without reprinting QR codes.
+            </div>
+        </div>
+
+        <div class="service-card">
+            <div class="service-card__header">
+                <div class="service-card__icon">&#128241;</div>
+                <div>
+                    <div class="service-card__name">Secondary QR: UPI Direct Pay</div>
+                    <div class="service-card__role">India-only, zero-fee instant payment</div>
+                </div>
+            </div>
+
+            <p>A UPI QR code that opens the donor's payment app directly with a pre-filled payment. Best for Indian audiences at events where speed matters.</p>
+
+            <ul>
+                <li><strong>UPI ID:</strong> <code>gungru@upi</code></li>
+                <li><strong>QR Format:</strong> UPI deep link: <code>upi://pay?pa=gungru@upi&pn=Gungru%20Khangtsen&cu=INR</code></li>
+                <li><strong>Generate with:</strong> Razorpay QR (if you have an account), BHIM app, or any UPI QR generator</li>
+                <li><strong>Advantages:</strong> Zero fees, instant, one-tap payment on mobile</li>
+                <li><strong>Limitation:</strong> Only works with Indian UPI apps</li>
+            </ul>
+        </div>
+
+        <h3>Printed Material Recommendations</h3>
+
+        <table class="fee-table">
+            <thead>
+                <tr><th>Material</th><th>QR Code(s)</th><th>Notes</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Tour event table tent</strong></td>
+                    <td>Donation page QR (primary) + UPI QR (if Indian audience)</td>
+                    <td>Include both QRs side by side. Label clearly: "Scan to Donate" and "UPI Quick Pay"</td>
+                </tr>
+                <tr>
+                    <td><strong>Sand mandala display card</strong></td>
+                    <td>Donation page QR only</td>
+                    <td>Keep it simple. Single QR with "Support the Monks" text</td>
+                </tr>
+                <tr>
+                    <td><strong>Monastery brochure</strong></td>
+                    <td>Donation page QR</td>
+                    <td>Include with URL text below: gadengungru.github.io/donate</td>
+                </tr>
+                <tr>
+                    <td><strong>Thank-you card</strong></td>
+                    <td>Donation page QR</td>
+                    <td>For recurring giving. "Continue supporting" with QR</td>
+                </tr>
+                <tr>
+                    <td><strong>Social media / digital</strong></td>
+                    <td>Donation page short link</td>
+                    <td>Use <code>bit.ly/gungru-donate</code> instead of QR &mdash; easier to click</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>QR Code Design Best Practices</h3>
+        <ul>
+            <li><strong>Size:</strong> Minimum 2cm &times; 2cm for print. Larger for posters/banners.</li>
+            <li><strong>Error correction:</strong> Use Level H (30% error correction) for printed materials &mdash; works even if partially obscured.</li>
+            <li><strong>Colors:</strong> Dark QR on light background. Maroon (#7B1A2C) QR on cream (#FBF8F1) matches brand.</li>
+            <li><strong>Logo:</strong> You can embed the monastery logo in the center of the QR if using Level H error correction.</li>
+            <li><strong>Always test:</strong> Print a sample and test scanning with 3+ different phones before mass printing.</li>
+            <li><strong>Include fallback text:</strong> Always print the URL below the QR code for those who can't scan.</li>
+        </ul>
+    </div>
+
+    <!-- 6. Setup Checklist -->
+    <div class="doc-section" id="setup">
+        <h2>6. Complete Setup Checklist</h2>
+
+        <p>Current status of each service and what's needed to go live with real payments.</p>
+
+        <div class="service-card">
+            <div class="service-card__header">
+                <div class="service-card__icon">&#9989;</div>
+                <div>
+                    <div class="service-card__name">Go-Live Checklist</div>
+                </div>
+            </div>
+
+            <h3>Phase 1: Foundation (Active)</h3>
+            <ol class="setup-steps">
+                <li><strong>GitHub Pages site</strong> &mdash; deployed and serving at gadengungru.github.io <span class="service-card__status status--active" style="margin-left:8px;">Done</span></li>
+                <li><strong>Supabase project</strong> &mdash; database schema, RLS policies, storage buckets configured <span class="service-card__status status--active" style="margin-left:8px;">Done</span></li>
+                <li><strong>UPI ID</strong> &mdash; <code>gungru@upi</code> configured and accepting payments <span class="service-card__status status--active" style="margin-left:8px;">Done</span></li>
+                <li><strong>Bank details</strong> &mdash; SBI account details on donation page <span class="service-card__status status--active" style="margin-left:8px;">Done</span></li>
+            </ol>
+
+            <h3>Phase 2: Payment Gateway (Next Steps)</h3>
+            <ol class="setup-steps">
+                <li><strong>Razorpay account</strong> &mdash; Create account, complete KYC, get API keys <span class="service-card__status status--planned" style="margin-left:8px;">To Do</span></li>
+                <li><strong>Razorpay webhook</strong> &mdash; Configure webhook URL pointing to Supabase edge function <span class="service-card__status status--planned" style="margin-left:8px;">To Do</span></li>
+                <li><strong>Deploy edge function</strong> &mdash; <code>supabase functions deploy process-square-payment</code> <span class="service-card__status status--planned" style="margin-left:8px;">To Do</span></li>
+                <li><strong>Store secrets</strong> &mdash; <code>RAZORPAY_KEY_SECRET</code>, <code>RAZORPAY_WEBHOOK_SECRET</code> in Supabase <span class="service-card__status status--planned" style="margin-left:8px;">To Do</span></li>
+                <li><strong>Test payments</strong> &mdash; Use Razorpay test mode to verify end-to-end flow <span class="service-card__status status--planned" style="margin-left:8px;">To Do</span></li>
+                <li><strong>Remove demo mode</strong> &mdash; Switch donate page from demo toasts to live Razorpay Checkout <span class="service-card__status status--planned" style="margin-left:8px;">To Do</span></li>
+            </ol>
+
+            <h3>Phase 3: Notifications</h3>
+            <ol class="setup-steps">
+                <li><strong>Resend account</strong> &mdash; Create account, verify domain, get API key <span class="service-card__status status--planned" style="margin-left:8px;">To Do</span></li>
+                <li><strong>Email templates</strong> &mdash; Design donation confirmation + 80G receipt templates <span class="service-card__status status--planned" style="margin-left:8px;">To Do</span></li>
+                <li><strong>Deploy send-email function</strong> &mdash; <code>supabase functions deploy send-email</code> <span class="service-card__status status--planned" style="margin-left:8px;">To Do</span></li>
+                <li><strong>Telnyx account</strong> &mdash; Create account, purchase number, configure messaging profile <span class="service-card__status status--planned" style="margin-left:8px;">To Do</span></li>
+                <li><strong>Deploy SMS functions</strong> &mdash; <code>send-sms</code> and <code>telnyx-webhook</code> <span class="service-card__status status--planned" style="margin-left:8px;">To Do</span></li>
+            </ol>
+
+            <h3>Phase 4: Enhancements</h3>
+            <ol class="setup-steps">
+                <li><strong>PayPal Business</strong> &mdash; Set up business account, apply for Giving Fund rates <span class="service-card__status status--planned" style="margin-left:8px;">To Do</span></li>
+                <li><strong>Recurring donations</strong> &mdash; Enable Razorpay Subscriptions for monthly giving <span class="service-card__status status--planned" style="margin-left:8px;">To Do</span></li>
+                <li><strong>80G automation</strong> &mdash; Auto-generate 80G certificates in email <span class="service-card__status status--planned" style="margin-left:8px;">To Do</span></li>
+                <li><strong>Donor dashboard</strong> &mdash; Authenticated view for donors to see their history <span class="service-card__status status--planned" style="margin-left:8px;">To Do</span></li>
+                <li><strong>QR codes</strong> &mdash; Generate and print QR codes for tour materials <span class="service-card__status status--planned" style="margin-left:8px;">To Do</span></li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <span class="footer-wheel">&#9784;</span>
+            <h3 class="footer-name">Gaden Shartse Gungru Khangtsen Monastery</h3>
+            <div class="footer-address">
+                P.O. Tibetan Colony, Mundgod<br>
+                N. Kanara, Karnataka 581411, India<br>
+                info@gadengungru.com
+            </div>
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="general-understanding.html">General Understanding</a>
+                <a href="donate.html">Donate</a>
+            </div>
+            <div class="footer-badges">
+                <div class="footer-badge"><span>&#128421;</span><span>Built with AlpacApps Infrastructure</span></div>
+                <div class="footer-badge"><span>&#10024;</span><span>Powered by Claude</span></div>
+            </div>
+            <div class="footer-version">v260214.1</div>
+            <div class="footer-address" style="margin-top: 20px; font-size: 12px; color: rgba(255,255,255,0.3);">
+                Internal documentation &mdash; Not for public distribution
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll
+        const nav = document.getElementById('siteNav');
+        window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 20); });
+
+        // Smooth scroll for TOC links
+        document.querySelectorAll('.toc__list a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = document.querySelector(link.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        // Scroll reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
