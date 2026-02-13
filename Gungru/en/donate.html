@@ -100,49 +100,32 @@
                     <button class="freq-toggle__btn" data-freq="monthly" onclick="toggleFreq(this)">Monthly</button>
                 </div>
 
-                <!-- Preset Amounts -->
-                <div class="amount-grid">
-                    <input type="radio" id="amt1" name="amount" value="500">
-                    <label for="amt1">
-                        <span class="amount-inr">&#8377;500</span>
-                        <span class="amount-usd">~$6 USD</span>
-                    </label>
-                    <input type="radio" id="amt2" name="amount" value="1000">
-                    <label for="amt2">
-                        <span class="amount-inr">&#8377;1,000</span>
-                        <span class="amount-usd">~$12 USD</span>
-                    </label>
-                    <input type="radio" id="amt3" name="amount" value="5000">
-                    <label for="amt3">
-                        <span class="amount-inr">&#8377;5,000</span>
-                        <span class="amount-usd">~$60 USD</span>
-                    </label>
-                    <input type="radio" id="amt4" name="amount" value="10000">
-                    <label for="amt4">
-                        <span class="amount-inr">&#8377;10,000</span>
-                        <span class="amount-usd">~$120 USD</span>
-                    </label>
-                    <input type="radio" id="amt5" name="amount" value="25000">
-                    <label for="amt5">
-                        <span class="amount-inr">&#8377;25,000</span>
-                        <span class="amount-usd">~$300 USD</span>
-                    </label>
-                    <input type="radio" id="amt6" name="amount" value="50000">
-                    <label for="amt6">
-                        <span class="amount-inr">&#8377;50,000</span>
-                        <span class="amount-usd">~$600 USD</span>
-                    </label>
+                <!-- Currency Selector -->
+                <div class="currency-picker">
+                    <label for="donationCurrency">Currency:</label>
+                    <select id="donationCurrency" onchange="changeCurrency(this.value)">
+                        <option value="USD">$ USD</option>
+                        <option value="EUR">&euro; EUR</option>
+                        <option value="GBP">&pound; GBP</option>
+                        <option value="INR">&#8377; INR</option>
+                        <option value="JPY">&yen; JPY</option>
+                        <option value="CNY">&yen; CNY</option>
+                        <option value="CAD">$ CAD</option>
+                        <option value="AUD">$ AUD</option>
+                        <option value="CHF">Fr CHF</option>
+                        <option value="SGD">$ SGD</option>
+                        <option value="HKD">$ HKD</option>
+                        <option value="TWD">$ TWD</option>
+                    </select>
                 </div>
+
+                <!-- Preset Amounts (dynamically populated) -->
+                <div class="amount-grid" id="amountGrid"></div>
 
                 <!-- Custom Amount -->
                 <div class="custom-amount">
                     <input type="text" id="customAmount" placeholder="Enter custom amount" onfocus="clearPresets()">
-                    <select id="currencySelect">
-                        <option value="INR">&#8377; INR</option>
-                        <option value="USD">$ USD</option>
-                        <option value="EUR">&euro; EUR</option>
-                        <option value="GBP">&pound; GBP</option>
-                    </select>
+                    <span class="custom-currency-label" id="customCurrencyLabel">USD</span>
                 </div>
 
                 <p class="donate-note" id="monthlyNote" style="display:none;">
@@ -478,6 +461,118 @@
     </div>
 
     <script>
+        // ── Multi-Currency System ──
+        // Base amounts are in INR. Each currency has pre-computed rounded amounts
+        // that are close (~20%) to the INR equivalent, for clean display.
+
+        const CURRENCIES = {
+            USD: { symbol: '$',  flag: '\u{1F1FA}\u{1F1F8}', amounts: [6, 12, 60, 120, 300, 600], sponsorAmounts: { 3000: 35, 5000: 60, 2000: 25, 10000: 120, 25000: 300, 108: 1.50 } },
+            EUR: { symbol: '\u20AC', flag: '\u{1F1EA}\u{1F1FA}', amounts: [5, 10, 50, 100, 250, 500], sponsorAmounts: { 3000: 35, 5000: 55, 2000: 25, 10000: 110, 25000: 275, 108: 1.25 } },
+            GBP: { symbol: '\u00A3', flag: '\u{1F1EC}\u{1F1E7}', amounts: [5, 10, 45, 90, 250, 500], sponsorAmounts: { 3000: 30, 5000: 50, 2000: 20, 10000: 100, 25000: 250, 108: 1 } },
+            INR: { symbol: '\u20B9', flag: '\u{1F1EE}\u{1F1F3}', amounts: [500, 1000, 5000, 10000, 25000, 50000], sponsorAmounts: { 3000: 3000, 5000: 5000, 2000: 2000, 10000: 10000, 25000: 25000, 108: 108 } },
+            JPY: { symbol: '\u00A5', flag: '\u{1F1EF}\u{1F1F5}', amounts: [1000, 2000, 8000, 18000, 45000, 90000], sponsorAmounts: { 3000: 5500, 5000: 9000, 2000: 3500, 10000: 18000, 25000: 45000, 108: 200 } },
+            CNY: { symbol: '\u00A5', flag: '\u{1F1E8}\u{1F1F3}', amounts: [40, 80, 400, 850, 2000, 4000], sponsorAmounts: { 3000: 260, 5000: 430, 2000: 170, 10000: 860, 25000: 2100, 108: 10 } },
+            CAD: { symbol: '$',  flag: '\u{1F1E8}\u{1F1E6}', amounts: [8, 15, 80, 160, 400, 800], sponsorAmounts: { 3000: 50, 5000: 80, 2000: 35, 10000: 170, 25000: 400, 108: 2 } },
+            AUD: { symbol: '$',  flag: '\u{1F1E6}\u{1F1FA}', amounts: [10, 20, 90, 180, 450, 900], sponsorAmounts: { 3000: 55, 5000: 90, 2000: 35, 10000: 180, 25000: 450, 108: 2 } },
+            CHF: { symbol: 'Fr', flag: '\u{1F1E8}\u{1F1ED}', amounts: [5, 10, 50, 100, 250, 500], sponsorAmounts: { 3000: 35, 5000: 55, 2000: 25, 10000: 110, 25000: 275, 108: 1.50 } },
+            SGD: { symbol: '$',  flag: '\u{1F1F8}\u{1F1EC}', amounts: [8, 15, 80, 160, 400, 800], sponsorAmounts: { 3000: 50, 5000: 80, 2000: 30, 10000: 160, 25000: 400, 108: 2 } },
+            HKD: { symbol: '$',  flag: '\u{1F1ED}\u{1F1F0}', amounts: [50, 100, 450, 950, 2500, 5000], sponsorAmounts: { 3000: 280, 5000: 470, 2000: 190, 10000: 940, 25000: 2400, 108: 10 } },
+            TWD: { symbol: '$',  flag: '\u{1F1F9}\u{1F1FC}', amounts: [200, 400, 2000, 4000, 10000, 20000], sponsorAmounts: { 3000: 1100, 5000: 1800, 2000: 700, 10000: 3600, 25000: 9000, 108: 40 } }
+        };
+
+        // Language to default currency mapping
+        const LANG_CURRENCY = { en: 'USD', hi: 'INR', kn: 'INR', bo: 'INR', zh: 'CNY', fr: 'EUR', es: 'EUR' };
+
+        // Detect language from <html lang>, URL path, or default to 'en'
+        function detectLang() {
+            const htmlLang = document.documentElement.lang || '';
+            if (LANG_CURRENCY[htmlLang]) return htmlLang;
+            const pathMatch = window.location.pathname.match(/\/([a-z]{2})\//);
+            if (pathMatch && LANG_CURRENCY[pathMatch[1]]) return pathMatch[1];
+            return 'en';
+        }
+
+        let currentCurrency = LANG_CURRENCY[detectLang()] || 'USD';
+
+        // Format amount for display
+        function fmtAmt(amount, currency) {
+            const c = CURRENCIES[currency];
+            if (currency === 'JPY' || (Number.isInteger(amount) && amount >= 100)) {
+                return c.symbol + amount.toLocaleString();
+            }
+            if (amount < 1) return c.symbol + amount.toFixed(2);
+            if (amount % 1 !== 0) return c.symbol + amount.toFixed(2);
+            return c.symbol + amount.toLocaleString();
+        }
+
+        // Build preset amount grid
+        function buildAmountGrid(currency) {
+            const grid = document.getElementById('amountGrid');
+            const c = CURRENCIES[currency];
+            grid.innerHTML = '';
+            c.amounts.forEach((amt, i) => {
+                const id = 'amt' + (i + 1);
+                const radio = document.createElement('input');
+                radio.type = 'radio'; radio.id = id; radio.name = 'amount'; radio.value = amt;
+                const label = document.createElement('label');
+                label.htmlFor = id;
+                const mainSpan = document.createElement('span');
+                mainSpan.className = 'amount-main';
+                mainSpan.textContent = fmtAmt(amt, currency);
+                const codeSpan = document.createElement('span');
+                codeSpan.className = 'amount-code';
+                codeSpan.textContent = currency;
+                label.appendChild(mainSpan);
+                label.appendChild(codeSpan);
+                grid.appendChild(radio);
+                grid.appendChild(label);
+            });
+        }
+
+        // Update sponsorship cards
+        function updateSponsorCards(currency) {
+            const c = CURRENCIES[currency];
+            document.querySelectorAll('.sponsor-card').forEach(card => {
+                const actionEl = card.querySelector('.sponsor-card__action');
+                if (!actionEl) return;
+                const onclickStr = actionEl.getAttribute('onclick');
+                const match = onclickStr && onclickStr.match(/selectSponsor\((\d+)/);
+                if (!match) return;
+                const inrAmt = parseInt(match[1]);
+                const localAmt = c.sponsorAmounts[inrAmt];
+                if (localAmt === undefined) return;
+                const priceEl = card.querySelector('.sponsor-card__price');
+                if (!priceEl) return;
+                const inrSpan = priceEl.querySelector('.inr');
+                const usdSpan = priceEl.querySelector('.usd');
+                if (currency === 'INR') {
+                    if (inrSpan) inrSpan.textContent = fmtAmt(localAmt, currency);
+                    if (usdSpan) usdSpan.textContent = '';
+                } else {
+                    if (inrSpan) inrSpan.textContent = fmtAmt(localAmt, currency);
+                    if (usdSpan) usdSpan.textContent = '';
+                }
+            });
+        }
+
+        // Change currency
+        function changeCurrency(currency) {
+            currentCurrency = currency;
+            buildAmountGrid(currency);
+            updateSponsorCards(currency);
+            document.getElementById('customCurrencyLabel').textContent = currency;
+            document.getElementById('customAmount').value = '';
+        }
+
+        // Initialize on load
+        function initCurrency() {
+            const select = document.getElementById('donationCurrency');
+            select.value = currentCurrency;
+            changeCurrency(currentCurrency);
+        }
+
+        // ── Core Functions ──
+
         // Navbar scroll
         const nav = document.getElementById('siteNav');
         window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 20); });
@@ -498,29 +593,29 @@
         function handleDonate() {
             const selected = document.querySelector('.amount-grid input[type="radio"]:checked');
             const custom = document.getElementById('customAmount').value;
-            const currency = document.getElementById('currencySelect').value;
             const isMonthly = document.querySelector('.freq-toggle__btn.active').dataset.freq === 'monthly';
             let amount = '';
             if (selected) {
-                amount = '\u20B9' + parseInt(selected.value).toLocaleString('en-IN');
+                amount = fmtAmt(parseFloat(selected.value), currentCurrency);
             } else if (custom) {
-                const symbols = { INR: '\u20B9', USD: '$', EUR: '\u20AC', GBP: '\u00A3' };
-                amount = (symbols[currency] || '') + parseInt(custom).toLocaleString('en-IN');
+                amount = fmtAmt(parseFloat(custom), currentCurrency);
             } else {
                 showToast('Please select or enter a donation amount.', 'info');
                 return;
             }
-            showToast('Thank you! In production, Razorpay Checkout would open for ' + amount + (isMonthly ? ' monthly' : '') + '.', 'success');
+            showToast('Thank you! In production, payment would open for ' + amount + ' ' + currentCurrency + (isMonthly ? ' monthly' : '') + '.', 'success');
         }
 
         // Sponsor card click
-        function selectSponsor(amount) {
+        function selectSponsor(inrAmount) {
             document.getElementById('donate').scrollIntoView({ behavior: 'smooth' });
             setTimeout(() => {
-                if (amount >= 2000) toggleFreq(document.querySelector('.freq-toggle__btn[data-freq="monthly"]'));
-                const radio = document.querySelector('.amount-grid input[value="' + amount + '"]');
+                if (inrAmount >= 2000) toggleFreq(document.querySelector('.freq-toggle__btn[data-freq="monthly"]'));
+                const c = CURRENCIES[currentCurrency];
+                const localAmt = c.sponsorAmounts[inrAmount];
+                const radio = document.querySelector('.amount-grid input[value="' + localAmt + '"]');
                 if (radio) { radio.checked = true; document.getElementById('customAmount').value = ''; }
-                else { clearPresets(); document.getElementById('customAmount').value = amount; document.getElementById('currencySelect').value = 'INR'; }
+                else { clearPresets(); document.getElementById('customAmount').value = localAmt; }
             }, 500);
         }
 
@@ -565,6 +660,9 @@
             entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
         }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Initialize currency on page load
+        initCurrency();
     </script>
 </body>
 </html>
