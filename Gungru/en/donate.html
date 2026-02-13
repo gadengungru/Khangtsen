@@ -62,13 +62,6 @@
         </div>
     </section>
 
-    <!-- Divider -->
-    <div class="section-divider">
-        <span class="divider-symbol">&#10043;</span>
-        <span class="divider-symbol">&#10043;</span>
-        <span class="divider-symbol">&#10043;</span>
-    </div>
-
     <!-- About -->
     <section class="about" id="about">
         <div class="about__card reveal">
@@ -85,13 +78,6 @@
             </div>
         </div>
     </section>
-
-    <!-- Divider -->
-    <div class="section-divider">
-        <span class="divider-symbol">&#10043;</span>
-        <span class="divider-symbol">&#10043;</span>
-        <span class="divider-symbol">&#10043;</span>
-    </div>
 
     <!-- Donation Section -->
     <section class="donate-section" id="donate">
@@ -176,13 +162,6 @@
             </div>
         </div>
     </section>
-
-    <!-- Divider -->
-    <div class="section-divider">
-        <span class="divider-symbol">&#10043;</span>
-        <span class="divider-symbol">&#10043;</span>
-        <span class="divider-symbol">&#10043;</span>
-    </div>
 
     <!-- Sponsorship -->
     <section class="sponsorship-section" id="sponsor">
@@ -331,15 +310,15 @@
                     <div class="payment-cat__title">Digital Assets</div>
                     <div class="payment-method"><div class="pm-icon">&#8383;</div><div class="pm-name">Bitcoin (BTC)</div></div>
                     <div class="payment-method"><div class="pm-icon">&#9830;</div><div class="pm-name">Ethereum (ETH)</div></div>
-                    <div class="bank-details">
-                        <div class="bank-details__row">
-                            <span class="label">BTC Address:</span>
-                            <span class="value">bc1qxy2kgdygjrsqtzq2n0yrf...</span>
+                    <div class="bank-details crypto-details">
+                        <div class="crypto-addr">
+                            <span class="crypto-addr__label">BTC</span>
+                            <code class="crypto-addr__value">bc1qxy2kgdygjrsqtzq2n0yrf...</code>
                             <button class="copy-btn" onclick="copyToClipboard(this, 'bc1qxy2kgdygjrsqtzq2n0yrf')">Copy</button>
                         </div>
-                        <div class="bank-details__row">
-                            <span class="label">ETH Address:</span>
-                            <span class="value">0x742d35Cc6634C0532925a3b...</span>
+                        <div class="crypto-addr">
+                            <span class="crypto-addr__label">ETH</span>
+                            <code class="crypto-addr__value">0x742d35Cc6634C0532925a3b...</code>
                             <button class="copy-btn" onclick="copyToClipboard(this, '0x742d35Cc6634C0532925a3b')">Copy</button>
                         </div>
                     </div>
@@ -463,73 +442,6 @@
         </div>
     </section>
 
-    <!-- Divider -->
-    <div class="section-divider">
-        <span class="divider-symbol">&#10043;</span>
-        <span class="divider-symbol">&#10043;</span>
-        <span class="divider-symbol">&#10043;</span>
-    </div>
-
-    <!-- How It Works -->
-    <section class="tech-section" id="how-it-works">
-        <div class="container">
-            <div class="section-header">
-                <div class="section-header__label">
-                    <span>&#128736;</span>
-                    <span>Architecture</span>
-                </div>
-                <h2 class="section-header__title">How It Works</h2>
-                <p class="section-header__subtitle">
-                    A modern, serverless donation platform built on the AlpacApps infrastructure.
-                </p>
-            </div>
-
-            <div class="arch-flow reveal">
-                <h3 class="arch-flow__title">System Architecture</h3>
-                <div class="flow-diagram">
-                    <div class="flow-step"><div class="flow-step__icon">&#128100;</div><div class="flow-step__label">Donor</div></div>
-                    <span class="flow-arrow">&rarr;</span>
-                    <div class="flow-step"><div class="flow-step__icon">&#127760;</div><div class="flow-step__label">Static Page</div></div>
-                    <span class="flow-arrow">&rarr;</span>
-                    <div class="flow-step"><div class="flow-step__icon">&#128179;</div><div class="flow-step__label">Razorpay</div></div>
-                    <span class="flow-arrow">&rarr;</span>
-                    <div class="flow-step"><div class="flow-step__icon">&#9889;</div><div class="flow-step__label">Edge Function</div></div>
-                    <span class="flow-arrow">&rarr;</span>
-                    <div class="flow-step"><div class="flow-step__icon">&#127974;</div><div class="flow-step__label">Bank Account</div></div>
-                </div>
-            </div>
-
-            <div class="tech-grid">
-                <div class="tech-card reveal"><div class="tech-card__icon">&#127760;</div><div class="tech-card__body"><div class="tech-card__title">Frontend</div><div class="tech-card__desc">Static HTML/CSS/JS on GitHub Pages. Zero hosting cost, global CDN.</div></div></div>
-                <div class="tech-card reveal"><div class="tech-card__icon">&#128179;</div><div class="tech-card__body"><div class="tech-card__title">Payment Processing</div><div class="tech-card__desc">Razorpay for Indian + international payments via Supabase Edge Functions.</div></div></div>
-                <div class="tech-card reveal"><div class="tech-card__icon">&#128241;</div><div class="tech-card__body"><div class="tech-card__title">UPI Integration</div><div class="tech-card__desc">Native QR code for instant Indian mobile payments.</div></div></div>
-                <div class="tech-card reveal"><div class="tech-card__icon">&#128451;</div><div class="tech-card__body"><div class="tech-card__title">Database</div><div class="tech-card__desc">Supabase (PostgreSQL) for donor records and transaction ledger.</div></div></div>
-                <div class="tech-card reveal"><div class="tech-card__icon">&#128231;</div><div class="tech-card__body"><div class="tech-card__title">Email Receipts</div><div class="tech-card__desc">Automated thank-you emails via Resend API with 80G tax receipt.</div></div></div>
-                <div class="tech-card reveal"><div class="tech-card__icon">&#128172;</div><div class="tech-card__body"><div class="tech-card__title">SMS Confirmation</div><div class="tech-card__desc">Instant donation confirmation via Telnyx in 200+ countries.</div></div></div>
-            </div>
-
-            <div class="data-flow reveal">
-                <h3 class="data-flow__title">Donation Data Flow</h3>
-                <div class="flow-steps">
-                    <div class="flow-step-item"><span class="flow-step-item__num">1</span><span class="flow-step-item__text"><strong>Donor selects amount</strong> and preferred payment method</span></div>
-                    <div class="flow-step-item"><span class="flow-step-item__num">2</span><span class="flow-step-item__text">Client calls <strong>Supabase Edge Function</strong> to create a Razorpay Order</span></div>
-                    <div class="flow-step-item"><span class="flow-step-item__num">3</span><span class="flow-step-item__text"><strong>Razorpay Checkout</strong> opens securely (card, UPI, netbanking)</span></div>
-                    <div class="flow-step-item"><span class="flow-step-item__num">4</span><span class="flow-step-item__text">Payment processed &mdash; <strong>webhook fires</strong> to Supabase</span></div>
-                    <div class="flow-step-item"><span class="flow-step-item__num">5</span><span class="flow-step-item__text">Edge function <strong>verifies signature</strong> and writes to database</span></div>
-                    <div class="flow-step-item"><span class="flow-step-item__num">6</span><span class="flow-step-item__text"><strong>Receipt email</strong> sent automatically (with 80G for Indian donors)</span></div>
-                    <div class="flow-step-item"><span class="flow-step-item__num">7</span><span class="flow-step-item__text"><strong>Donor dashboard updated</strong> in real-time</span></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Divider -->
-    <div class="section-divider">
-        <span class="divider-symbol">&#10043;</span>
-        <span class="divider-symbol">&#10043;</span>
-        <span class="divider-symbol">&#10043;</span>
-    </div>
-
     <!-- Footer -->
     <footer class="site-footer">
         <div class="footer-inner">
@@ -549,7 +461,10 @@
                 <div class="footer-badge"><span>&#128421;</span><span>Built with AlpacApps Infrastructure</span></div>
                 <div class="footer-badge"><span>&#10024;</span><span>Powered by Claude</span></div>
             </div>
-            <div class="footer-version">v260213.1 11:25p</div>
+            <div class="footer-links" style="margin-bottom: 0; margin-top: 16px;">
+                <a href="payment-setup.html" style="font-size: 11px; opacity: 0.25;">&#128736; Payment Setup</a>
+            </div>
+            <div class="footer-version">v260214.1</div>
             <div class="footer-address" style="margin-top: 20px; font-size: 12px; color: rgba(255,255,255,0.3);">
                 Demo &mdash; No real payments are processed
             </div>
