@@ -1,0 +1,63 @@
+{
+  "metadata": {
+    "title": "Khangtsen",
+    "description": "Préserver et promouvoir la culture tibétaine, l'éducation et la communauté"
+  },
+  "nav": {
+    "home": "Accueil",
+    "about": "À propos",
+    "programs": "Programmes",
+    "contact": "Contact"
+  },
+  "home": {
+    "hero": {
+      "title": "Bienvenue à Khangtsen",
+      "subtitle": "Préserver le patrimoine, construire la communauté, renforcer l'avenir",
+      "cta": "En savoir plus"
+    },
+    "mission": {
+      "title": "Notre mission",
+      "description": "Nous nous consacrons à la préservation et à la promotion de la culture tibétaine, au soutien de l'éducation et au renforcement des liens communautaires à travers les générations."
+    }
+  },
+  "about": {
+    "title": "À propos de nous",
+    "description": "Découvrez notre histoire, notre mission et la communauté que nous servons.",
+    "history": {
+      "title": "Notre histoire",
+      "content": "Khangtsen a une riche histoire enracinée dans la préservation du patrimoine culturel tibétain. Nous travaillons à maintenir les traditions tout en embrassant l'avenir."
+    }
+  },
+  "programs": {
+    "title": "Nos programmes",
+    "description": "Explorez les programmes et initiatives que nous offrons à notre communauté.",
+    "list": [
+      {
+        "title": "Préservation culturelle",
+        "description": "Programmes dédiés à la préservation de la langue, des arts et des traditions tibétaines."
+      },
+      {
+        "title": "Éducation",
+        "description": "Initiatives éducatives soutenant la jeunesse et l'apprentissage tout au long de la vie."
+      },
+      {
+        "title": "Soutien communautaire",
+        "description": "Ressources et services qui renforcent les liens de notre communauté."
+      }
+    ]
+  },
+  "contact": {
+    "title": "Contactez-nous",
+    "description": "Prenez contact avec nous. Nous aimerions avoir de vos nouvelles.",
+    "form": {
+      "name": "Votre nom",
+      "email": "Votre e-mail",
+      "message": "Votre message",
+      "submit": "Envoyer le message"
+    }
+  },
+  "footer": {
+    "rights": "Tous droits réservés.",
+    "language": "Langue"
+  }
+}
