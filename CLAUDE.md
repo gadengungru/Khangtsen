@@ -91,9 +91,9 @@ The site uses a **database-driven auto-versioning** system. The version is store
 2. **Display the new version** to the user so they know what version is live.
 
 3. **Show the testing links** so the user can verify changes:
-   - Main site: https://gadengungru.github.io/Gungru/en/index.html
-   - Donate page: https://gadengungru.github.io/Gungru/en/donate.html
-   - General Understanding: https://gadengungru.github.io/Gungru/en/general-understanding.html
+   - Main site: https://gadengungru.github.io/Khangtsen/Gungru/en/index.html
+   - Donate page: https://gadengungru.github.io/Khangtsen/Gungru/en/donate.html
+   - General Understanding: https://gadengungru.github.io/Khangtsen/Gungru/en/general-understanding.html
 
 **Version format:** `v{YYMMDD}.{build}` — e.g., `v260214.5` means Feb 14, 2026, build 5. Build resets to 1 on a new day and increments on same-day pushes.
 
@@ -102,9 +102,9 @@ The site uses a **database-driven auto-versioning** system. The version is store
 Pushed to main. Version bumped to v260214.6
 
 Test your changes:
-- https://gadengungru.github.io/Gungru/en/index.html
-- https://gadengungru.github.io/Gungru/en/donate.html
-- https://gadengungru.github.io/Gungru/en/general-understanding.html
+- https://gadengungru.github.io/Khangtsen/Gungru/en/index.html
+- https://gadengungru.github.io/Khangtsen/Gungru/en/donate.html
+- https://gadengungru.github.io/Khangtsen/Gungru/en/general-understanding.html
 ```
 
 ## Conventions
