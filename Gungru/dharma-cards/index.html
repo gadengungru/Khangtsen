@@ -198,8 +198,12 @@
             return viewedCards.indexOf(cardId) !== -1;
         }
 
+        // Mobile detection
+        var isMobile = window.innerWidth <= 640;
+        window.addEventListener('resize', function() { isMobile = window.innerWidth <= 640; });
+
         // ── Render a Card Element ──
-        function createCardElement(card) {
+        function createCardElement(card, forFeatured) {
             var el = document.createElement('div');
             el.className = 'dharma-card card-type--' + card.category;
             el.dataset.category = card.category;
@@ -212,6 +216,11 @@
 
             var catInfo = DharmaCards.CATEGORIES[card.category];
 
+            // Use image if available, fallback to emoji
+            var artContent = card.image
+                ? '<img src="' + card.image + '" alt="' + card.name + '" loading="lazy">'
+                : '<span class="card-front__art-placeholder">' + card.emoji + '</span>';
+
             el.innerHTML =
                 '<div class="card-inner">' +
                     // Front
@@ -222,8 +231,7 @@
                             '<span class="' + rarityClass + '">' + card.rarity + '</span>' +
                         '</div>' +
                         '<div class="card-front__art">' +
-                            '<div class="card-front__art-bg"></div>' +
-                            '<span class="card-front__art-placeholder">' + card.emoji + '</span>' +
+                            artContent +
                         '</div>' +
                         '<div class="card-front__stats">' +
                             '<div class="card-stat"><span class="card-stat__value">' + card.wisdom + '</span><span class="card-stat__label">Wisdom</span></div>' +
@@ -260,13 +268,16 @@
                     '</div>' +
                 '</div>';
 
-            // Click to flip
+            // On mobile: tap opens modal directly (flip is hard to read on small screens)
+            // On desktop: click flips, double-click opens modal
             el.addEventListener('click', function(e) {
-                // If clicking a related tag, open that card instead
                 if (e.target.classList.contains('card-back__tag')) {
                     e.stopPropagation();
-                    var gotoId = e.target.dataset.goto;
-                    openModal(gotoId);
+                    openModal(e.target.dataset.goto);
+                    return;
+                }
+                if (isMobile && !forFeatured) {
+                    openModal(card.id);
                     return;
                 }
                 el.classList.toggle('flipped');
@@ -275,7 +286,6 @@
                 }
             });
 
-            // Double-click opens modal
             el.addEventListener('dblclick', function(e) {
                 e.preventDefault();
                 openModal(card.id);
@@ -428,8 +438,10 @@
                     '</div>' +
                     '<button class="card-modal__close" id="modalClose">&times;</button>' +
                 '</div>' +
-                '<div class="card-modal__art card-type--' + card.category + '" style="background:linear-gradient(135deg,#F5F0E8,#EDE6D8)">' +
-                    '<span style="font-size:5rem">' + card.emoji + '</span>' +
+                '<div class="card-modal__art card-type--' + card.category + '">' +
+                    (card.image
+                        ? '<img src="' + card.image + '" alt="' + card.name + '">'
+                        : '<span style="font-size:5rem">' + card.emoji + '</span>') +
                 '</div>' +
                 '<div class="card-modal__stats">' +
                     '<div class="modal-stat"><span class="modal-stat__value">' + card.wisdom + '</span><span class="modal-stat__label">Wisdom</span></div>' +

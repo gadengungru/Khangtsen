@@ -8,6 +8,9 @@
 const DharmaCards = (function() {
     'use strict';
 
+    // Image base URL (Supabase public storage)
+    var IMAGE_BASE = 'https://axnongwefdafwflekysk.supabase.co/storage/v1/object/public/photos/tradingcards/';
+
     // Card categories
     const CATEGORIES = {
         buddha:   { name: 'Buddha & Bodhisattva', icon: '\u2638', color: '#D4A843' },
@@ -390,10 +393,16 @@ const DharmaCards = (function() {
         }
     ];
 
+    // Assign image URLs to all cards based on their id
+    CARDS.forEach(function(card) {
+        card.image = IMAGE_BASE + card.id + '.jpg';
+    });
+
     // Public API
     return {
         CATEGORIES: CATEGORIES,
         CARDS: CARDS,
+        IMAGE_BASE: IMAGE_BASE,
 
         getCardById: function(id) {
             return CARDS.find(function(c) { return c.id === id; });
