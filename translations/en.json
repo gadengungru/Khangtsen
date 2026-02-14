@@ -1,0 +1,343 @@
+{
+  "metadata": {
+    "title": "Gaden Shartse Gungru Khangtsen Monastery",
+    "description": "Supporting the preservation of Tibetan Buddhist wisdom through education, sacred arts, and compassionate action."
+  },
+  "nav": {
+    "home": "Home",
+    "generalUnderstanding": "General Understanding",
+    "donate": "Donate"
+  },
+  "home": {
+    "hero": {
+      "location": "Mundgod, Karnataka, India",
+      "title1": "Gaden Shartse",
+      "title2": "Gungru Khangtsen",
+      "title3": "Monastery",
+      "tagline": "Supporting the preservation of Tibetan Buddhist wisdom through education, sacred arts, and compassionate action.",
+      "ctaDonate": "Make a Donation",
+      "ctaLearnMore": "Learn More"
+    },
+    "about": {
+      "title": "Preserving a Living Tradition",
+      "text": "Gungru Khangtsen is one of eleven monastic houses within Gaden Shartse Monastery in Mundgod, India — home to the exiled Tibetan monastic community since 1966. Our monks dedicate their lives to the study of Buddhist philosophy, debate, and meditation, preserving a tradition stretching back over six centuries. Through annual USA tours featuring sacred sand mandala creation, teachings, and traditional ceremonies, we share this wisdom with the world.",
+      "badges": {
+        "established": "Est. 1409 (Gaden)",
+        "monks": "60+ Resident Monks",
+        "tours": "Annual USA Tours",
+        "mandala": "Sand Mandala Art"
+      }
+    },
+    "gallery": {
+      "label": "Our Community",
+      "title": "Life at the Monastery",
+      "subtitle": "A glimpse into the daily life, ceremonies, and sacred arts of Gungru Khangtsen.",
+      "cards": {
+        "monastery": {
+          "title": "The Monastery",
+          "desc": "Our home in Mundgod, South India, where monks study, debate, and practice the ancient Buddhist teachings."
+        },
+        "ceremonies": {
+          "title": "Ceremonies & Pujas",
+          "desc": "Sacred prayer ceremonies performed daily for the benefit of all sentient beings and our supporters worldwide."
+        },
+        "mandala": {
+          "title": "Sacred Sand Mandalas",
+          "desc": "Intricate designs created from millions of grains of colored sand during our annual tours across the United States."
+        }
+      }
+    },
+    "mission": {
+      "label": "What We Do",
+      "title": "Our Mission",
+      "subtitle": "Dedicated to preserving and sharing the profound wisdom of Tibetan Buddhism.",
+      "features": {
+        "education": {
+          "title": "Monastic Education",
+          "desc": "Our monks undertake a rigorous 15–20 year program studying the Five Great Treatises through debate, memorization, and contemplation — the heart of the Gelug tradition."
+        },
+        "tours": {
+          "title": "Sacred Arts Tours",
+          "desc": "Each year, our monks travel to the United States to create sacred sand mandalas, perform traditional ceremonies, and share Buddhist teachings with communities nationwide."
+        },
+        "prayers": {
+          "title": "Prayer Services",
+          "desc": "We perform Pujas (prayer ceremonies) for healing, protection, and merit. You can request prayers for yourself or loved ones, including Medicine Buddha and Tara Pujas."
+        },
+        "preservation": {
+          "title": "Cultural Preservation",
+          "desc": "As part of the Tibetan exile community, we preserve ancient texts, philosophical traditions, ritual arts, and the Tibetan language for future generations."
+        },
+        "community": {
+          "title": "Community Support",
+          "desc": "We provide food, shelter, education, and healthcare for over 60 monks, many of whom are elderly or have dedicated decades to preserving the Dharma."
+        },
+        "butterLamp": {
+          "title": "Butter Lamp Offerings",
+          "desc": "Light a butter lamp in your name or in memory of a loved one. The flame symbolizes the dispelling of darkness and the illumination of wisdom."
+        }
+      }
+    },
+    "cta": {
+      "title": "Support Our Mission",
+      "text": "Your generosity directly supports the monks' education, healthcare, daily sustenance, and the preservation of Tibetan Buddhist wisdom for future generations.",
+      "ctaDonate": "Make a Donation",
+      "ctaLearn": "Learn About Buddhism"
+    }
+  },
+  "donate": {
+    "hero": {
+      "location": "Mundgod, Karnataka, India",
+      "title1": "Gaden Shartse",
+      "title2": "Gungru Khangtsen",
+      "title3": "Monastery",
+      "tagline": "Supporting the preservation of Tibetan Buddhist wisdom through education, sacred arts, and compassionate action.",
+      "ctaDonate": "Make a Donation",
+      "ctaSponsor": "Sponsor a Monk"
+    },
+    "about": {
+      "title": "Preserving a Living Tradition",
+      "text": "Gungru Khangtsen is one of eleven monastic houses within Gaden Shartse Monastery in Mundgod, India — home to the exiled Tibetan monastic community since 1966. Our monks dedicate their lives to the study of Buddhist philosophy, debate, and meditation, preserving a tradition stretching back over six centuries. Through annual USA tours featuring sacred sand mandala creation, teachings, and traditional ceremonies, we share this wisdom with the world while raising essential funds for the monastery.",
+      "badges": {
+        "established": "Est. 1409 (Gaden)",
+        "monks": "60+ Resident Monks",
+        "tours": "Annual USA Tours",
+        "mandala": "Sand Mandala Art"
+      }
+    },
+    "donationSection": {
+      "label": "Generosity",
+      "title": "Make a Donation",
+      "subtitle": "Every offering, no matter the size, directly supports the monks' education, healthcare, and daily sustenance.",
+      "frequency": {
+        "oneTime": "One-Time",
+        "monthly": "Monthly"
+      },
+      "currencyLabel": "Currency:",
+      "customAmountPlaceholder": "Enter custom amount",
+      "monthlyNote": "You will be charged monthly. Cancel anytime.",
+      "donateButton": "Donate Now",
+      "secureNote": "Secure payment · Tax-deductible · 80G receipt provided",
+      "selectAmountWarning": "Please select or enter a donation amount.",
+      "thankYouMessage": "Thank you! In production, payment would open for {amount} {currency}{frequency}."
+    },
+    "sponsorship": {
+      "label": "Programs",
+      "title": "Sponsorship Programs",
+      "subtitle": "Choose a meaningful way to make a lasting impact on the monastic community.",
+      "cards": {
+        "meals": {
+          "title": "Monk's Daily Meals",
+          "period": "/month",
+          "desc": "Feed one monk for an entire month. Your support provides three nutritious meals daily, essential for the energy monks need for their rigorous study schedule.",
+          "action": "Sponsor meals"
+        },
+        "education": {
+          "title": "Education Fund",
+          "period": "/month",
+          "desc": "Support a monk's philosophical studies. Covers textbooks, debate materials, and access to the monastery's library of ancient texts and commentaries.",
+          "action": "Support education"
+        },
+        "medical": {
+          "title": "Medical Care",
+          "period": "/month",
+          "desc": "Healthcare for elderly monks who have dedicated decades to preservation of the Dharma. Covers medicine, check-ups, and specialist visits.",
+          "action": "Fund healthcare"
+        },
+        "building": {
+          "title": "Building Fund",
+          "desc": "Help restore and maintain the khangtsen's prayer hall, dormitories, and kitchen. Our buildings serve as the physical foundation of monastic life.",
+          "action": "Contribute to building"
+        },
+        "tour": {
+          "title": "Sacred Arts Tour",
+          "desc": "Sponsor a sand mandala tour stop in the United States. Your generosity funds travel, materials, and venue costs for monks sharing sacred art.",
+          "action": "Sponsor a tour"
+        },
+        "butterLamp": {
+          "title": "Butter Lamp Offering",
+          "desc": "Light a butter lamp in your name or in memory of a loved one. The flame symbolizes the dispelling of darkness and the illumination of wisdom.",
+          "action": "Light a lamp"
+        }
+      }
+    },
+    "payment": {
+      "label": "Payment",
+      "title": "Payment Methods",
+      "subtitle": "We accept donations from around the world through multiple secure channels.",
+      "categories": {
+        "indiaDigital": {
+          "label": "India — Digital",
+          "title": "UPI & Wallets",
+          "upiId": "UPI ID:"
+        },
+        "international": {
+          "label": "International",
+          "title": "Cards & Online",
+          "creditDebit": "Credit / Debit Card",
+          "creditDebitDetail": "Visa, MC, Amex",
+          "razorpay": "Razorpay Checkout",
+          "razorpayDetail": "All methods",
+          "wireTransfer": "Wire Transfer / SWIFT",
+          "wireTransferDetail": "See details below"
+        },
+        "crypto": {
+          "label": "Cryptocurrency",
+          "title": "Digital Assets"
+        },
+        "offline": {
+          "label": "Offline",
+          "title": "Bank & Check",
+          "account": "Account",
+          "checkMoneyOrder": "Check / Money Order:"
+        }
+      },
+      "copyButton": "Copy",
+      "copiedButton": "Copied"
+    },
+    "donorForm": {
+      "label": "Your Information",
+      "title": "Donor Details",
+      "subtitle": "Help us send your receipt and keep you updated on the impact of your generosity.",
+      "fields": {
+        "fullName": "Full Name",
+        "email": "Email Address",
+        "phone": "Phone",
+        "phoneOptional": "(optional)",
+        "country": "Country",
+        "selectCountry": "Select country",
+        "dedication": "Dedication",
+        "noDedication": "No dedication",
+        "inHonorOf": "In honor of...",
+        "inMemoryOf": "In memory of...",
+        "dedicatedToMerit": "Dedicated to the merit of...",
+        "dedicationName": "Dedication name",
+        "messageToMonks": "Message to the Monks",
+        "messageOptional": "(optional)"
+      },
+      "checkboxes": {
+        "anonymous": "Make this donation anonymous",
+        "taxReceipt": "Send me a tax receipt (80G certificate for Indian donors)",
+        "updates": "Receive occasional updates about the monastery"
+      },
+      "submitButton": "Complete Donation",
+      "thankYouMessage": "Thank you, {name}! In production, your donation would be processed now."
+    },
+    "countries": {
+      "IN": "India",
+      "US": "United States",
+      "CA": "Canada",
+      "GB": "United Kingdom",
+      "AU": "Australia",
+      "DE": "Germany",
+      "FR": "France",
+      "JP": "Japan",
+      "TW": "Taiwan",
+      "SG": "Singapore",
+      "NP": "Nepal",
+      "BT": "Bhutan",
+      "XX": "Other"
+    }
+  },
+  "generalUnderstanding": {
+    "hero": {
+      "title": "General Understanding",
+      "tagline": "Frequently asked questions about Tibetan Buddhism, Pujas, and our monastic community."
+    },
+    "intro": {
+      "title": "Welcome",
+      "text": "Whether you are new to Tibetan Buddhism or a long-time practitioner, we hope these answers help deepen your understanding of our tradition and the spiritual services we offer. If you have additional questions, please don't hesitate to contact us."
+    },
+    "faq": {
+      "tibetanBuddhism": {
+        "groupTitle": "About Tibetan Buddhism",
+        "q1": {
+          "question": "What is Tibetan Buddhism?",
+          "answer": "Tibetan Buddhism is a form of Mahayana Buddhism that developed in Tibet and the Himalayan regions. It combines the teachings of the historical Buddha with tantric practices, philosophical study, and devotional rituals. It emphasizes compassion for all sentient beings, the pursuit of wisdom, and the aspiration to achieve enlightenment for the benefit of others."
+        },
+        "q2": {
+          "question": "What is the Gelug tradition?",
+          "answer": "The Gelug school, founded by Je Tsongkhapa in the early 15th century, is one of four major schools of Tibetan Buddhism. It emphasizes rigorous philosophical study, monastic discipline, and the gradual path to enlightenment. Gaden Monastery, established by Tsongkhapa himself in 1409, is the principal monastery of the Gelug tradition. His Holiness the Dalai Lama is the most well-known teacher of the Gelug lineage."
+        },
+        "q3": {
+          "question": "What is a Khangtsen?",
+          "answer": "A Khangtsen (also spelled Khangsten) is a regional house within a larger Tibetan monastery. Monks are organized into Khangtsens based on their geographic origin in Tibet. Gungru Khangtsen is one of eleven such houses within Gaden Shartse Monastery. Each Khangtsen provides housing, meals, and community support for its monks, functioning as a close-knit family within the larger monastic institution."
+        },
+        "q4": {
+          "question": "What are the Four Noble Truths?",
+          "answer": "The Four Noble Truths are the foundational teaching of Buddhism, first taught by the Buddha after his enlightenment. They are: (1) the truth of suffering — that life inevitably involves dissatisfaction, (2) the truth of the origin of suffering — that suffering arises from craving and ignorance, (3) the truth of the cessation of suffering — that it is possible to end suffering, and (4) the truth of the path — that there is a practical path leading to the end of suffering, known as the Noble Eightfold Path."
+        }
+      },
+      "pujasAndPrayers": {
+        "groupTitle": "About Pujas & Prayers",
+        "q1": {
+          "question": "What is a Puja?",
+          "answer": "A Puja is a Buddhist prayer ceremony performed by monks. It involves chanting sacred texts, making offerings, and performing rituals directed toward specific purposes such as healing, protection, purification, or generating merit. Pujas can be requested by individuals for themselves or on behalf of others, including loved ones who have passed away."
+        },
+        "q2": {
+          "question": "What types of Pujas can I request?",
+          "answer": "We offer several types of Pujas including: Medicine Buddha Puja for healing and health, Tara Puja for protection and removing obstacles, Manjushri Puja for wisdom and academic success, Lama Choepa (Guru Puja) for spiritual growth, and special prayers for the deceased to guide them toward a favorable rebirth. Contact us to discuss which Puja is most appropriate for your needs."
+        },
+        "q3": {
+          "question": "How do I request a Puja?",
+          "answer": "You can request a Puja by contacting us through our website, via email at info@gadengungru.com, or by reaching out during one of our USA tours. We will discuss your needs and intentions, and our monks will perform the ceremony at the monastery in India. You will receive confirmation and blessings after the Puja is completed."
+        },
+        "q4": {
+          "question": "What is a Butter Lamp offering?",
+          "answer": "A butter lamp is a traditional Tibetan Buddhist offering. The light of the lamp symbolizes wisdom dispelling the darkness of ignorance. You can sponsor a butter lamp to be lit in your name or in memory of a loved one. It is one of the simplest and most meaningful offerings you can make, and is available for a small donation."
+        }
+      },
+      "monastery": {
+        "groupTitle": "About the Monastery",
+        "q1": {
+          "question": "Where is Gaden Shartse Gungru Khangtsen located?",
+          "answer": "The monastery is located in Mundgod, Karnataka, India. After the Chinese invasion of Tibet in 1959 and the subsequent exile of His Holiness the Dalai Lama, the Tibetan monastic community was re-established in South India. Mundgod is home to one of the largest Tibetan settlements in India, housing several major monasteries including Gaden Shartse and Gaden Jangtse."
+        },
+        "q2": {
+          "question": "What do the monks study?",
+          "answer": "Monks undertake an intensive program of Buddhist philosophical studies that typically spans 15–20 years. The curriculum includes the Five Great Treatises: Pramana (logic and epistemology), Prajnaparamita (perfection of wisdom), Madhyamaka (middle way philosophy), Abhidharma (metaphysics), and Vinaya (monastic discipline). Study is conducted primarily through rigorous debate, a distinctive hallmark of the Gelug tradition."
+        },
+        "q3": {
+          "question": "How can I visit the monastery?",
+          "answer": "Visitors are welcome at the monastery in Mundgod. The nearest major airport is Hubli (HBX), approximately 2 hours away. We recommend contacting us in advance at info@gadengungru.com so we can help arrange your visit and ensure monks are available to welcome you and show you around the monastery."
+        },
+        "q4": {
+          "question": "How can I support the monastery?",
+          "answer": "There are many ways to support us: making a financial donation, sponsoring a monk's meals or education, requesting a Puja, attending our USA tours, or simply spreading awareness about our work. Every contribution, no matter the size, makes a meaningful difference in the lives of our monks."
+        }
+      },
+      "sandMandalas": {
+        "groupTitle": "About Sand Mandalas",
+        "q1": {
+          "question": "What is a Sand Mandala?",
+          "answer": "A sand mandala is an intricate design created from millions of grains of colored sand. Monks spend days or weeks carefully placing each grain using traditional metal funnels called chak-pur to create a sacred geometric pattern representing the Buddhist universe or the palace of a specific deity. The creation of a sand mandala is itself a form of meditation and prayer."
+        },
+        "q2": {
+          "question": "Why is the Sand Mandala destroyed after completion?",
+          "answer": "The ritual dissolution of a sand mandala is one of its most powerful teachings. After days of painstaking creation, the mandala is ceremonially swept away, symbolizing the Buddhist teaching of impermanence — that all things, no matter how beautiful, are transient. The sand is then distributed to attendees as a blessing, and a portion is traditionally released into a nearby body of water to spread the blessings to all beings."
+        },
+        "q3": {
+          "question": "Where can I see a Sand Mandala being created?",
+          "answer": "Our monks create sand mandalas during their annual tours of the United States. These events are typically held at universities, museums, cultural centers, and community venues. Follow us on social media or contact us at info@gadengungru.com to learn about upcoming tour dates and locations near you."
+        }
+      }
+    },
+    "cta": {
+      "title": "Have More Questions?",
+      "text": "Feel free to reach out to us. We're happy to help you understand more about our tradition and how you can get involved.",
+      "ctaContact": "Contact Us",
+      "ctaDonate": "Make a Donation"
+    }
+  },
+  "footer": {
+    "monasteryName": "Gaden Shartse Gungru Khangtsen Monastery",
+    "builtWith": "Built with AlpacApps Infrastructure",
+    "poweredBy": "Powered by Claude",
+    "demo": "Demo — No real payments are processed",
+    "demoBanner": "Demo — No real payments"
+  },
+  "common": {
+    "toggleMenu": "Toggle menu",
+    "contactUs": "Contact Us"
+  }
+}
