@@ -37,7 +37,7 @@ export default function SignInPage() {
         <div className="text-center mb-8">
           <h1 className="text-2xl font-bold text-slate-900">Sign In</h1>
           <p className="text-sm text-slate-500 mt-2">
-            Sign in to access the Khangtsen intranet
+            Sign in to access the intranet
           </p>
         </div>
 

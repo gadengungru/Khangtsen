@@ -18,7 +18,7 @@ export function IntranetHeader() {
     <header className="bg-slate-900 text-white">
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-14">
         <div className="flex items-center gap-4">
-          <span className="text-lg font-bold">Khangtsen</span>
+          <span className="text-lg font-bold">Intranet</span>
           <span className="text-xs text-slate-400">v0.1.0</span>
         </div>
 

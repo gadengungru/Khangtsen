@@ -1,28 +1,23 @@
 export const i18n = {
   defaultLocale: "en",
-  locales: ["en", "bo", "hi", "zh", "kn", "fr", "es"],
+  // Add locales here during setup. All dictionaries in src/i18n/dictionaries/
+  // must have a matching JSON file for each locale listed.
+  locales: ["en", "es", "fr"],
 } as const;
 
 export type Locale = (typeof i18n)["locales"][number];
 
-export const INTRANET_LOCALES: Locale[] = ["en", "bo"];
+// Locales that support the intranet interface
+export const INTRANET_LOCALES: Locale[] = ["en"];
 
 export const localeNames: Record<Locale, string> = {
   en: "English",
-  bo: "བོད་སྐད་",
-  hi: "हिन्दी",
-  zh: "中文",
-  kn: "ಕನ್ನಡ",
-  fr: "Français",
-  es: "Español",
+  es: "Espa\u00f1ol",
+  fr: "Fran\u00e7ais",
 };
 
 export const localeFlags: Record<Locale, string> = {
-  en: "\u{1F1EC}\u{1F1E7}",
-  bo: "\u{1F3F3}\u{FE0F}",
-  hi: "\u{1F1EE}\u{1F1F3}",
-  zh: "\u{1F1E8}\u{1F1F3}",
-  kn: "\u{1F1EE}\u{1F1F3}",
-  fr: "\u{1F1EB}\u{1F1F7}",
+  en: "\u{1F1FA}\u{1F1F8}",
   es: "\u{1F1EA}\u{1F1F8}",
+  fr: "\u{1F1EB}\u{1F1F7}",
 };

@@ -23,10 +23,6 @@ export async function generateMetadata({
 }
 
 const fontFamilyMap: Record<Locale, string> = {
-  bo: "'Noto Sans Tibetan', sans-serif",
-  hi: "'Noto Sans Devanagari', sans-serif",
-  kn: "'Noto Sans Kannada', sans-serif",
-  zh: "'Noto Sans SC', sans-serif",
   en: "var(--font-geist), sans-serif",
   fr: "var(--font-geist), sans-serif",
   es: "var(--font-geist), sans-serif",

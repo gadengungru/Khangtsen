@@ -3,10 +3,6 @@ import type { Dictionary } from "./types";
 
 const dictionaries: Record<Locale, () => Promise<Dictionary>> = {
   en: () => import("./dictionaries/en.json").then((m) => m.default),
-  bo: () => import("./dictionaries/bo.json").then((m) => m.default),
-  hi: () => import("./dictionaries/hi.json").then((m) => m.default),
-  zh: () => import("./dictionaries/zh.json").then((m) => m.default),
-  kn: () => import("./dictionaries/kn.json").then((m) => m.default),
   fr: () => import("./dictionaries/fr.json").then((m) => m.default),
   es: () => import("./dictionaries/es.json").then((m) => m.default),
 };

@@ -1,65 +1,65 @@
 {
   "metadata": {
-    "title": "Khangtsen",
-    "description": "Préserver et promouvoir la culture tibétaine, l'éducation et la communauté"
+    "title": "My Organization",
+    "description": "Community management platform"
   },
   "nav": {
-    "home": "Accueil",
-    "about": "À propos",
-    "programs": "Programmes",
+    "home": "Home",
+    "about": "About",
+    "programs": "Programs",
     "contact": "Contact",
-    "signIn": "Se connecter",
+    "signIn": "Sign In",
     "intranet": "Intranet"
   },
   "home": {
     "hero": {
-      "title": "Bienvenue à Khangtsen",
-      "subtitle": "Préserver le patrimoine, construire la communauté, renforcer l'avenir",
-      "cta": "En savoir plus"
+      "title": "Welcome",
+      "subtitle": "Building community, empowering futures",
+      "cta": "Learn More"
     },
     "mission": {
-      "title": "Notre mission",
-      "description": "Nous nous consacrons à la préservation et à la promotion de la culture tibétaine, au soutien de l'éducation et au renforcement des liens communautaires à travers les générations."
+      "title": "Our Mission",
+      "description": "We are dedicated to serving our community, supporting education, and strengthening bonds across generations."
     }
   },
   "about": {
-    "title": "À propos de nous",
-    "description": "Découvrez notre histoire, notre mission et la communauté que nous servons.",
+    "title": "About Us",
+    "description": "Learn about our history, mission, and the community we serve.",
     "history": {
-      "title": "Notre histoire",
-      "content": "Khangtsen a une riche histoire enracinée dans la préservation du patrimoine culturel tibétain. Nous travaillons à maintenir les traditions tout en embrassant l'avenir."
+      "title": "Our History",
+      "content": "Our organization has a rich history of community service. We work to maintain traditions while embracing the future."
     }
   },
   "programs": {
-    "title": "Nos programmes",
-    "description": "Explorez les programmes et initiatives que nous offrons à notre communauté.",
+    "title": "Our Programs",
+    "description": "Explore the programs and initiatives we offer to our community.",
     "list": [
       {
-        "title": "Préservation culturelle",
-        "description": "Programmes dédiés à la préservation de la langue, des arts et des traditions tibétaines."
+        "title": "Community Programs",
+        "description": "Programs dedicated to serving and strengthening our community."
       },
       {
-        "title": "Éducation",
-        "description": "Initiatives éducatives soutenant la jeunesse et l'apprentissage tout au long de la vie."
+        "title": "Education",
+        "description": "Educational initiatives supporting youth and lifelong learning."
       },
       {
-        "title": "Soutien communautaire",
-        "description": "Ressources et services qui renforcent les liens de notre communauté."
+        "title": "Community Support",
+        "description": "Resources and services that strengthen our community bonds."
       }
     ]
   },
   "contact": {
-    "title": "Contactez-nous",
-    "description": "Prenez contact avec nous. Nous aimerions avoir de vos nouvelles.",
+    "title": "Contact Us",
+    "description": "Get in touch with us. We'd love to hear from you.",
     "form": {
-      "name": "Votre nom",
-      "email": "Votre e-mail",
-      "message": "Votre message",
-      "submit": "Envoyer le message"
+      "name": "Your Name",
+      "email": "Your Email",
+      "message": "Your Message",
+      "submit": "Send Message"
     }
   },
   "footer": {
-    "rights": "Tous droits réservés.",
-    "language": "Langue"
+    "rights": "All rights reserved.",
+    "language": "Language"
   }
 }

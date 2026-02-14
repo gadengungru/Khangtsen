@@ -8,8 +8,8 @@ const geist = Geist({
 });
 
 export const metadata: Metadata = {
-  title: "Khangtsen",
-  description: "Preserving and promoting Tibetan culture, education, and community",
+  title: "AlpacApps",
+  description: "Community management platform",
 };
 
 export default function RootLayout({
@@ -20,10 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={geist.variable}>
       <head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tibetan:wght@400;700&family=Noto+Sans+Devanagari:wght@400;700&family=Noto+Sans+Kannada:wght@400;700&family=Noto+Sans+SC:wght@400;700&display=swap"
-          rel="stylesheet"
-        />
+        {/* Add Google Fonts here if your locales need non-Latin scripts */}
       </head>
       <body className="min-h-screen flex flex-col antialiased bg-background text-foreground">
         {children}

@@ -32,7 +32,7 @@ export function Navbar({ dict, lang }: { dict: Dictionary; lang: Locale }) {
     <nav className="sticky top-0 z-50 border-b border-slate-200 bg-white/80 backdrop-blur-md">
       <div className="max-w-6xl mx-auto px-6 flex items-center justify-between h-16">
         <Link href={`/${lang}`} className="text-xl font-bold">
-          Khangtsen
+          {dict.metadata.title}
         </Link>
 
         {/* Desktop nav */}

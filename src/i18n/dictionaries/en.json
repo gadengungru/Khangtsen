@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "title": "Khangtsen",
-    "description": "Preserving and promoting Tibetan culture, education, and community"
+    "title": "My Organization",
+    "description": "Community management platform"
   },
   "nav": {
     "home": "Home",
@@ -13,13 +13,13 @@
   },
   "home": {
     "hero": {
-      "title": "Welcome to Khangtsen",
-      "subtitle": "Preserving heritage, building community, empowering futures",
+      "title": "Welcome",
+      "subtitle": "Building community, empowering futures",
       "cta": "Learn More"
     },
     "mission": {
       "title": "Our Mission",
-      "description": "We are dedicated to preserving and promoting Tibetan culture, supporting education, and strengthening community bonds across generations."
+      "description": "We are dedicated to serving our community, supporting education, and strengthening bonds across generations."
     }
   },
   "about": {
@@ -27,7 +27,7 @@
     "description": "Learn about our history, mission, and the community we serve.",
     "history": {
       "title": "Our History",
-      "content": "Khangtsen has a rich history rooted in the preservation of Tibetan cultural heritage. We work to maintain traditions while embracing the future."
+      "content": "Our organization has a rich history of community service. We work to maintain traditions while embracing the future."
     }
   },
   "programs": {
@@ -35,8 +35,8 @@
     "description": "Explore the programs and initiatives we offer to our community.",
     "list": [
       {
-        "title": "Cultural Preservation",
-        "description": "Programs dedicated to preserving Tibetan language, arts, and traditions."
+        "title": "Community Programs",
+        "description": "Programs dedicated to serving and strengthening our community."
       },
       {
         "title": "Education",
