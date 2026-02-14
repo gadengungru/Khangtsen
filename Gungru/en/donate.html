@@ -20,11 +20,11 @@
                 <span></span><span></span><span></span>
             </button>
             <ul class="site-nav__links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="general-understanding.html">General Understanding</a></li>
+                <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+                <li><a href="general-understanding.html" data-i18n="nav.general_understanding">General Understanding</a></li>
                 <li><a href="donate.html" class="site-nav__cta active">
                     <span>&#9825;</span>
-                    <span>Donate</span>
+                    <span data-i18n="nav.donate">Donate</span>
                 </a></li>
             </ul>
         </div>
@@ -48,16 +48,16 @@
                 Monastery
             </h1>
 
-            <p class="hero__tagline">
+            <p class="hero__tagline" data-i18n="home.tagline">
                 Supporting the preservation of Tibetan Buddhist wisdom through education, sacred arts, and compassionate action.
             </p>
 
             <div class="hero__actions">
                 <a href="#donate" class="btn btn-primary">
                     <span>&#9825;</span>
-                    <span>Make a Donation</span>
+                    <span data-i18n="home.cta_donate">Make a Donation</span>
                 </a>
-                <a href="#sponsor" class="btn btn-secondary">Sponsor a Monk</a>
+                <a href="#sponsor" class="btn btn-secondary" data-i18n="donate.sponsor_meals_action">Sponsor a Monk</a>
             </div>
         </div>
     </section>
@@ -66,8 +66,8 @@
     <section class="about" id="about">
         <div class="about__card reveal">
             <span class="about__icon">&#127748;</span>
-            <h2 class="about__title">Preserving a Living Tradition</h2>
-            <p class="about__text">
+            <h2 class="about__title" data-i18n="home.about_title">Preserving a Living Tradition</h2>
+            <p class="about__text" data-i18n="donate.about_text">
                 Gungru Khangtsen is one of eleven monastic houses within <strong>Gaden Shartse Monastery</strong> in Mundgod, India &mdash; home to the exiled Tibetan monastic community since 1966. Our monks dedicate their lives to the study of <strong>Buddhist philosophy, debate, and meditation</strong>, preserving a tradition stretching back over six centuries. Through annual <strong>USA tours</strong> featuring sacred sand mandala creation, teachings, and traditional ceremonies, we share this wisdom with the world while raising essential funds for the monastery.
             </p>
             <div class="about__badges">
@@ -87,8 +87,8 @@
                     <span>&#9784;</span>
                     <span>Generosity</span>
                 </div>
-                <h2 class="section-header__title">Make a Donation</h2>
-                <p class="section-header__subtitle">
+                <h2 class="section-header__title" data-i18n="donate.section_title">Make a Donation</h2>
+                <p class="section-header__subtitle" data-i18n="donate.section_subtitle">
                     Every offering, no matter the size, directly supports the monks' education, healthcare, and daily sustenance.
                 </p>
             </div>
@@ -153,8 +153,8 @@
                 <span>&#128330;</span>
                 <span>Programs</span>
             </div>
-            <h2 class="section-header__title">Sponsorship Programs</h2>
-            <p class="section-header__subtitle">
+            <h2 class="section-header__title" data-i18n="donate.sponsor_title">Sponsorship Programs</h2>
+            <p class="section-header__subtitle" data-i18n="donate.sponsor_subtitle">
                 Choose a meaningful way to make a lasting impact on the monastic community.
             </p>
         </div>
@@ -162,13 +162,13 @@
         <div class="sponsor-grid">
             <div class="sponsor-card reveal">
                 <span class="sponsor-card__icon">&#127834;</span>
-                <h3 class="sponsor-card__title">Monk's Daily Meals</h3>
+                <h3 class="sponsor-card__title" data-i18n="donate.sponsor_meals_title">Monk's Daily Meals</h3>
                 <div class="sponsor-card__price">
                     <span class="inr">&#8377;3,000</span>
                     <span class="period">/month</span>
                     <span class="usd">($36 USD)</span>
                 </div>
-                <p class="sponsor-card__desc">Feed one monk for an entire month. Your support provides three nutritious meals daily, essential for the energy monks need for their rigorous study schedule.</p>
+                <p class="sponsor-card__desc" data-i18n="donate.sponsor_meals_desc">Feed one monk for an entire month. Your support provides three nutritious meals daily, essential for the energy monks need for their rigorous study schedule.</p>
                 <div class="sponsor-card__action" onclick="selectSponsor(3000)">
                     <span>Sponsor meals</span>
                     <span class="arrow">&rarr;</span>
@@ -177,13 +177,13 @@
 
             <div class="sponsor-card reveal">
                 <span class="sponsor-card__icon">&#128218;</span>
-                <h3 class="sponsor-card__title">Education Fund</h3>
+                <h3 class="sponsor-card__title" data-i18n="donate.sponsor_education_title">Education Fund</h3>
                 <div class="sponsor-card__price">
                     <span class="inr">&#8377;5,000</span>
                     <span class="period">/month</span>
                     <span class="usd">($60 USD)</span>
                 </div>
-                <p class="sponsor-card__desc">Support a monk's philosophical studies. Covers textbooks, debate materials, and access to the monastery's library of ancient texts and commentaries.</p>
+                <p class="sponsor-card__desc" data-i18n="donate.sponsor_education_desc">Support a monk's philosophical studies. Covers textbooks, debate materials, and access to the monastery's library of ancient texts and commentaries.</p>
                 <div class="sponsor-card__action" onclick="selectSponsor(5000)">
                     <span>Support education</span>
                     <span class="arrow">&rarr;</span>
@@ -192,13 +192,13 @@
 
             <div class="sponsor-card reveal">
                 <span class="sponsor-card__icon">&#127973;</span>
-                <h3 class="sponsor-card__title">Medical Care</h3>
+                <h3 class="sponsor-card__title" data-i18n="donate.sponsor_medical_title">Medical Care</h3>
                 <div class="sponsor-card__price">
                     <span class="inr">&#8377;2,000</span>
                     <span class="period">/month</span>
                     <span class="usd">($24 USD)</span>
                 </div>
-                <p class="sponsor-card__desc">Healthcare for elderly monks who have dedicated decades to preservation of the Dharma. Covers medicine, check-ups, and specialist visits.</p>
+                <p class="sponsor-card__desc" data-i18n="donate.sponsor_medical_desc">Healthcare for elderly monks who have dedicated decades to preservation of the Dharma. Covers medicine, check-ups, and specialist visits.</p>
                 <div class="sponsor-card__action" onclick="selectSponsor(2000)">
                     <span>Fund healthcare</span>
                     <span class="arrow">&rarr;</span>
@@ -207,12 +207,12 @@
 
             <div class="sponsor-card reveal">
                 <span class="sponsor-card__icon">&#127959;</span>
-                <h3 class="sponsor-card__title">Building Fund</h3>
+                <h3 class="sponsor-card__title" data-i18n="donate.sponsor_building_title">Building Fund</h3>
                 <div class="sponsor-card__price">
                     <span class="inr">&#8377;10,000+</span>
                     <span class="usd">($120+ USD)</span>
                 </div>
-                <p class="sponsor-card__desc">Help restore and maintain the khangtsen's prayer hall, dormitories, and kitchen. Our buildings serve as the physical foundation of monastic life.</p>
+                <p class="sponsor-card__desc" data-i18n="donate.sponsor_building_desc">Help restore and maintain the khangtsen's prayer hall, dormitories, and kitchen. Our buildings serve as the physical foundation of monastic life.</p>
                 <div class="sponsor-card__action" onclick="selectSponsor(10000)">
                     <span>Contribute to building</span>
                     <span class="arrow">&rarr;</span>
@@ -221,12 +221,12 @@
 
             <div class="sponsor-card reveal">
                 <span class="sponsor-card__icon">&#127912;</span>
-                <h3 class="sponsor-card__title">Sacred Arts Tour</h3>
+                <h3 class="sponsor-card__title" data-i18n="donate.sponsor_tour_title">Sacred Arts Tour</h3>
                 <div class="sponsor-card__price">
                     <span class="inr">&#8377;25,000+</span>
                     <span class="usd">($300+ USD)</span>
                 </div>
-                <p class="sponsor-card__desc">Sponsor a sand mandala tour stop in the United States. Your generosity funds travel, materials, and venue costs for monks sharing sacred art.</p>
+                <p class="sponsor-card__desc" data-i18n="donate.sponsor_tour_desc">Sponsor a sand mandala tour stop in the United States. Your generosity funds travel, materials, and venue costs for monks sharing sacred art.</p>
                 <div class="sponsor-card__action" onclick="selectSponsor(25000)">
                     <span>Sponsor a tour</span>
                     <span class="arrow">&rarr;</span>
@@ -235,12 +235,12 @@
 
             <div class="sponsor-card sponsor-card--lamp reveal">
                 <span class="sponsor-card__icon">&#128367;</span>
-                <h3 class="sponsor-card__title">Butter Lamp Offering</h3>
+                <h3 class="sponsor-card__title" data-i18n="donate.sponsor_lamp_title">Butter Lamp Offering</h3>
                 <div class="sponsor-card__price">
                     <span class="inr">&#8377;108</span>
                     <span class="usd">($1.30 USD)</span>
                 </div>
-                <p class="sponsor-card__desc">Light a butter lamp in your name or in memory of a loved one. The flame symbolizes the dispelling of darkness and the illumination of wisdom.</p>
+                <p class="sponsor-card__desc" data-i18n="donate.sponsor_lamp_desc">Light a butter lamp in your name or in memory of a loved one. The flame symbolizes the dispelling of darkness and the illumination of wisdom.</p>
                 <div class="sponsor-card__action" onclick="selectSponsor(108)">
                     <span>Light a lamp</span>
                     <span class="arrow">&rarr;</span>
@@ -429,16 +429,16 @@
     <footer class="site-footer">
         <div class="footer-inner">
             <span class="footer-wheel">&#9784;</span>
-            <h3 class="footer-name">Gaden Shartse Gungru Khangtsen Monastery</h3>
-            <div class="footer-address">
+            <h3 class="footer-name" data-i18n="footer.name">Gaden Shartse Gungru Khangtsen Monastery</h3>
+            <div class="footer-address" data-i18n="footer.address">
                 P.O. Tibetan Colony, Mundgod<br>
                 N. Kanara, Karnataka 581411, India<br>
                 info@gadengungru.com
             </div>
             <div class="footer-links">
-                <a href="index.html">Home</a>
-                <a href="general-understanding.html">General Understanding</a>
-                <a href="donate.html">Donate</a>
+                <a href="index.html" data-i18n="nav.home">Home</a>
+                <a href="general-understanding.html" data-i18n="nav.general_understanding">General Understanding</a>
+                <a href="donate.html" data-i18n="nav.donate">Donate</a>
             </div>
             <div class="footer-badges">
                 <div class="footer-badge"><span>&#128421;</span><span>Built with AlpacApps Infrastructure</span></div>
@@ -447,7 +447,7 @@
             <div class="footer-links" style="margin-bottom: 0; margin-top: 16px;">
                 <a href="payment-setup.html" style="font-size: 11px; opacity: 0.25;">&#128736; Payment Setup</a>
             </div>
-            <div class="footer-version"></div>
+            <div class="footer-version">v260214.2 12:31a</div>
             <div class="footer-address" style="margin-top: 20px; font-size: 12px; color: rgba(255,255,255,0.3);">
                 Demo &mdash; No real payments are processed
             </div>
@@ -460,7 +460,6 @@
         <span>Demo &mdash; No real payments</span>
     </div>
 
-    <script src="../assets/js/version.js"></script>
     <script>
         // ── Multi-Currency System ──
         // Base amounts are in INR. Each currency has pre-computed rounded amounts
@@ -665,5 +664,7 @@
         // Initialize currency on page load
         initCurrency();
     </script>
+    <script src="../assets/js/version.js"></script>
+    <script src="../assets/js/i18n.js"></script>
 </body>
 </html>
