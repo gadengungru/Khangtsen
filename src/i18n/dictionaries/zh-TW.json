@@ -1,0 +1,65 @@
+{
+  "metadata": {
+    "title": "康村",
+    "description": "保護和推廣藏族文化、教育與社區"
+  },
+  "nav": {
+    "home": "首頁",
+    "about": "關於我們",
+    "programs": "項目",
+    "contact": "聯絡我們",
+    "signIn": "登入",
+    "intranet": "內部網"
+  },
+  "home": {
+    "hero": {
+      "title": "歡迎來到康村",
+      "subtitle": "保護遺產，建設社區，賦能未來",
+      "cta": "了解更多"
+    },
+    "mission": {
+      "title": "我們的使命",
+      "description": "我們致力於保護和推廣藏族文化，支持教育，加強跨代社區紐帶。"
+    }
+  },
+  "about": {
+    "title": "關於我們",
+    "description": "了解我們的歷史、使命以及我們服務的社區。",
+    "history": {
+      "title": "我們的歷史",
+      "content": "康村在保護藏族文化遺產方面有著豐富的歷史。我們在擁抱未來的同時努力維護傳統。"
+    }
+  },
+  "programs": {
+    "title": "我們的項目",
+    "description": "探索我們為社區提供的項目和倡議。",
+    "list": [
+      {
+        "title": "文化保護",
+        "description": "致力於保護藏語、藝術和傳統的項目。"
+      },
+      {
+        "title": "教育",
+        "description": "支持青年和終身學習的教育倡議。"
+      },
+      {
+        "title": "社區支持",
+        "description": "加強社區紐帶的資源和服務。"
+      }
+    ]
+  },
+  "contact": {
+    "title": "聯絡我們",
+    "description": "與我們取得聯繫，我們很樂意聽取您的意見。",
+    "form": {
+      "name": "您的姓名",
+      "email": "您的電子郵件",
+      "message": "您的留言",
+      "submit": "發送訊息"
+    }
+  },
+  "footer": {
+    "rights": "版權所有。",
+    "language": "語言"
+  }
+}

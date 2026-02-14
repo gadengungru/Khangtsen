@@ -4,10 +4,16 @@
         en: { flag: '\uD83C\uDDEC\uD83C\uDDE7', name: 'English' },
         bo: { flag: '\uD83C\uDFF3\uFE0F', name: '\u0F56\u0F7C\u0F51\u0F0B\u0F66\u0F90\u0F51\u0F0B' },
         hi: { flag: '\uD83C\uDDEE\uD83C\uDDF3', name: '\u0939\u093F\u0928\u094D\u0926\u0940' },
-        zh: { flag: '\uD83C\uDDE8\uD83C\uDDF3', name: '\u4E2D\u6587' },
+        'zh-TW': { flag: '\uD83C\uDDF9\uD83C\uDDFC', name: '\u4E2D\u6587' },
         kn: { flag: '\uD83C\uDDEE\uD83C\uDDF3', name: '\u0C95\u0CA8\u0CCD\u0CA8\u0CA1' },
         fr: { flag: '\uD83C\uDDEB\uD83C\uDDF7', name: 'Fran\u00E7ais' },
-        es: { flag: '\uD83C\uDDEA\uD83C\uDDF8', name: 'Espa\u00F1ol' }
+        es: { flag: '\uD83C\uDDEA\uD83C\uDDF8', name: 'Espa\u00F1ol' },
+        dz: { flag: '\uD83C\uDDE7\uD83C\uDDF9', name: '\u0F62\u0FAB\u0F7C\u0F44\u0F0B\u0F41' },
+        ja: { flag: '\uD83C\uDDEF\uD83C\uDDF5', name: '\u65E5\u672C\u8A9E' },
+        mr: { flag: '\uD83C\uDDEE\uD83C\uDDF3', name: '\u092E\u0930\u093E\u0920\u0940' },
+        ne: { flag: '\uD83C\uDDF3\uD83C\uDDF5', name: '\u0928\u0947\u092A\u093E\u0932\u0940' },
+        ta: { flag: '\uD83C\uDDEE\uD83C\uDDF3', name: '\u0BA4\u0BAE\u0BBF\u0BB4\u0BCD' },
+        te: { flag: '\uD83C\uDDEE\uD83C\uDDF3', name: '\u0C24\u0C46\u0C32\u0C41\u0C17\u0C41' }
     };
 
     var DEFAULT_LANG = 'en';

@@ -141,7 +141,8 @@ section { position: relative; }
 
 .lang-picker__menu {
     position: absolute; top: calc(100% + 6px); right: 0; z-index: 1001;
-    min-width: 180px; background: var(--surface);
+    min-width: 180px; max-height: 400px; overflow-y: auto;
+    background: var(--surface);
     border: 1px solid var(--border); border-radius: var(--radius);
     box-shadow: var(--shadow-lg); padding: 6px 0;
     opacity: 0; pointer-events: none; transform: translateY(-8px);
