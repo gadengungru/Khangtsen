@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Members — Admin — Gungru Khangtsen</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="site-nav" id="siteNav">
+        <div class="site-nav__inner">
+            <a href="../index.html" class="site-nav__brand">
+                <img src="../../assets/images/logo.png" alt="Gungru Khangtsen">
+                <span>Gungru Khangtsen</span>
+            </a>
+            <button class="nav-toggle" onclick="document.querySelector('.site-nav__links').classList.toggle('open')" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="site-nav__links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../general-understanding.html">General Understanding</a></li>
+                <li><a href="../donate.html" class="site-nav__cta">
+                    <span>&#9825;</span>
+                    <span>Donate</span>
+                </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Admin Topbar -->
+    <div class="admin-topbar">
+        <span class="admin-topbar__label">&#128274; Admin Panel</span>
+        <nav class="admin-topbar__nav">
+            <a href="index.html">Dashboard</a>
+            <a href="members.html" class="active">Members</a>
+            <a href="events.html">Events</a>
+            <a href="transactions.html">Transactions</a>
+        </nav>
+    </div>
+
+    <!-- Admin Content -->
+    <div class="admin-layout">
+        <div class="admin-container">
+            <div class="admin-page-header">
+                <h1>Members</h1>
+                <p>Manage community members</p>
+            </div>
+
+            <div class="admin-toolbar">
+                <input type="text" class="admin-toolbar__search" id="memberSearch" placeholder="Search members…">
+                <div class="admin-toolbar__actions">
+                    <button class="btn-sm btn-primary" id="addMemberBtn">+ Add Member</button>
+                </div>
+            </div>
+
+            <div class="admin-filters" id="memberFilters">
+                <button class="admin-filter-btn active" data-filter="all">All</button>
+                <button class="admin-filter-btn" data-filter="active">Active</button>
+                <button class="admin-filter-btn" data-filter="inactive">Inactive</button>
+            </div>
+
+            <div class="admin-table-wrap">
+                <table class="admin-table" id="membersTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="membersBody">
+                        <tr><td colspan="6" class="admin-empty"><div class="admin-empty__icon">&#128100;</div><div class="admin-empty__text">Loading members…</div></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Member Modal (hidden) -->
+    <div class="admin-modal" id="memberModal">
+        <div class="admin-modal__backdrop" id="memberModalBackdrop"></div>
+        <div class="admin-modal__card">
+            <h2 class="admin-modal__title" id="memberModalTitle">Add Member</h2>
+            <form class="admin-modal__form" id="memberForm">
+                <input type="hidden" id="memberId">
+                <div class="admin-modal__row">
+                    <div class="admin-modal__field">
+                        <label for="memberName">Full Name</label>
+                        <input type="text" id="memberName" required placeholder="Full name">
+                    </div>
+                    <div class="admin-modal__field">
+                        <label for="memberEmail">Email</label>
+                        <input type="email" id="memberEmail" placeholder="Email address">
+                    </div>
+                </div>
+                <div class="admin-modal__row">
+                    <div class="admin-modal__field">
+                        <label for="memberPhone">Phone</label>
+                        <input type="text" id="memberPhone" placeholder="Phone number">
+                    </div>
+                    <div class="admin-modal__field">
+                        <label for="memberRole">Role</label>
+                        <select id="memberRole">
+                            <option value="member">Member</option>
+                            <option value="monk">Monk</option>
+                            <option value="teacher">Teacher</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="admin-modal__row">
+                    <div class="admin-modal__field">
+                        <label for="memberStatus">Status</label>
+                        <select id="memberStatus">
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                            <option value="archived">Archived</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="admin-modal__field">
+                    <label for="memberNotes">Notes</label>
+                    <textarea id="memberNotes" rows="3" placeholder="Optional notes…"></textarea>
+                </div>
+                <div class="admin-modal__actions">
+                    <button type="button" class="btn-cancel" id="memberCancel">Cancel</button>
+                    <button type="submit" class="btn-sm btn-primary" id="memberSaveBtn">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <span class="footer-wheel">&#9784;</span>
+            <h3 class="footer-name">Gaden Shartse Gungru Khangtsen Monastery</h3>
+            <div class="footer-badges">
+                <div class="footer-badge"><span>&#128421;</span><span>Built with AlpacApps Infrastructure</span></div>
+                <div class="footer-badge"><span>&#10024;</span><span>Powered by Claude</span></div>
+            </div>
+            <div class="footer-version">Admin</div>
+        </div>
+    </footer>
+
+    <script>
+        const nav = document.getElementById('siteNav');
+        window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 20); });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script>
+        requireAuth(function(user) {
+            var sb = window.adminSupabase;
+            var allMembers = [];
+            var currentFilter = 'all';
+
+            // Toast
+            function showToast(msg, type) {
+                var existing = document.querySelector('.toast-notification');
+                if (existing) existing.remove();
+                var t = document.createElement('div');
+                t.className = 'toast-notification';
+                t.style.cssText = 'position:fixed;top:80px;left:50%;transform:translateX(-50%) translateY(-10px);z-index:10000;padding:14px 24px;border-radius:12px;font-size:14px;font-weight:500;font-family:DM Sans,sans-serif;max-width:90vw;text-align:center;opacity:0;transition:all 0.3s ease;box-shadow:0 8px 32px rgba(0,0,0,0.12);';
+                if (type === 'success') { t.style.background = '#f0fdf4'; t.style.color = '#166534'; t.style.border = '1px solid #bbf7d0'; }
+                else { t.style.background = '#fef2f2'; t.style.color = '#991b1b'; t.style.border = '1px solid #fecaca'; }
+                t.textContent = msg; document.body.appendChild(t);
+                requestAnimationFrame(function() { t.style.opacity = '1'; t.style.transform = 'translateX(-50%) translateY(0)'; });
+                setTimeout(function() { t.style.opacity = '0'; setTimeout(function() { t.remove(); }, 300); }, 4000);
+            }
+
+            function escapeHtml(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+            // Load members
+            function loadMembers() {
+                sb.from('members').select('*').order('full_name').then(function(result) {
+                    if (result.error) { showToast('Failed to load members', 'error'); return; }
+                    allMembers = result.data || [];
+                    renderMembers();
+                });
+            }
+
+            function renderMembers() {
+                var search = document.getElementById('memberSearch').value.toLowerCase();
+                var filtered = allMembers.filter(function(m) {
+                    if (currentFilter !== 'all' && m.status !== currentFilter) return false;
+                    if (search && !(m.full_name || '').toLowerCase().includes(search) && !(m.email || '').toLowerCase().includes(search)) return false;
+                    return true;
+                });
+
+                var tbody = document.getElementById('membersBody');
+                if (!filtered.length) {
+                    tbody.innerHTML = '<tr><td colspan="6" class="admin-empty"><div class="admin-empty__icon">&#128100;</div><div class="admin-empty__text">No members found</div></td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = filtered.map(function(m) {
+                    var badgeClass = m.status === 'active' ? 'admin-badge--active' : m.status === 'inactive' ? 'admin-badge--inactive' : 'admin-badge--pending';
+                    return '<tr>' +
+                        '<td><strong>' + escapeHtml(m.full_name || '') + '</strong></td>' +
+                        '<td>' + escapeHtml(m.email || '—') + '</td>' +
+                        '<td>' + escapeHtml(m.phone || '—') + '</td>' +
+                        '<td>' + escapeHtml(m.role || '—') + '</td>' +
+                        '<td><span class="admin-badge ' + badgeClass + '">' + escapeHtml(m.status || 'active') + '</span></td>' +
+                        '<td><div class="admin-table__actions">' +
+                            '<button onclick="editMember(\'' + m.id + '\')">Edit</button>' +
+                        '</div></td>' +
+                    '</tr>';
+                }).join('');
+            }
+
+            // Search & filter
+            document.getElementById('memberSearch').addEventListener('input', renderMembers);
+            document.getElementById('memberFilters').addEventListener('click', function(e) {
+                if (!e.target.classList.contains('admin-filter-btn')) return;
+                document.querySelectorAll('.admin-filter-btn').forEach(function(b) { b.classList.remove('active'); });
+                e.target.classList.add('active');
+                currentFilter = e.target.dataset.filter;
+                renderMembers();
+            });
+
+            // Modal
+            var modal = document.getElementById('memberModal');
+            function openModal(title) {
+                document.getElementById('memberModalTitle').textContent = title;
+                modal.classList.add('admin-modal--open');
+                requestAnimationFrame(function() { modal.classList.add('admin-modal--open'); });
+            }
+            function closeModal() {
+                modal.classList.remove('admin-modal--open');
+                document.getElementById('memberForm').reset();
+                document.getElementById('memberId').value = '';
+            }
+
+            document.getElementById('memberModalBackdrop').addEventListener('click', closeModal);
+            document.getElementById('memberCancel').addEventListener('click', closeModal);
+
+            // Add
+            document.getElementById('addMemberBtn').addEventListener('click', function() {
+                openModal('Add Member');
+            });
+
+            // Edit
+            window.editMember = function(id) {
+                var m = allMembers.find(function(x) { return x.id === id; });
+                if (!m) return;
+                document.getElementById('memberId').value = m.id;
+                document.getElementById('memberName').value = m.full_name || '';
+                document.getElementById('memberEmail').value = m.email || '';
+                document.getElementById('memberPhone').value = m.phone || '';
+                document.getElementById('memberRole').value = m.role || 'member';
+                document.getElementById('memberStatus').value = m.status || 'active';
+                document.getElementById('memberNotes').value = m.notes || '';
+                openModal('Edit Member');
+            };
+
+            // Save
+            document.getElementById('memberForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                var id = document.getElementById('memberId').value;
+                var data = {
+                    full_name: document.getElementById('memberName').value.trim(),
+                    email: document.getElementById('memberEmail').value.trim() || null,
+                    phone: document.getElementById('memberPhone').value.trim() || null,
+                    role: document.getElementById('memberRole').value,
+                    status: document.getElementById('memberStatus').value,
+                    notes: document.getElementById('memberNotes').value.trim() || null
+                };
+
+                var saveBtn = document.getElementById('memberSaveBtn');
+                saveBtn.disabled = true; saveBtn.textContent = 'Saving…';
+
+                var query = id
+                    ? sb.from('members').update(data).eq('id', id)
+                    : sb.from('members').insert(data);
+
+                query.then(function(result) {
+                    saveBtn.disabled = false; saveBtn.textContent = 'Save';
+                    if (result.error) { showToast(result.error.message || 'Save failed', 'error'); return; }
+                    closeModal();
+                    showToast(id ? 'Member updated' : 'Member added', 'success');
+                    loadMembers();
+                });
+            });
+
+            loadMembers();
+        });
+    </script>
+    <script src="../../assets/js/version.js"></script>
+</body>
+</html>

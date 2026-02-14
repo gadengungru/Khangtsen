@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events — Admin — Gungru Khangtsen</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="site-nav" id="siteNav">
+        <div class="site-nav__inner">
+            <a href="../index.html" class="site-nav__brand">
+                <img src="../../assets/images/logo.png" alt="Gungru Khangtsen">
+                <span>Gungru Khangtsen</span>
+            </a>
+            <button class="nav-toggle" onclick="document.querySelector('.site-nav__links').classList.toggle('open')" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="site-nav__links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../general-understanding.html">General Understanding</a></li>
+                <li><a href="../donate.html" class="site-nav__cta">
+                    <span>&#9825;</span>
+                    <span>Donate</span>
+                </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Admin Topbar -->
+    <div class="admin-topbar">
+        <span class="admin-topbar__label">&#128274; Admin Panel</span>
+        <nav class="admin-topbar__nav">
+            <a href="index.html">Dashboard</a>
+            <a href="members.html">Members</a>
+            <a href="events.html" class="active">Events</a>
+            <a href="transactions.html">Transactions</a>
+        </nav>
+    </div>
+
+    <!-- Admin Content -->
+    <div class="admin-layout">
+        <div class="admin-container">
+            <div class="admin-page-header">
+                <h1>Events</h1>
+                <p>Manage ceremonies, gatherings, and tour dates</p>
+            </div>
+
+            <div class="admin-toolbar">
+                <input type="text" class="admin-toolbar__search" id="eventSearch" placeholder="Search events…">
+                <div class="admin-toolbar__actions">
+                    <button class="btn-sm btn-primary" id="addEventBtn">+ Add Event</button>
+                </div>
+            </div>
+
+            <div class="admin-filters" id="eventFilters">
+                <button class="admin-filter-btn active" data-filter="all">All</button>
+                <button class="admin-filter-btn" data-filter="upcoming">Upcoming</button>
+                <button class="admin-filter-btn" data-filter="completed">Completed</button>
+                <button class="admin-filter-btn" data-filter="cancelled">Cancelled</button>
+            </div>
+
+            <div class="admin-table-wrap">
+                <table class="admin-table" id="eventsTable">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Type</th>
+                            <th>Location</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="eventsBody">
+                        <tr><td colspan="7" class="admin-empty"><div class="admin-empty__icon">&#128197;</div><div class="admin-empty__text">Loading events…</div></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Event Modal -->
+    <div class="admin-modal" id="eventModal">
+        <div class="admin-modal__backdrop" id="eventModalBackdrop"></div>
+        <div class="admin-modal__card">
+            <h2 class="admin-modal__title" id="eventModalTitle">Add Event</h2>
+            <form class="admin-modal__form" id="eventForm">
+                <input type="hidden" id="eventId">
+                <div class="admin-modal__field">
+                    <label for="eventTitle">Title</label>
+                    <input type="text" id="eventTitle" required placeholder="Event title">
+                </div>
+                <div class="admin-modal__row">
+                    <div class="admin-modal__field">
+                        <label for="eventType">Type</label>
+                        <select id="eventType">
+                            <option value="ceremony">Ceremony</option>
+                            <option value="puja">Puja</option>
+                            <option value="teaching">Teaching</option>
+                            <option value="tour">Tour</option>
+                            <option value="meeting">Meeting</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="admin-modal__field">
+                        <label for="eventStatus">Status</label>
+                        <select id="eventStatus">
+                            <option value="upcoming">Upcoming</option>
+                            <option value="ongoing">Ongoing</option>
+                            <option value="completed">Completed</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="admin-modal__field">
+                    <label for="eventLocation">Location</label>
+                    <input type="text" id="eventLocation" placeholder="Event location">
+                </div>
+                <div class="admin-modal__row">
+                    <div class="admin-modal__field">
+                        <label for="eventStart">Start Date</label>
+                        <input type="datetime-local" id="eventStart" required>
+                    </div>
+                    <div class="admin-modal__field">
+                        <label for="eventEnd">End Date</label>
+                        <input type="datetime-local" id="eventEnd">
+                    </div>
+                </div>
+                <div class="admin-modal__field">
+                    <label for="eventDesc">Description</label>
+                    <textarea id="eventDesc" rows="3" placeholder="Optional description…"></textarea>
+                </div>
+                <div class="admin-modal__actions">
+                    <button type="button" class="btn-cancel" id="eventCancel">Cancel</button>
+                    <button type="submit" class="btn-sm btn-primary" id="eventSaveBtn">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <span class="footer-wheel">&#9784;</span>
+            <h3 class="footer-name">Gaden Shartse Gungru Khangtsen Monastery</h3>
+            <div class="footer-badges">
+                <div class="footer-badge"><span>&#128421;</span><span>Built with AlpacApps Infrastructure</span></div>
+                <div class="footer-badge"><span>&#10024;</span><span>Powered by Claude</span></div>
+            </div>
+            <div class="footer-version">Admin</div>
+        </div>
+    </footer>
+
+    <script>
+        const nav = document.getElementById('siteNav');
+        window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 20); });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script>
+        requireAuth(function(user) {
+            var sb = window.adminSupabase;
+            var allEvents = [];
+            var currentFilter = 'all';
+
+            function showToast(msg, type) {
+                var existing = document.querySelector('.toast-notification');
+                if (existing) existing.remove();
+                var t = document.createElement('div');
+                t.className = 'toast-notification';
+                t.style.cssText = 'position:fixed;top:80px;left:50%;transform:translateX(-50%) translateY(-10px);z-index:10000;padding:14px 24px;border-radius:12px;font-size:14px;font-weight:500;font-family:DM Sans,sans-serif;max-width:90vw;text-align:center;opacity:0;transition:all 0.3s ease;box-shadow:0 8px 32px rgba(0,0,0,0.12);';
+                if (type === 'success') { t.style.background = '#f0fdf4'; t.style.color = '#166534'; t.style.border = '1px solid #bbf7d0'; }
+                else { t.style.background = '#fef2f2'; t.style.color = '#991b1b'; t.style.border = '1px solid #fecaca'; }
+                t.textContent = msg; document.body.appendChild(t);
+                requestAnimationFrame(function() { t.style.opacity = '1'; t.style.transform = 'translateX(-50%) translateY(0)'; });
+                setTimeout(function() { t.style.opacity = '0'; setTimeout(function() { t.remove(); }, 300); }, 4000);
+            }
+
+            function escapeHtml(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+            function formatDate(d) {
+                if (!d) return '—';
+                return new Date(d).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+            }
+
+            function toLocalInput(d) {
+                if (!d) return '';
+                var dt = new Date(d);
+                var offset = dt.getTimezoneOffset();
+                dt = new Date(dt.getTime() - offset * 60000);
+                return dt.toISOString().slice(0, 16);
+            }
+
+            function loadEvents() {
+                sb.from('events').select('*').order('start_date', { ascending: false }).then(function(result) {
+                    if (result.error) { showToast('Failed to load events', 'error'); return; }
+                    allEvents = result.data || [];
+                    renderEvents();
+                });
+            }
+
+            function renderEvents() {
+                var search = document.getElementById('eventSearch').value.toLowerCase();
+                var filtered = allEvents.filter(function(e) {
+                    if (currentFilter !== 'all' && e.status !== currentFilter) return false;
+                    if (search && !(e.title || '').toLowerCase().includes(search) && !(e.location || '').toLowerCase().includes(search)) return false;
+                    return true;
+                });
+
+                var tbody = document.getElementById('eventsBody');
+                if (!filtered.length) {
+                    tbody.innerHTML = '<tr><td colspan="7" class="admin-empty"><div class="admin-empty__icon">&#128197;</div><div class="admin-empty__text">No events found</div></td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = filtered.map(function(e) {
+                    var badgeClass = e.status === 'upcoming' ? 'admin-badge--active' :
+                                     e.status === 'completed' ? 'admin-badge--inactive' :
+                                     e.status === 'cancelled' ? 'admin-badge--expense' : 'admin-badge--pending';
+                    return '<tr>' +
+                        '<td><strong>' + escapeHtml(e.title || '') + '</strong></td>' +
+                        '<td>' + escapeHtml(e.event_type || '—') + '</td>' +
+                        '<td>' + escapeHtml(e.location || '—') + '</td>' +
+                        '<td>' + formatDate(e.start_date) + '</td>' +
+                        '<td>' + formatDate(e.end_date) + '</td>' +
+                        '<td><span class="admin-badge ' + badgeClass + '">' + escapeHtml(e.status || 'upcoming') + '</span></td>' +
+                        '<td><div class="admin-table__actions">' +
+                            '<button onclick="editEvent(\'' + e.id + '\')">Edit</button>' +
+                        '</div></td>' +
+                    '</tr>';
+                }).join('');
+            }
+
+            document.getElementById('eventSearch').addEventListener('input', renderEvents);
+            document.getElementById('eventFilters').addEventListener('click', function(ev) {
+                if (!ev.target.classList.contains('admin-filter-btn')) return;
+                document.querySelectorAll('.admin-filter-btn').forEach(function(b) { b.classList.remove('active'); });
+                ev.target.classList.add('active');
+                currentFilter = ev.target.dataset.filter;
+                renderEvents();
+            });
+
+            var modal = document.getElementById('eventModal');
+            function openModal(title) {
+                document.getElementById('eventModalTitle').textContent = title;
+                modal.classList.add('admin-modal--open');
+            }
+            function closeModal() {
+                modal.classList.remove('admin-modal--open');
+                document.getElementById('eventForm').reset();
+                document.getElementById('eventId').value = '';
+            }
+
+            document.getElementById('eventModalBackdrop').addEventListener('click', closeModal);
+            document.getElementById('eventCancel').addEventListener('click', closeModal);
+
+            document.getElementById('addEventBtn').addEventListener('click', function() {
+                openModal('Add Event');
+            });
+
+            window.editEvent = function(id) {
+                var e = allEvents.find(function(x) { return x.id === id; });
+                if (!e) return;
+                document.getElementById('eventId').value = e.id;
+                document.getElementById('eventTitle').value = e.title || '';
+                document.getElementById('eventType').value = e.event_type || 'ceremony';
+                document.getElementById('eventStatus').value = e.status || 'upcoming';
+                document.getElementById('eventLocation').value = e.location || '';
+                document.getElementById('eventStart').value = toLocalInput(e.start_date);
+                document.getElementById('eventEnd').value = toLocalInput(e.end_date);
+                document.getElementById('eventDesc').value = e.description || '';
+                openModal('Edit Event');
+            };
+
+            document.getElementById('eventForm').addEventListener('submit', function(ev) {
+                ev.preventDefault();
+                var id = document.getElementById('eventId').value;
+                var data = {
+                    title: document.getElementById('eventTitle').value.trim(),
+                    event_type: document.getElementById('eventType').value,
+                    status: document.getElementById('eventStatus').value,
+                    location: document.getElementById('eventLocation').value.trim() || null,
+                    start_date: document.getElementById('eventStart').value || null,
+                    end_date: document.getElementById('eventEnd').value || null,
+                    description: document.getElementById('eventDesc').value.trim() || null
+                };
+
+                var saveBtn = document.getElementById('eventSaveBtn');
+                saveBtn.disabled = true; saveBtn.textContent = 'Saving…';
+
+                var query = id
+                    ? sb.from('events').update(data).eq('id', id)
+                    : sb.from('events').insert(data);
+
+                query.then(function(result) {
+                    saveBtn.disabled = false; saveBtn.textContent = 'Save';
+                    if (result.error) { showToast(result.error.message || 'Save failed', 'error'); return; }
+                    closeModal();
+                    showToast(id ? 'Event updated' : 'Event added', 'success');
+                    loadEvents();
+                });
+            });
+
+            loadEvents();
+        });
+    </script>
+    <script src="../../assets/js/version.js"></script>
+</body>
+</html>
