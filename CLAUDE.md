@@ -77,6 +77,36 @@ Khangtsen is a community/organization management platform. It manages members, c
 - Config in `signwell_config` table
 - Edge function: `signwell-webhook` (deploy with `--no-verify-jwt`)
 
+## Versioning System (MANDATORY for every push)
+
+The site uses a **database-driven auto-versioning** system. The version is stored in the `settings` table as `site_version` (JSON: `{date, build, updated_at}`). A PostgreSQL function `increment_site_version()` handles incrementing automatically.
+
+**After EVERY `git push`, you MUST do the following:**
+
+1. **Increment the version** by calling the database function:
+   ```bash
+   /opt/homebrew/opt/libpq/bin/psql "postgresql://postgres.axnongwefdafwflekysk:canmUq-tuvvet-4ticza@aws-1-ap-southeast-2.pooler.supabase.com:5432/postgres" -c "SELECT increment_site_version();"
+   ```
+
+2. **Display the new version** to the user so they know what version is live.
+
+3. **Show the testing links** so the user can verify changes:
+   - Main site: https://gadengungru.github.io/Gungru/en/index.html
+   - Donate page: https://gadengungru.github.io/Gungru/en/donate.html
+   - General Understanding: https://gadengungru.github.io/Gungru/en/general-understanding.html
+
+**Version format:** `v{YYMMDD}.{build}` — e.g., `v260214.5` means Feb 14, 2026, build 5. Build resets to 1 on a new day and increments on same-day pushes.
+
+**Example end-of-push output:**
+```
+Pushed to main. Version bumped to v260214.6
+
+Test your changes:
+- https://gadengungru.github.io/Gungru/en/index.html
+- https://gadengungru.github.io/Gungru/en/donate.html
+- https://gadengungru.github.io/Gungru/en/general-understanding.html
+```
+
 ## Conventions
 
 1. Use toast notifications, not alert()
