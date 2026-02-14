@@ -13,7 +13,9 @@
         mr: { flag: '\uD83C\uDDEE\uD83C\uDDF3', name: '\u092E\u0930\u093E\u0920\u0940' },
         ne: { flag: '\uD83C\uDDF3\uD83C\uDDF5', name: '\u0928\u0947\u092A\u093E\u0932\u0940' },
         ta: { flag: '\uD83C\uDDEE\uD83C\uDDF3', name: '\u0BA4\u0BAE\u0BBF\u0BB4\u0BCD' },
-        te: { flag: '\uD83C\uDDEE\uD83C\uDDF3', name: '\u0C24\u0C46\u0C32\u0C41\u0C17\u0C41' }
+        te: { flag: '\uD83C\uDDEE\uD83C\uDDF3', name: '\u0C24\u0C46\u0C32\u0C41\u0C17\u0C41' },
+        vi: { flag: '\uD83C\uDDFB\uD83C\uDDF3', name: 'Ti\u1EBFng Vi\u1EC7t' },
+        'zh-CN': { flag: '\uD83C\uDDF8\uD83C\uDDEC', name: '\u7B80\u4F53\u4E2D\u6587' }
     };
 
     var DEFAULT_LANG = 'en';

@@ -15,6 +15,8 @@ const dictionaries: Record<Locale, () => Promise<Dictionary>> = {
   ne: () => import("./dictionaries/ne.json").then((m) => m.default),
   ta: () => import("./dictionaries/ta.json").then((m) => m.default),
   te: () => import("./dictionaries/te.json").then((m) => m.default),
+  vi: () => import("./dictionaries/vi.json").then((m) => m.default),
+  "zh-CN": () => import("./dictionaries/zh-CN.json").then((m) => m.default),
 };
 
 export const getDictionary = async (locale: Locale): Promise<Dictionary> => {
