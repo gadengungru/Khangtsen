@@ -139,11 +139,11 @@
                 <span></span><span></span><span></span>
             </button>
             <ul class="site-nav__links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="general-understanding.html">General Understanding</a></li>
+                <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+                <li><a href="general-understanding.html" data-i18n="nav.general_understanding">General Understanding</a></li>
                 <li><a href="donate.html" class="site-nav__cta">
                     <span>&#9825;</span>
-                    <span>Donate</span>
+                    <span data-i18n="nav.donate">Donate</span>
                 </a></li>
             </ul>
         </div>
@@ -887,22 +887,22 @@
     <footer class="site-footer">
         <div class="footer-inner">
             <span class="footer-wheel">&#9784;</span>
-            <h3 class="footer-name">Gaden Shartse Gungru Khangtsen Monastery</h3>
-            <div class="footer-address">
+            <h3 class="footer-name" data-i18n="footer.name">Gaden Shartse Gungru Khangtsen Monastery</h3>
+            <div class="footer-address" data-i18n="footer.address">
                 P.O. Tibetan Colony, Mundgod<br>
                 N. Kanara, Karnataka 581411, India<br>
                 info@gadengungru.com
             </div>
             <div class="footer-links">
-                <a href="index.html">Home</a>
-                <a href="general-understanding.html">General Understanding</a>
-                <a href="donate.html">Donate</a>
+                <a href="index.html" data-i18n="nav.home">Home</a>
+                <a href="general-understanding.html" data-i18n="nav.general_understanding">General Understanding</a>
+                <a href="donate.html" data-i18n="nav.donate">Donate</a>
             </div>
             <div class="footer-badges">
                 <div class="footer-badge"><span>&#128421;</span><span>Built with AlpacApps Infrastructure</span></div>
                 <div class="footer-badge"><span>&#10024;</span><span>Powered by Claude</span></div>
             </div>
-            <div class="footer-version">v260214.1</div>
+            <div class="footer-version">v260214.2 12:31a</div>
             <div class="footer-address" style="margin-top: 20px; font-size: 12px; color: rgba(255,255,255,0.3);">
                 Internal documentation &mdash; Not for public distribution
             </div>
@@ -929,5 +929,7 @@
         }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     </script>
+    <script src="../assets/js/version.js"></script>
+    <script src="../assets/js/i18n.js"></script>
 </body>
 </html>
