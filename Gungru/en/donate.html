@@ -85,7 +85,7 @@
             <div class="section-header">
                 <div class="section-header__label">
                     <span>&#9784;</span>
-                    <span>Generosity</span>
+                    <span data-i18n="donate.section_label">Generosity</span>
                 </div>
                 <h2 class="section-header__title" data-i18n="donate.section_title">Make a Donation</h2>
                 <p class="section-header__subtitle" data-i18n="donate.section_subtitle">
@@ -96,13 +96,13 @@
             <div class="donate-card reveal">
                 <!-- Frequency Toggle -->
                 <div class="freq-toggle">
-                    <button class="freq-toggle__btn active" data-freq="one-time" onclick="toggleFreq(this)">One-Time</button>
-                    <button class="freq-toggle__btn" data-freq="monthly" onclick="toggleFreq(this)">Monthly</button>
+                    <button class="freq-toggle__btn active" data-freq="one-time" onclick="toggleFreq(this)" data-i18n="donate.one_time">One-Time</button>
+                    <button class="freq-toggle__btn" data-freq="monthly" onclick="toggleFreq(this)" data-i18n="donate.monthly">Monthly</button>
                 </div>
 
                 <!-- Currency Selector -->
                 <div class="currency-picker">
-                    <label for="donationCurrency">Currency:</label>
+                    <label for="donationCurrency" data-i18n="donate.currency_label">Currency:</label>
                     <select id="donationCurrency" onchange="changeCurrency(this.value)">
                         <option value="USD">$ USD</option>
                         <option value="EUR">&euro; EUR</option>
@@ -124,23 +124,23 @@
 
                 <!-- Custom Amount -->
                 <div class="custom-amount">
-                    <input type="text" id="customAmount" placeholder="Enter custom amount" onfocus="clearPresets()">
+                    <input type="text" id="customAmount" placeholder="Enter custom amount" data-i18n="donate.custom_placeholder" data-i18n-attr="placeholder" onfocus="clearPresets()">
                     <span class="custom-currency-label" id="customCurrencyLabel">USD</span>
                 </div>
 
                 <p class="donate-note" id="monthlyNote" style="display:none;">
-                    &#8635; You will be charged monthly. Cancel anytime.
+                    &#8635; <span data-i18n="donate.monthly_note">You will be charged monthly. Cancel anytime.</span>
                 </p>
 
                 <div class="donate-btn-wrap">
                     <button class="btn btn-primary" onclick="handleDonate()">
                         <span>&#9825;</span>
-                        <span>Donate Now</span>
+                        <span data-i18n="donate.donate_now">Donate Now</span>
                     </button>
                 </div>
 
                 <p class="donate-note">
-                    &#128274; Secure payment &middot; Tax-deductible &middot; 80G receipt provided
+                    &#128274; <span data-i18n="donate.secure_note">Secure payment &middot; Tax-deductible &middot; 80G receipt provided</span>
                 </p>
             </div>
         </div>
@@ -151,7 +151,7 @@
         <div class="section-header">
             <div class="section-header__label">
                 <span>&#128330;</span>
-                <span>Programs</span>
+                <span data-i18n="donate.sponsor_label">Programs</span>
             </div>
             <h2 class="section-header__title" data-i18n="donate.sponsor_title">Sponsorship Programs</h2>
             <p class="section-header__subtitle" data-i18n="donate.sponsor_subtitle">
@@ -170,7 +170,7 @@
                 </div>
                 <p class="sponsor-card__desc" data-i18n="donate.sponsor_meals_desc">Feed one monk for an entire month. Your support provides three nutritious meals daily, essential for the energy monks need for their rigorous study schedule.</p>
                 <div class="sponsor-card__action" onclick="selectSponsor(3000)">
-                    <span>Sponsor meals</span>
+                    <span data-i18n="donate.sponsor_meals_action">Sponsor meals</span>
                     <span class="arrow">&rarr;</span>
                 </div>
             </div>
@@ -185,7 +185,7 @@
                 </div>
                 <p class="sponsor-card__desc" data-i18n="donate.sponsor_education_desc">Support a monk's philosophical studies. Covers textbooks, debate materials, and access to the monastery's library of ancient texts and commentaries.</p>
                 <div class="sponsor-card__action" onclick="selectSponsor(5000)">
-                    <span>Support education</span>
+                    <span data-i18n="donate.sponsor_education_action">Support education</span>
                     <span class="arrow">&rarr;</span>
                 </div>
             </div>
@@ -200,7 +200,7 @@
                 </div>
                 <p class="sponsor-card__desc" data-i18n="donate.sponsor_medical_desc">Healthcare for elderly monks who have dedicated decades to preservation of the Dharma. Covers medicine, check-ups, and specialist visits.</p>
                 <div class="sponsor-card__action" onclick="selectSponsor(2000)">
-                    <span>Fund healthcare</span>
+                    <span data-i18n="donate.sponsor_medical_action">Fund healthcare</span>
                     <span class="arrow">&rarr;</span>
                 </div>
             </div>
@@ -214,7 +214,7 @@
                 </div>
                 <p class="sponsor-card__desc" data-i18n="donate.sponsor_building_desc">Help restore and maintain the khangtsen's prayer hall, dormitories, and kitchen. Our buildings serve as the physical foundation of monastic life.</p>
                 <div class="sponsor-card__action" onclick="selectSponsor(10000)">
-                    <span>Contribute to building</span>
+                    <span data-i18n="donate.sponsor_building_action">Contribute to building</span>
                     <span class="arrow">&rarr;</span>
                 </div>
             </div>
@@ -228,7 +228,7 @@
                 </div>
                 <p class="sponsor-card__desc" data-i18n="donate.sponsor_tour_desc">Sponsor a sand mandala tour stop in the United States. Your generosity funds travel, materials, and venue costs for monks sharing sacred art.</p>
                 <div class="sponsor-card__action" onclick="selectSponsor(25000)">
-                    <span>Sponsor a tour</span>
+                    <span data-i18n="donate.sponsor_tour_action">Sponsor a tour</span>
                     <span class="arrow">&rarr;</span>
                 </div>
             </div>
@@ -242,7 +242,7 @@
                 </div>
                 <p class="sponsor-card__desc" data-i18n="donate.sponsor_lamp_desc">Light a butter lamp in your name or in memory of a loved one. The flame symbolizes the dispelling of darkness and the illumination of wisdom.</p>
                 <div class="sponsor-card__action" onclick="selectSponsor(108)">
-                    <span>Light a lamp</span>
+                    <span data-i18n="donate.sponsor_lamp_action">Light a lamp</span>
                     <span class="arrow">&rarr;</span>
                 </div>
             </div>
@@ -255,10 +255,10 @@
             <div class="section-header">
                 <div class="section-header__label">
                     <span>&#128179;</span>
-                    <span>Payment</span>
+                    <span data-i18n="donate.payment_label">Payment</span>
                 </div>
-                <h2 class="section-header__title">Payment Methods</h2>
-                <p class="section-header__subtitle">
+                <h2 class="section-header__title" data-i18n="donate.payment_title">Payment Methods</h2>
+                <p class="section-header__subtitle" data-i18n="donate.payment_subtitle">
                     We accept donations from around the world through multiple secure channels.
                 </p>
             </div>
@@ -345,10 +345,10 @@
             <div class="section-header">
                 <div class="section-header__label">
                     <span>&#128221;</span>
-                    <span>Your Information</span>
+                    <span data-i18n="donate.form_label">Your Information</span>
                 </div>
-                <h2 class="section-header__title">Donor Details</h2>
-                <p class="section-header__subtitle">
+                <h2 class="section-header__title" data-i18n="donate.form_title">Donor Details</h2>
+                <p class="section-header__subtitle" data-i18n="donate.form_subtitle">
                     Help us send your receipt and keep you updated on the impact of your generosity.
                 </p>
             </div>
@@ -356,19 +356,19 @@
             <form class="donor-form reveal" onsubmit="handleFormSubmit(event)">
                 <div class="form-grid">
                     <div class="form-group">
-                        <label for="donorName">Full Name</label>
+                        <label for="donorName" data-i18n="donate.form_name">Full Name</label>
                         <input type="text" id="donorName" name="full_name" required>
                     </div>
                     <div class="form-group">
-                        <label for="donorEmail">Email Address</label>
+                        <label for="donorEmail" data-i18n="donate.form_email">Email Address</label>
                         <input type="email" id="donorEmail" name="email" required>
                     </div>
                     <div class="form-group">
-                        <label for="donorPhone">Phone <span class="optional">(optional)</span></label>
+                        <label for="donorPhone"><span data-i18n="donate.form_phone">Phone</span> <span class="optional" data-i18n="donate.form_phone_optional">(optional)</span></label>
                         <input type="tel" id="donorPhone" name="phone">
                     </div>
                     <div class="form-group">
-                        <label for="donorCountry">Country</label>
+                        <label for="donorCountry" data-i18n="donate.form_country">Country</label>
                         <select id="donorCountry" name="country" required>
                             <option value="">Select country</option>
                             <option value="IN">India</option>
@@ -388,7 +388,7 @@
                     </div>
                     <div class="form-divider"></div>
                     <div class="form-group full-width">
-                        <label for="donorDedication">Dedication</label>
+                        <label for="donorDedication" data-i18n="donate.form_dedication">Dedication</label>
                         <select id="donorDedication" name="dedication_type">
                             <option value="">No dedication</option>
                             <option value="honor">In honor of...</option>
@@ -401,24 +401,24 @@
                         <input type="text" id="dedicationName" name="dedication_name">
                     </div>
                     <div class="form-group full-width">
-                        <label for="donorMessage">Message to the Monks <span class="optional">(optional)</span></label>
+                        <label for="donorMessage"><span data-i18n="donate.form_message">Message to the Monks</span> <span class="optional" data-i18n="donate.form_message_optional">(optional)</span></label>
                         <textarea id="donorMessage" name="message" rows="4"></textarea>
                     </div>
                     <div class="form-divider"></div>
                     <div class="checkbox-group full-width">
                         <input type="checkbox" id="anonCheck" name="is_anonymous">
-                        <label for="anonCheck">Make this donation <strong>anonymous</strong></label>
+                        <label for="anonCheck" data-i18n="donate.form_anonymous">Make this donation <strong>anonymous</strong></label>
                     </div>
                     <div class="checkbox-group full-width">
                         <input type="checkbox" id="receiptCheck" name="request_receipt" checked>
-                        <label for="receiptCheck">Send me a <strong>tax receipt</strong> (80G certificate for Indian donors)</label>
+                        <label for="receiptCheck" data-i18n="donate.form_receipt">Send me a <strong>tax receipt</strong> (80G certificate for Indian donors)</label>
                     </div>
                     <div class="checkbox-group full-width">
                         <input type="checkbox" id="updatesCheck" name="receive_updates">
-                        <label for="updatesCheck">Receive occasional updates about the monastery</label>
+                        <label for="updatesCheck" data-i18n="donate.form_updates">Receive occasional updates about the monastery</label>
                     </div>
                     <div class="form-submit">
-                        <button type="submit" class="btn btn-primary">Complete Donation</button>
+                        <button type="submit" class="btn btn-primary" data-i18n="donate.form_submit">Complete Donation</button>
                     </div>
                 </div>
             </form>
@@ -449,7 +449,7 @@
             </div>
             <div class="footer-version">v260214.2 12:31a</div>
             <div class="footer-address" style="margin-top: 20px; font-size: 12px; color: rgba(255,255,255,0.3);">
-                Demo &mdash; No real payments are processed
+                <span data-i18n="footer.demo">Demo &mdash; No real payments are processed</span>
             </div>
         </div>
     </footer>
@@ -457,7 +457,7 @@
     <!-- Demo Banner -->
     <div class="demo-banner">
         <span class="demo-dot"></span>
-        <span>Demo &mdash; No real payments</span>
+        <span data-i18n="footer.demoBanner">Demo &mdash; No real payments</span>
     </div>
 
     <script>
@@ -466,28 +466,28 @@
         // that are close (~20%) to the INR equivalent, for clean display.
 
         const CURRENCIES = {
-            USD: { symbol: '$',  flag: '\u{1F1FA}\u{1F1F8}', amounts: [6, 12, 60, 120, 300, 600], sponsorAmounts: { 3000: 35, 5000: 60, 2000: 25, 10000: 120, 25000: 300, 108: 1.50 } },
-            EUR: { symbol: '\u20AC', flag: '\u{1F1EA}\u{1F1FA}', amounts: [5, 10, 50, 100, 250, 500], sponsorAmounts: { 3000: 35, 5000: 55, 2000: 25, 10000: 110, 25000: 275, 108: 1.25 } },
-            GBP: { symbol: '\u00A3', flag: '\u{1F1EC}\u{1F1E7}', amounts: [5, 10, 45, 90, 250, 500], sponsorAmounts: { 3000: 30, 5000: 50, 2000: 20, 10000: 100, 25000: 250, 108: 1 } },
-            INR: { symbol: '\u20B9', flag: '\u{1F1EE}\u{1F1F3}', amounts: [500, 1000, 5000, 10000, 25000, 50000], sponsorAmounts: { 3000: 3000, 5000: 5000, 2000: 2000, 10000: 10000, 25000: 25000, 108: 108 } },
-            JPY: { symbol: '\u00A5', flag: '\u{1F1EF}\u{1F1F5}', amounts: [1000, 2000, 8000, 18000, 45000, 90000], sponsorAmounts: { 3000: 5500, 5000: 9000, 2000: 3500, 10000: 18000, 25000: 45000, 108: 200 } },
-            CNY: { symbol: '\u00A5', flag: '\u{1F1E8}\u{1F1F3}', amounts: [40, 80, 400, 850, 2000, 4000], sponsorAmounts: { 3000: 260, 5000: 430, 2000: 170, 10000: 860, 25000: 2100, 108: 10 } },
-            CAD: { symbol: '$',  flag: '\u{1F1E8}\u{1F1E6}', amounts: [8, 15, 80, 160, 400, 800], sponsorAmounts: { 3000: 50, 5000: 80, 2000: 35, 10000: 170, 25000: 400, 108: 2 } },
-            AUD: { symbol: '$',  flag: '\u{1F1E6}\u{1F1FA}', amounts: [10, 20, 90, 180, 450, 900], sponsorAmounts: { 3000: 55, 5000: 90, 2000: 35, 10000: 180, 25000: 450, 108: 2 } },
-            CHF: { symbol: 'Fr', flag: '\u{1F1E8}\u{1F1ED}', amounts: [5, 10, 50, 100, 250, 500], sponsorAmounts: { 3000: 35, 5000: 55, 2000: 25, 10000: 110, 25000: 275, 108: 1.50 } },
-            SGD: { symbol: '$',  flag: '\u{1F1F8}\u{1F1EC}', amounts: [8, 15, 80, 160, 400, 800], sponsorAmounts: { 3000: 50, 5000: 80, 2000: 30, 10000: 160, 25000: 400, 108: 2 } },
-            HKD: { symbol: '$',  flag: '\u{1F1ED}\u{1F1F0}', amounts: [50, 100, 450, 950, 2500, 5000], sponsorAmounts: { 3000: 280, 5000: 470, 2000: 190, 10000: 940, 25000: 2400, 108: 10 } },
-            TWD: { symbol: '$',  flag: '\u{1F1F9}\u{1F1FC}', amounts: [200, 400, 2000, 4000, 10000, 20000], sponsorAmounts: { 3000: 1100, 5000: 1800, 2000: 700, 10000: 3600, 25000: 9000, 108: 40 } }
+            USD: { symbol: '$',  flag: '\u{1F1FA}\u{1F1F8}', amounts: [6, 12, 60, 120, 300, 600], monthlyAmounts: [1, 2, 12, 25, 60, 120], sponsorAmounts: { 3000: 35, 5000: 60, 2000: 25, 10000: 120, 25000: 300, 108: 1.50 } },
+            EUR: { symbol: '\u20AC', flag: '\u{1F1EA}\u{1F1FA}', amounts: [5, 10, 50, 100, 250, 500], monthlyAmounts: [1, 2, 10, 20, 50, 100], sponsorAmounts: { 3000: 35, 5000: 55, 2000: 25, 10000: 110, 25000: 275, 108: 1.25 } },
+            GBP: { symbol: '\u00A3', flag: '\u{1F1EC}\u{1F1E7}', amounts: [5, 10, 45, 90, 250, 500], monthlyAmounts: [1, 2, 9, 18, 50, 100], sponsorAmounts: { 3000: 30, 5000: 50, 2000: 20, 10000: 100, 25000: 250, 108: 1 } },
+            INR: { symbol: '\u20B9', flag: '\u{1F1EE}\u{1F1F3}', amounts: [500, 1000, 5000, 10000, 25000, 50000], monthlyAmounts: [100, 200, 1000, 2000, 5000, 10000], sponsorAmounts: { 3000: 3000, 5000: 5000, 2000: 2000, 10000: 10000, 25000: 25000, 108: 108 } },
+            JPY: { symbol: '\u00A5', flag: '\u{1F1EF}\u{1F1F5}', amounts: [1000, 2000, 8000, 18000, 45000, 90000], monthlyAmounts: [200, 400, 1500, 3500, 9000, 18000], sponsorAmounts: { 3000: 5500, 5000: 9000, 2000: 3500, 10000: 18000, 25000: 45000, 108: 200 } },
+            CNY: { symbol: '\u00A5', flag: '\u{1F1E8}\u{1F1F3}', amounts: [40, 80, 400, 850, 2000, 4000], monthlyAmounts: [8, 15, 80, 170, 400, 800], sponsorAmounts: { 3000: 260, 5000: 430, 2000: 170, 10000: 860, 25000: 2100, 108: 10 } },
+            CAD: { symbol: '$',  flag: '\u{1F1E8}\u{1F1E6}', amounts: [8, 15, 80, 160, 400, 800], monthlyAmounts: [2, 3, 15, 30, 80, 160], sponsorAmounts: { 3000: 50, 5000: 80, 2000: 35, 10000: 170, 25000: 400, 108: 2 } },
+            AUD: { symbol: '$',  flag: '\u{1F1E6}\u{1F1FA}', amounts: [10, 20, 90, 180, 450, 900], monthlyAmounts: [2, 4, 18, 35, 90, 180], sponsorAmounts: { 3000: 55, 5000: 90, 2000: 35, 10000: 180, 25000: 450, 108: 2 } },
+            CHF: { symbol: 'Fr', flag: '\u{1F1E8}\u{1F1ED}', amounts: [5, 10, 50, 100, 250, 500], monthlyAmounts: [1, 2, 10, 20, 50, 100], sponsorAmounts: { 3000: 35, 5000: 55, 2000: 25, 10000: 110, 25000: 275, 108: 1.50 } },
+            SGD: { symbol: '$',  flag: '\u{1F1F8}\u{1F1EC}', amounts: [8, 15, 80, 160, 400, 800], monthlyAmounts: [2, 3, 15, 30, 80, 160], sponsorAmounts: { 3000: 50, 5000: 80, 2000: 30, 10000: 160, 25000: 400, 108: 2 } },
+            HKD: { symbol: '$',  flag: '\u{1F1ED}\u{1F1F0}', amounts: [50, 100, 450, 950, 2500, 5000], monthlyAmounts: [10, 20, 90, 190, 500, 1000], sponsorAmounts: { 3000: 280, 5000: 470, 2000: 190, 10000: 940, 25000: 2400, 108: 10 } },
+            TWD: { symbol: '$',  flag: '\u{1F1F9}\u{1F1FC}', amounts: [200, 400, 2000, 4000, 10000, 20000], monthlyAmounts: [40, 80, 400, 800, 2000, 4000], sponsorAmounts: { 3000: 1100, 5000: 1800, 2000: 700, 10000: 3600, 25000: 9000, 108: 40 } }
         };
 
         // Language to default currency mapping
-        const LANG_CURRENCY = { en: 'USD', hi: 'INR', kn: 'INR', bo: 'INR', zh: 'CNY', fr: 'EUR', es: 'EUR' };
+        const LANG_CURRENCY = { en: 'USD', hi: 'INR', kn: 'INR', bo: 'INR', fr: 'EUR', es: 'EUR', 'zh-TW': 'TWD', 'zh-CN': 'CNY', vi: 'USD', dz: 'INR', ja: 'JPY', mr: 'INR', ne: 'INR', ta: 'INR', te: 'INR' };
 
         // Detect language from <html lang>, URL path, or default to 'en'
         function detectLang() {
             const htmlLang = document.documentElement.lang || '';
             if (LANG_CURRENCY[htmlLang]) return htmlLang;
-            const pathMatch = window.location.pathname.match(/\/([a-z]{2})\//);
+            const pathMatch = window.location.pathname.match(/\/([a-zA-Z]{2}(?:-[a-zA-Z]{2})?)\//);
             if (pathMatch && LANG_CURRENCY[pathMatch[1]]) return pathMatch[1];
             return 'en';
         }
@@ -505,12 +505,19 @@
             return c.symbol + amount.toLocaleString();
         }
 
+        // Check if monthly frequency is active
+        function isMonthlyActive() {
+            const activeBtn = document.querySelector('.freq-toggle__btn.active');
+            return activeBtn && activeBtn.dataset.freq === 'monthly';
+        }
+
         // Build preset amount grid
         function buildAmountGrid(currency) {
             const grid = document.getElementById('amountGrid');
             const c = CURRENCIES[currency];
             grid.innerHTML = '';
-            c.amounts.forEach((amt, i) => {
+            const amts = isMonthlyActive() ? c.monthlyAmounts : c.amounts;
+            amts.forEach((amt, i) => {
                 const id = 'amt' + (i + 1);
                 const radio = document.createElement('input');
                 radio.type = 'radio'; radio.id = id; radio.name = 'amount'; radio.value = amt;
@@ -582,6 +589,7 @@
             document.querySelectorAll('.freq-toggle__btn').forEach(b => { b.classList.remove('active'); });
             btn.classList.add('active');
             document.getElementById('monthlyNote').style.display = btn.dataset.freq === 'monthly' ? 'block' : 'none';
+            buildAmountGrid(currentCurrency);
         }
 
         // Clear presets

@@ -147,6 +147,10 @@
   },
   "footer": {
     "name": "甘丹赤孜功如康村寺院",
-    "address": "P.O. 藏人定居点, 孟戈德<br>北卡纳拉, 卡纳塔克邦 581411, 印度<br>info@gadengungru.com"
+    "address": "P.O. 藏人定居点, 孟戈德<br>北卡纳拉, 卡纳塔克邦 581411, 印度<br>info@gadengungru.com",
+    "demo": "演示版 — 不处理任何实际付款",
+    "demoBanner": "演示版 — 无实际付款",
+    "builtWith": "使用 AlpacApps 基础设施构建",
+    "poweredBy": "由 Claude 驱动"
   }
 }

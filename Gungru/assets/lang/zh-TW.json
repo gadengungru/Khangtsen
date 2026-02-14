@@ -147,6 +147,10 @@
   },
   "footer": {
     "name": "甘丹赤孜功如康村寺院",
-    "address": "西藏殖民地郵政局，芒果德<br>北卡納拉，卡納塔克邦 581411，印度<br>info@gadengungru.com"
+    "address": "西藏殖民地郵政局，芒果德<br>北卡納拉，卡納塔克邦 581411，印度<br>info@gadengungru.com",
+    "demo": "示範版 — 不會處理任何真實付款",
+    "demoBanner": "示範版 — 無真實付款",
+    "builtWith": "使用 AlpacApps 基礎架構建構",
+    "poweredBy": "由 Claude 驅動"
   }
 }

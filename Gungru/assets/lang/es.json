@@ -147,6 +147,10 @@
   },
   "footer": {
     "name": "Monasterio Gaden Shartse Gungru Khangtsen",
-    "address": "P.O. Colonia tibetana, Mundgod<br>N. Kanara, Karnataka 581411, India<br>info@gadengungru.com"
+    "address": "P.O. Colonia tibetana, Mundgod<br>N. Kanara, Karnataka 581411, India<br>info@gadengungru.com",
+    "demo": "Demostración — No se procesan pagos reales",
+    "demoBanner": "Demo — Sin pagos reales",
+    "builtWith": "Construido con infraestructura AlpacApps",
+    "poweredBy": "Impulsado por Claude"
   }
 }

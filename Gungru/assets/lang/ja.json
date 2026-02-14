@@ -147,6 +147,10 @@
   },
   "footer": {
     "name": "ガンデン・シャルツェ・グングル・カンツェン僧院",
-    "address": "P.O. チベット人居住区、ムンドゴッド<br>N.カナラ、カルナータカ州 581411、インド<br>info@gadengungru.com"
+    "address": "P.O. チベット人居住区、ムンドゴッド<br>N.カナラ、カルナータカ州 581411、インド<br>info@gadengungru.com",
+    "demo": "デモ — 実際の決済は処理されません",
+    "demoBanner": "デモ — 実際の決済なし",
+    "builtWith": "AlpacApps インフラで構築",
+    "poweredBy": "Claude 搭載"
   }
 }

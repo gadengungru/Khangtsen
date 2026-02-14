@@ -147,6 +147,10 @@
   },
   "footer": {
     "name": "Tu viện Gaden Shartse Gungru Khangtsen",
-    "address": "P.O. Khu định cư Tây Tạng, Mundgod<br>B. Kanara, Karnataka 581411, Ấn Độ<br>info@gadengungru.com"
+    "address": "P.O. Khu định cư Tây Tạng, Mundgod<br>B. Kanara, Karnataka 581411, Ấn Độ<br>info@gadengungru.com",
+    "demo": "Bản demo — Không có khoản thanh toán thực nào được xử lý",
+    "demoBanner": "Bản demo — Không thanh toán thực",
+    "builtWith": "Xây dựng với Cơ sở hạ tầng AlpacApps",
+    "poweredBy": "Được hỗ trợ bởi Claude"
   }
 }
