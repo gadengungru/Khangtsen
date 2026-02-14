@@ -7,7 +7,9 @@
     "home": "首页",
     "about": "关于我们",
     "programs": "项目",
-    "contact": "联系我们"
+    "contact": "联系我们",
+    "signIn": "登录",
+    "intranet": "内部网"
   },
   "home": {
     "hero": {

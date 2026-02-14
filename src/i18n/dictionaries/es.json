@@ -7,7 +7,9 @@
     "home": "Inicio",
     "about": "Acerca de",
     "programs": "Programas",
-    "contact": "Contacto"
+    "contact": "Contacto",
+    "signIn": "Iniciar sesión",
+    "intranet": "Intranet"
   },
   "home": {
     "hero": {

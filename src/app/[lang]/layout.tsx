@@ -3,6 +3,7 @@ import { i18n, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
+import { AuthProvider } from "@/contexts/auth-context";
 
 export async function generateStaticParams() {
   return i18n.locales.map((locale) => ({ lang: locale }));
@@ -44,9 +45,11 @@ export default async function LangLayout({
 
   return (
     <div style={{ fontFamily: fontFamilyMap[lang] }} className="flex flex-col min-h-screen">
-      <Navbar dict={dict} lang={lang} />
-      <main className="flex-1">{children}</main>
-      <Footer dict={dict} />
+      <AuthProvider>
+        <Navbar dict={dict} lang={lang} />
+        <main className="flex-1">{children}</main>
+        <Footer dict={dict} />
+      </AuthProvider>
     </div>
   );
 }

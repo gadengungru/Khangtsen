@@ -7,7 +7,9 @@
     "home": "Home",
     "about": "About",
     "programs": "Programs",
-    "contact": "Contact"
+    "contact": "Contact",
+    "signIn": "Sign In",
+    "intranet": "Intranet"
   },
   "home": {
     "hero": {

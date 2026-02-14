@@ -8,6 +8,8 @@ export interface Dictionary {
     about: string;
     programs: string;
     contact: string;
+    signIn: string;
+    intranet: string;
   };
   home: {
     hero: {

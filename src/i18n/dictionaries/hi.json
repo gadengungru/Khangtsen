@@ -7,7 +7,9 @@
     "home": "होम",
     "about": "हमारे बारे में",
     "programs": "कार्यक्रम",
-    "contact": "संपर्क"
+    "contact": "संपर्क",
+    "signIn": "साइन इन",
+    "intranet": "इंट्रानेट"
   },
   "home": {
     "hero": {

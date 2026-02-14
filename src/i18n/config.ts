@@ -5,6 +5,8 @@ export const i18n = {
 
 export type Locale = (typeof i18n)["locales"][number];
 
+export const INTRANET_LOCALES: Locale[] = ["en", "bo"];
+
 export const localeNames: Record<Locale, string> = {
   en: "English",
   bo: "བོད་སྐད་",

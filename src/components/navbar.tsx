@@ -3,13 +3,23 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { Dictionary } from "@/i18n/types";
-import type { Locale } from "@/i18n/config";
+import { type Locale, INTRANET_LOCALES } from "@/i18n/config";
 import { LanguageSwitcher } from "./language-switcher";
+import { useAuth } from "@/contexts/auth-context";
 import { useState } from "react";
 
 export function Navbar({ dict, lang }: { dict: Dictionary; lang: Locale }) {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const { user, loading } = useAuth();
+
+  // Intranet only supports EN and BO - fall back to EN for other locales
+  const intranetLang = INTRANET_LOCALES.includes(lang) ? lang : "en";
+
+  // Hide public navbar on intranet pages (intranet has its own header)
+  if (pathname.includes("/intranet")) {
+    return null;
+  }
 
   const links = [
     { href: `/${lang}`, label: dict.nav.home },
@@ -39,6 +49,23 @@ export function Navbar({ dict, lang }: { dict: Dictionary; lang: Locale }) {
             </Link>
           ))}
           <LanguageSwitcher lang={lang} />
+          {!loading && (
+            user ? (
+              <Link
+                href={`/${intranetLang}/intranet`}
+                className="text-sm font-medium px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg transition-colors"
+              >
+                {dict.nav.intranet}
+              </Link>
+            ) : (
+              <Link
+                href={`/${intranetLang}/signin`}
+                className="text-sm font-medium px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg transition-colors"
+              >
+                {dict.nav.signIn}
+              </Link>
+            )
+          )}
         </div>
 
         {/* Mobile toggle */}
@@ -75,6 +102,27 @@ export function Navbar({ dict, lang }: { dict: Dictionary; lang: Locale }) {
           <div className="pt-2">
             <LanguageSwitcher lang={lang} />
           </div>
+          {!loading && (
+            <div className="pt-2">
+              {user ? (
+                <Link
+                  href={`/${intranetLang}/intranet`}
+                  onClick={() => setMenuOpen(false)}
+                  className="block text-sm font-medium text-amber-600"
+                >
+                  {dict.nav.intranet}
+                </Link>
+              ) : (
+                <Link
+                  href={`/${intranetLang}/signin`}
+                  onClick={() => setMenuOpen(false)}
+                  className="block text-sm font-medium text-amber-600"
+                >
+                  {dict.nav.signIn}
+                </Link>
+              )}
+            </div>
+          )}
         </div>
       )}
     </nav>
