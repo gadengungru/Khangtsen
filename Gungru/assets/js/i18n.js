@@ -14,21 +14,63 @@
     var currentLang = localStorage.getItem('gungru-lang') || DEFAULT_LANG;
     var dictCache = {};
 
-    // Build language picker HTML
+    // Build dropdown picker
     function buildPicker() {
-        var picker = document.createElement('div');
-        picker.className = 'lang-picker';
-        Object.keys(LANGS).forEach(function(code) {
-            var btn = document.createElement('button');
-            btn.className = 'lang-picker__btn' + (code === currentLang ? ' lang-picker__btn--active' : '');
-            btn.setAttribute('data-lang', code);
-            btn.setAttribute('title', LANGS[code].name);
-            btn.setAttribute('aria-label', 'Switch to ' + LANGS[code].name);
-            btn.textContent = LANGS[code].flag;
-            btn.addEventListener('click', function() { switchLang(code); });
-            picker.appendChild(btn);
+        var wrapper = document.createElement('div');
+        wrapper.className = 'lang-picker';
+
+        // Toggle button
+        var toggle = document.createElement('button');
+        toggle.className = 'lang-picker__toggle';
+        toggle.setAttribute('aria-haspopup', 'listbox');
+        toggle.setAttribute('aria-expanded', 'false');
+        updateToggle(toggle);
+        toggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            var open = wrapper.classList.toggle('lang-picker--open');
+            toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
         });
-        return picker;
+
+        // Dropdown menu
+        var menu = document.createElement('div');
+        menu.className = 'lang-picker__menu';
+        menu.setAttribute('role', 'listbox');
+
+        Object.keys(LANGS).forEach(function(code) {
+            var item = document.createElement('button');
+            item.className = 'lang-picker__item' + (code === currentLang ? ' lang-picker__item--active' : '');
+            item.setAttribute('role', 'option');
+            item.setAttribute('data-lang', code);
+            item.setAttribute('aria-selected', code === currentLang ? 'true' : 'false');
+            item.innerHTML = '<span class="lang-picker__item-flag">' + LANGS[code].flag + '</span>' +
+                '<span class="lang-picker__item-name">' + LANGS[code].name + '</span>';
+            item.addEventListener('click', function(e) {
+                e.stopPropagation();
+                switchLang(code);
+                wrapper.classList.remove('lang-picker--open');
+                toggle.setAttribute('aria-expanded', 'false');
+            });
+            menu.appendChild(item);
+        });
+
+        wrapper.appendChild(toggle);
+        wrapper.appendChild(menu);
+
+        // Close on outside click
+        document.addEventListener('click', function() {
+            wrapper.classList.remove('lang-picker--open');
+            toggle.setAttribute('aria-expanded', 'false');
+        });
+
+        return wrapper;
+    }
+
+    function updateToggle(toggle) {
+        var lang = LANGS[currentLang] || LANGS[DEFAULT_LANG];
+        toggle.innerHTML = '<span class="lang-picker__toggle-flag">' + lang.flag + '</span>' +
+            '<span class="lang-picker__toggle-label">Language</span>' +
+            '<span class="lang-picker__toggle-arrow">&#9662;</span>';
+        toggle.setAttribute('title', 'Language: ' + lang.name);
     }
 
     // Insert picker into navbar
@@ -42,8 +84,6 @@
     // Load dictionary
     function loadDict(lang) {
         if (dictCache[lang]) return Promise.resolve(dictCache[lang]);
-        // Resolve path relative to current page
-        var base = document.querySelector('link[rel="stylesheet"]');
         var prefix = '../assets/lang/';
         return fetch(prefix + lang + '.json')
             .then(function(r) { return r.json(); })
@@ -61,7 +101,6 @@
             var key = el.getAttribute('data-i18n');
             var val = getNestedValue(dict, key);
             if (val) {
-                // Check if element has data-i18n-attr (for attributes like placeholder, title, aria-label)
                 var attr = el.getAttribute('data-i18n-attr');
                 if (attr) {
                     el.setAttribute(attr, val);
@@ -70,8 +109,6 @@
                 }
             }
         });
-
-        // Update html lang attribute
         document.documentElement.lang = currentLang;
     }
 
@@ -80,14 +117,19 @@
         currentLang = lang;
         localStorage.setItem('gungru-lang', lang);
 
-        // Update active button
-        document.querySelectorAll('.lang-picker__btn').forEach(function(btn) {
-            btn.classList.toggle('lang-picker__btn--active', btn.getAttribute('data-lang') === lang);
+        // Update toggle button
+        var toggle = document.querySelector('.lang-picker__toggle');
+        if (toggle) updateToggle(toggle);
+
+        // Update active item
+        document.querySelectorAll('.lang-picker__item').forEach(function(item) {
+            var isActive = item.getAttribute('data-lang') === lang;
+            item.classList.toggle('lang-picker__item--active', isActive);
+            item.setAttribute('aria-selected', isActive ? 'true' : 'false');
         });
 
         // Load and apply
         loadDict(lang).then(applyTranslations).catch(function() {
-            // Fallback to English
             if (lang !== DEFAULT_LANG) {
                 loadDict(DEFAULT_LANG).then(applyTranslations);
             }
