@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dharma Guardians — Buddhist Trading Card Game</title>
+    <meta name="description" content="Collect wisdom, not victories. A Buddhist trading card game rooted in the Gelug tradition of Gaden Shartse Gungru Khangtsen Monastery.">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="cards.css">
+</head>
+<body class="cards-body">
+
+    <!-- Navigation -->
+    <nav class="site-nav" id="siteNav">
+        <div class="site-nav__inner">
+            <a href="../en/index.html" class="site-nav__brand">
+                <img src="../assets/images/logo.png" alt="Gungru Khangtsen">
+                <span>Gungru Khangtsen</span>
+            </a>
+            <button class="nav-toggle" onclick="document.querySelector('.site-nav__links').classList.toggle('open')" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="site-nav__links">
+                <li><a href="../en/index.html">Home</a></li>
+                <li><a href="../en/general-understanding.html">General Understanding</a></li>
+                <li><a href="../mandala-game/index.html">Sacred Sands</a></li>
+                <li><a href="index.html" class="active">Dharma Guardians</a></li>
+                <li><a href="../en/donate.html" class="site-nav__cta">
+                    <span>&#9825;</span>
+                    <span>Donate</span>
+                </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="cards-hero">
+        <span class="cards-hero__icon">&#9784;</span>
+        <h1 class="cards-hero__title">Dharma Guardians</h1>
+        <p class="cards-hero__subtitle">
+            Collect wisdom, not victories. A Buddhist trading card game rooted in the Gelug tradition
+            of Gaden Shartse Gungru Khangtsen.
+        </p>
+        <div class="cards-hero__stats">
+            <div class="hero-stat">
+                <span class="hero-stat__number" id="totalCards">20</span>
+                <span class="hero-stat__label">Cards</span>
+            </div>
+            <div class="hero-stat">
+                <span class="hero-stat__number">5</span>
+                <span class="hero-stat__label">Categories</span>
+            </div>
+            <div class="hero-stat">
+                <span class="hero-stat__number">4</span>
+                <span class="hero-stat__label">Rarities</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Collection Progress -->
+    <div class="collection-progress">
+        <div class="progress-card">
+            <span class="progress-card__label">Wisdom Collected</span>
+            <div class="progress-card__bar">
+                <div class="progress-card__fill" id="progressFill"></div>
+            </div>
+            <span class="progress-card__count" id="progressCount">0 / 20</span>
+        </div>
+    </div>
+
+    <!-- How to Play -->
+    <section class="how-to-play">
+        <h2 class="how-to-play__title">How to Play</h2>
+        <div class="how-to-play__grid">
+            <div class="how-step">
+                <span class="how-step__number">1</span>
+                <h3 class="how-step__title">Browse</h3>
+                <p class="how-step__text">Explore cards across five categories drawn from authentic Gelug Buddhist tradition.</p>
+            </div>
+            <div class="how-step">
+                <span class="how-step__number">2</span>
+                <h3 class="how-step__title">Discover</h3>
+                <p class="how-step__text">Click any card to flip it and read the teaching on the back. Each card is a lesson.</p>
+            </div>
+            <div class="how-step">
+                <span class="how-step__number">3</span>
+                <h3 class="how-step__title">Connect</h3>
+                <p class="how-step__text">Follow the related cards to see how teachings interconnect across the tradition.</p>
+            </div>
+            <div class="how-step">
+                <span class="how-step__number">4</span>
+                <h3 class="how-step__title">Collect</h3>
+                <p class="how-step__text">Track your progress. Complete all categories to unlock the full wisdom of the Dharma.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Card of the Day -->
+    <section class="featured-section" id="featuredSection">
+        <div class="featured-card-wrapper">
+            <div class="featured-label">
+                <div class="featured-label__text">Featured Card</div>
+                <div class="featured-label__impermanence">Changes daily &mdash; a teaching in impermanence</div>
+            </div>
+            <div id="featuredCardSlot"></div>
+            <div class="featured-teaching" id="featuredTeaching"></div>
+        </div>
+    </section>
+
+    <!-- Filter Tabs -->
+    <div class="filter-section">
+        <div class="filter-tabs" id="filterTabs">
+            <button class="filter-tab filter-tab--active" data-filter="all">All Cards</button>
+            <button class="filter-tab" data-filter="buddha">
+                <span class="filter-tab__dot" style="background:#D4A843"></span>Buddha
+            </button>
+            <button class="filter-tab" data-filter="teaching">
+                <span class="filter-tab__dot" style="background:#7B1A2C"></span>Teaching
+            </button>
+            <button class="filter-tab" data-filter="art">
+                <span class="filter-tab__dot" style="background:#2B5C8A"></span>Sacred Art
+            </button>
+            <button class="filter-tab" data-filter="place">
+                <span class="filter-tab__dot" style="background:#2D6A4F"></span>Place
+            </button>
+            <button class="filter-tab" data-filter="monastic">
+                <span class="filter-tab__dot" style="background:#E8941A"></span>Monastic
+            </button>
+        </div>
+    </div>
+
+    <!-- Card Grid -->
+    <div class="card-grid" id="cardGrid"></div>
+
+    <!-- Category Progress -->
+    <section class="category-section">
+        <h2 class="category-section__title">Category Progress</h2>
+        <div class="category-grid" id="categoryGrid"></div>
+    </section>
+
+    <!-- Card Detail Modal -->
+    <div class="card-modal-overlay" id="cardModal">
+        <div class="card-modal" id="cardModalContent"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <span class="footer-wheel">&#9784;</span>
+            <h3 class="footer-name">Gaden Shartse Gungru Khangtsen Monastery</h3>
+            <div class="footer-address">
+                P.O. Tibetan Colony, Mundgod<br>
+                N. Kanara, Karnataka 581411, India<br>
+                info@gadengungru.com
+            </div>
+            <div class="footer-links">
+                <a href="../en/index.html">Home</a>
+                <a href="../en/general-understanding.html">General Understanding</a>
+                <a href="../en/donate.html">Donate</a>
+            </div>
+            <div class="footer-badges">
+                <div class="footer-badge">
+                    <span>&#128421;</span>
+                    <span>Built with AlpacApps Infrastructure</span>
+                </div>
+                <div class="footer-badge">
+                    <span>&#10024;</span>
+                    <span>Powered by Claude</span>
+                </div>
+            </div>
+            <div class="footer-version"></div>
+        </div>
+    </footer>
+
+    <script src="cards-data.js"></script>
+    <script>
+    (function() {
+        'use strict';
+
+        // State
+        var viewedCards = JSON.parse(localStorage.getItem('dharma_viewed') || '[]');
+        var currentFilter = 'all';
+
+        // ── Utility ──
+        function saveViewed() {
+            localStorage.setItem('dharma_viewed', JSON.stringify(viewedCards));
+        }
+
+        function markViewed(cardId) {
+            if (viewedCards.indexOf(cardId) === -1) {
+                viewedCards.push(cardId);
+                saveViewed();
+                updateProgress();
+            }
+        }
+
+        function isViewed(cardId) {
+            return viewedCards.indexOf(cardId) !== -1;
+        }
+
+        // ── Render a Card Element ──
+        function createCardElement(card) {
+            var el = document.createElement('div');
+            el.className = 'dharma-card card-type--' + card.category;
+            el.dataset.category = card.category;
+            el.dataset.id = card.id;
+
+            var rarityClass = 'card-front__rarity';
+            if (card.rarity === 'legendary') rarityClass += ' card-front__rarity--legendary';
+            else if (card.rarity === 'rare') rarityClass += ' card-front__rarity--rare';
+            else if (card.rarity === 'uncommon') rarityClass += ' card-front__rarity--uncommon';
+
+            var catInfo = DharmaCards.CATEGORIES[card.category];
+
+            el.innerHTML =
+                '<div class="card-inner">' +
+                    // Front
+                    '<div class="card-front">' +
+                        '<div class="card-front__border"></div>' +
+                        '<div class="card-front__header">' +
+                            '<span class="card-front__name">' + card.name + '</span>' +
+                            '<span class="' + rarityClass + '">' + card.rarity + '</span>' +
+                        '</div>' +
+                        '<div class="card-front__art">' +
+                            '<div class="card-front__art-bg"></div>' +
+                            '<span class="card-front__art-placeholder">' + card.emoji + '</span>' +
+                        '</div>' +
+                        '<div class="card-front__stats">' +
+                            '<div class="card-stat"><span class="card-stat__value">' + card.wisdom + '</span><span class="card-stat__label">Wisdom</span></div>' +
+                            '<div class="card-stat"><span class="card-stat__value">' + card.compassion + '</span><span class="card-stat__label">Compassion</span></div>' +
+                            '<div class="card-stat"><span class="card-stat__value">' + card.merit + '</span><span class="card-stat__label">Merit</span></div>' +
+                        '</div>' +
+                        '<div class="card-front__info">' +
+                            '<div class="card-front__type" style="color:' + catInfo.color + '">' + catInfo.icon + ' ' + catInfo.name + '</div>' +
+                            '<div class="card-front__desc">' + card.shortDesc + '</div>' +
+                        '</div>' +
+                    '</div>' +
+                    // Back
+                    '<div class="card-back">' +
+                        '<div class="card-back__header">' +
+                            '<div>' +
+                                '<div class="card-back__name">' + card.name + '</div>' +
+                                '<div style="font-size:0.7rem;opacity:0.5;margin-top:2px;">' + (card.subtitle || '') + '</div>' +
+                            '</div>' +
+                            '<span class="card-back__close">tap to close</span>' +
+                        '</div>' +
+                        '<div class="card-back__teaching">' +
+                            '<p>' + card.teaching + '</p>' +
+                            (card.quote ? '<div class="card-back__quote">' + card.quote + '</div>' : '') +
+                        '</div>' +
+                        '<div class="card-back__related">' +
+                            '<div class="card-back__related-label">Related Cards</div>' +
+                            '<div class="card-back__related-tags">' +
+                                card.related.map(function(rid) {
+                                    var rc = DharmaCards.getCardById(rid);
+                                    return rc ? '<span class="card-back__tag" data-goto="' + rid + '">' + rc.name + '</span>' : '';
+                                }).join('') +
+                            '</div>' +
+                        '</div>' +
+                    '</div>' +
+                '</div>';
+
+            // Click to flip
+            el.addEventListener('click', function(e) {
+                // If clicking a related tag, open that card instead
+                if (e.target.classList.contains('card-back__tag')) {
+                    e.stopPropagation();
+                    var gotoId = e.target.dataset.goto;
+                    openModal(gotoId);
+                    return;
+                }
+                el.classList.toggle('flipped');
+                if (el.classList.contains('flipped')) {
+                    markViewed(card.id);
+                }
+            });
+
+            // Double-click opens modal
+            el.addEventListener('dblclick', function(e) {
+                e.preventDefault();
+                openModal(card.id);
+            });
+
+            return el;
+        }
+
+        // ── Render Grid ──
+        function renderGrid() {
+            var grid = document.getElementById('cardGrid');
+            grid.innerHTML = '';
+            DharmaCards.CARDS.forEach(function(card) {
+                var el = createCardElement(card);
+                if (currentFilter !== 'all' && card.category !== currentFilter) {
+                    el.classList.add('hidden');
+                }
+                grid.appendChild(el);
+            });
+        }
+
+        // ── Filter ──
+        function setupFilters() {
+            var tabs = document.querySelectorAll('.filter-tab');
+            tabs.forEach(function(tab) {
+                tab.addEventListener('click', function() {
+                    tabs.forEach(function(t) { t.classList.remove('filter-tab--active'); });
+                    tab.classList.add('filter-tab--active');
+                    currentFilter = tab.dataset.filter;
+
+                    var cards = document.querySelectorAll('.dharma-card');
+                    cards.forEach(function(c) {
+                        if (currentFilter === 'all' || c.dataset.category === currentFilter) {
+                            c.classList.remove('hidden');
+                        } else {
+                            c.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+        }
+
+        // ── Progress ──
+        function updateProgress() {
+            var total = DharmaCards.getTotalCards();
+            var viewed = viewedCards.length;
+            var pct = Math.round((viewed / total) * 100);
+
+            document.getElementById('progressFill').style.width = pct + '%';
+            document.getElementById('progressCount').textContent = viewed + ' / ' + total;
+
+            // Category progress
+            Object.keys(DharmaCards.CATEGORIES).forEach(function(cat) {
+                var catCards = DharmaCards.getCardsByCategory(cat);
+                var catViewed = catCards.filter(function(c) { return isViewed(c.id); }).length;
+                var fill = document.querySelector('.cat-fill--' + cat);
+                if (fill) {
+                    fill.style.width = Math.round((catViewed / catCards.length) * 100) + '%';
+                }
+                var count = document.querySelector('.cat-count--' + cat);
+                if (count) {
+                    count.textContent = catViewed + ' / ' + catCards.length + ' discovered';
+                }
+            });
+        }
+
+        // ── Category Grid ──
+        function renderCategories() {
+            var grid = document.getElementById('categoryGrid');
+            grid.innerHTML = '';
+            var catColors = {
+                buddha: '#D4A843',
+                teaching: '#7B1A2C',
+                art: '#2B5C8A',
+                place: '#2D6A4F',
+                monastic: '#E8941A'
+            };
+
+            Object.keys(DharmaCards.CATEGORIES).forEach(function(cat) {
+                var info = DharmaCards.CATEGORIES[cat];
+                var catCards = DharmaCards.getCardsByCategory(cat);
+                var catViewed = catCards.filter(function(c) { return isViewed(c.id); }).length;
+                var div = document.createElement('div');
+                div.className = 'category-card';
+                div.innerHTML =
+                    '<span class="category-card__icon">' + info.icon + '</span>' +
+                    '<div class="category-card__name" style="color:' + info.color + '">' + info.name + '</div>' +
+                    '<div class="category-card__count cat-count--' + cat + '">' + catViewed + ' / ' + catCards.length + ' discovered</div>' +
+                    '<div class="category-card__bar">' +
+                        '<div class="category-card__fill cat-fill--' + cat + '" style="background:' + catColors[cat] + ';width:' + Math.round((catViewed / catCards.length) * 100) + '%"></div>' +
+                    '</div>';
+
+                div.addEventListener('click', function() {
+                    // Filter to this category
+                    var tabs = document.querySelectorAll('.filter-tab');
+                    tabs.forEach(function(t) {
+                        t.classList.remove('filter-tab--active');
+                        if (t.dataset.filter === cat) t.classList.add('filter-tab--active');
+                    });
+                    currentFilter = cat;
+                    var cards = document.querySelectorAll('.dharma-card');
+                    cards.forEach(function(c) {
+                        if (c.dataset.category === cat) {
+                            c.classList.remove('hidden');
+                        } else {
+                            c.classList.add('hidden');
+                        }
+                    });
+                    document.getElementById('filterTabs').scrollIntoView({ behavior: 'smooth' });
+                });
+
+                grid.appendChild(div);
+            });
+        }
+
+        // ── Featured Card (changes daily) ──
+        function renderFeatured() {
+            var dayIndex = Math.floor(Date.now() / 86400000) % DharmaCards.CARDS.length;
+            var card = DharmaCards.CARDS[dayIndex];
+            var catInfo = DharmaCards.CATEGORIES[card.category];
+
+            var slot = document.getElementById('featuredCardSlot');
+            var cardEl = createCardElement(card);
+            slot.innerHTML = '';
+            slot.appendChild(cardEl);
+
+            document.getElementById('featuredTeaching').innerHTML =
+                '<div class="featured-teaching__title">' + card.name + '</div>' +
+                '<p class="featured-teaching__text">' + card.shortDesc + '</p>' +
+                '<p class="featured-teaching__text" style="margin-top:12px;font-style:italic;opacity:0.6">' +
+                    catInfo.icon + ' ' + catInfo.name + ' &middot; ' + card.rarity +
+                '</p>';
+        }
+
+        // ── Modal ──
+        function openModal(cardId) {
+            var card = DharmaCards.getCardById(cardId);
+            if (!card) return;
+
+            markViewed(card.id);
+            var catInfo = DharmaCards.CATEGORIES[card.category];
+            var modal = document.getElementById('cardModalContent');
+
+            modal.innerHTML =
+                '<div class="card-modal__header">' +
+                    '<div>' +
+                        '<div class="card-modal__type" style="color:' + catInfo.color + '">' + catInfo.icon + ' ' + catInfo.name + '</div>' +
+                        '<div class="card-modal__name">' + card.name + '</div>' +
+                        '<span class="card-modal__rarity">' + card.rarity + '</span>' +
+                    '</div>' +
+                    '<button class="card-modal__close" id="modalClose">&times;</button>' +
+                '</div>' +
+                '<div class="card-modal__art card-type--' + card.category + '" style="background:linear-gradient(135deg,#F5F0E8,#EDE6D8)">' +
+                    '<span style="font-size:5rem">' + card.emoji + '</span>' +
+                '</div>' +
+                '<div class="card-modal__stats">' +
+                    '<div class="modal-stat"><span class="modal-stat__value">' + card.wisdom + '</span><span class="modal-stat__label">Wisdom</span></div>' +
+                    '<div class="modal-stat"><span class="modal-stat__value">' + card.compassion + '</span><span class="modal-stat__label">Compassion</span></div>' +
+                    '<div class="modal-stat"><span class="modal-stat__value">' + card.merit + '</span><span class="modal-stat__label">Merit</span></div>' +
+                '</div>' +
+                '<div class="card-modal__teaching">' +
+                    '<p>' + card.teaching + '</p>' +
+                    (card.quote ? '<div class="card-modal__quote">' + card.quote + '</div>' : '') +
+                '</div>' +
+                '<div class="card-modal__related">' +
+                    '<div class="card-modal__related-label">Related Cards</div>' +
+                    '<div class="card-modal__related-tags">' +
+                        card.related.map(function(rid) {
+                            var rc = DharmaCards.getCardById(rid);
+                            return rc ? '<button class="modal-tag" data-goto="' + rid + '">' + rc.name + '</button>' : '';
+                        }).join('') +
+                    '</div>' +
+                '</div>';
+
+            // Events
+            document.getElementById('modalClose').addEventListener('click', closeModal);
+            modal.querySelectorAll('.modal-tag').forEach(function(tag) {
+                tag.addEventListener('click', function() {
+                    openModal(tag.dataset.goto);
+                });
+            });
+
+            var overlay = document.getElementById('cardModal');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('cardModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.getElementById('cardModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // ── Navbar scroll ──
+        var nav = document.getElementById('siteNav');
+        window.addEventListener('scroll', function() {
+            nav.classList.toggle('scrolled', window.scrollY > 20);
+        });
+
+        // ── Init ──
+        renderGrid();
+        setupFilters();
+        renderCategories();
+        renderFeatured();
+        updateProgress();
+
+        // Update total count in hero
+        document.getElementById('totalCards').textContent = DharmaCards.getTotalCards();
+    })();
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/version.js"></script>
+</body>
+</html>
