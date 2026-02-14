@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Sacred Sands — Mandala Creation</title>
+    <meta name="description" content="Create a sacred sand mandala in the Tibetan Buddhist tradition. Learn the ancient art of sand mandala creation from the monks of Gaden Shartse Gungru Khangtsen.">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="mandala.css">
+</head>
+<body class="mandala-body">
+
+    <!-- Navigation -->
+    <nav class="site-nav" id="siteNav">
+        <div class="site-nav__inner">
+            <a href="../en/index.html" class="site-nav__brand">
+                <img src="../assets/images/logo.png" alt="Gungru Khangtsen">
+                <span>Gungru Khangtsen</span>
+            </a>
+            <button class="nav-toggle" onclick="document.querySelector('.site-nav__links').classList.toggle('open')" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="site-nav__links">
+                <li><a href="../en/index.html">Home</a></li>
+                <li><a href="../en/general-understanding.html">General Understanding</a></li>
+                <li><a href="index.html" class="active">Sacred Sands</a></li>
+                <li><a href="../en/donate.html" class="site-nav__cta">
+                    <span>&#9825;</span>
+                    <span>Donate</span>
+                </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Game Container -->
+    <div id="gameContainer" class="game-container">
+
+        <!-- Phase 0: Title / Start Screen -->
+        <div id="startScreen" class="game-screen game-screen--active">
+            <div class="start-content">
+                <div class="start-mandala-icon">
+                    <svg viewBox="0 0 200 200" width="120" height="120">
+                        <circle cx="100" cy="100" r="95" fill="none" stroke="var(--gold)" stroke-width="1" opacity="0.3"/>
+                        <circle cx="100" cy="100" r="75" fill="none" stroke="var(--gold)" stroke-width="1" opacity="0.4"/>
+                        <circle cx="100" cy="100" r="55" fill="none" stroke="var(--maroon)" stroke-width="1.5" opacity="0.5"/>
+                        <circle cx="100" cy="100" r="35" fill="none" stroke="var(--maroon)" stroke-width="1.5" opacity="0.6"/>
+                        <circle cx="100" cy="100" r="15" fill="var(--gold)" opacity="0.3"/>
+                        <line x1="100" y1="5" x2="100" y2="195" stroke="var(--gold)" stroke-width="0.5" opacity="0.2"/>
+                        <line x1="5" y1="100" x2="195" y2="100" stroke="var(--gold)" stroke-width="0.5" opacity="0.2"/>
+                        <line x1="30" y1="30" x2="170" y2="170" stroke="var(--gold)" stroke-width="0.5" opacity="0.15"/>
+                        <line x1="170" y1="30" x2="30" y2="170" stroke="var(--gold)" stroke-width="0.5" opacity="0.15"/>
+                    </svg>
+                </div>
+                <h1 class="start-title">Sacred Sands</h1>
+                <p class="start-subtitle">The Art of the Sand Mandala</p>
+                <p class="start-desc">
+                    Step into the ancient practice of Tibetan sand mandala creation.
+                    Follow the same process monks have used for centuries &mdash;
+                    from consecrating the space to placing each grain of colored sand,
+                    and finally, the profound act of releasing your creation.
+                </p>
+                <button class="btn btn-gold start-btn" id="startBtn">Begin the Practice</button>
+                <p class="start-tradition">A practice of Gaden Shartse Gungru Khangtsen Monastery</p>
+            </div>
+        </div>
+
+        <!-- Phase 1: Intention Setting -->
+        <div id="intentionScreen" class="game-screen">
+            <div class="intention-content">
+                <div class="teaching-moment teaching-moment--top">
+                    <p class="teaching-text">"Before the first grain of sand is placed, the monks gather to purify the space and set their intention. The mandala is not merely art &mdash; it is a prayer made visible."</p>
+                </div>
+                <h2 class="phase-title">Set Your Intention</h2>
+                <p class="phase-desc">Each mandala serves a purpose. What do you wish to cultivate?</p>
+                <div class="intention-grid">
+                    <button class="intention-card" data-intention="healing" data-mandala="medicine-buddha">
+                        <span class="intention-icon">&#128154;</span>
+                        <h3>Healing</h3>
+                        <p>Medicine Buddha Mandala</p>
+                        <span class="intention-detail">For healing of body, mind, and spirit</span>
+                    </button>
+                    <button class="intention-card" data-intention="compassion" data-mandala="chenrezig">
+                        <span class="intention-icon">&#128156;</span>
+                        <h3>Compassion</h3>
+                        <p>Chenrezig Mandala</p>
+                        <span class="intention-detail">For the awakening of universal compassion</span>
+                    </button>
+                    <button class="intention-card" data-intention="peace" data-mandala="amitayus">
+                        <span class="intention-icon">&#128153;</span>
+                        <h3>Peace</h3>
+                        <p>Amitayus Mandala</p>
+                        <span class="intention-detail">For longevity and inner peace</span>
+                    </button>
+                    <button class="intention-card" data-intention="wisdom" data-mandala="kalachakra">
+                        <span class="intention-icon">&#128155;</span>
+                        <h3>Wisdom</h3>
+                        <p>Kalachakra Mandala</p>
+                        <span class="intention-detail">The Wheel of Time &mdash; most complex</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 2: Consecration -->
+        <div id="consecrationScreen" class="game-screen">
+            <div class="consecration-content">
+                <h2 class="phase-title">Consecrate the Space</h2>
+                <p class="phase-desc">Light the butter lamps at the four directions to purify the mandala platform.</p>
+                <div class="consecration-platform">
+                    <canvas id="consecrateCanvas" width="400" height="400"></canvas>
+                    <div class="lamp lamp--north" data-dir="north" data-lit="false">
+                        <span class="lamp-icon">&#128367;</span>
+                        <span class="lamp-label">North</span>
+                    </div>
+                    <div class="lamp lamp--east" data-dir="east" data-lit="false">
+                        <span class="lamp-icon">&#128367;</span>
+                        <span class="lamp-label">East</span>
+                    </div>
+                    <div class="lamp lamp--south" data-dir="south" data-lit="false">
+                        <span class="lamp-icon">&#128367;</span>
+                        <span class="lamp-label">South</span>
+                    </div>
+                    <div class="lamp lamp--west" data-dir="west" data-lit="false">
+                        <span class="lamp-icon">&#128367;</span>
+                        <span class="lamp-label">West</span>
+                    </div>
+                </div>
+                <div class="consecration-teaching teaching-moment">
+                    <p class="teaching-text">"The butter lamp represents the light of wisdom dispelling the darkness of ignorance. Each direction is guarded by a Buddha who transforms a specific poison of the mind."</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 3: Main Game — Sand Placement -->
+        <div id="gameScreen" class="game-screen">
+            <!-- Top HUD -->
+            <div class="game-hud">
+                <div class="hud-left">
+                    <div class="mandala-name" id="mandalaName">Medicine Buddha Mandala</div>
+                    <div class="layer-indicator">
+                        Layer: <span id="currentLayer">1</span> / <span id="totalLayers">5</span>
+                        — <span id="layerName">Central Seed</span>
+                    </div>
+                </div>
+                <div class="hud-center">
+                    <div class="mindfulness-meter">
+                        <span class="mindfulness-label">Mindfulness</span>
+                        <div class="mindfulness-bar">
+                            <div class="mindfulness-fill" id="mindfulnessFill" style="width: 70%"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hud-right">
+                    <div class="merit-display">
+                        <span class="merit-icon">&#10024;</span>
+                        <span id="meritCount">0</span> Merit
+                    </div>
+                    <button class="hud-btn" id="teachingBtn" title="View Teaching">&#128214;</button>
+                    <button class="hud-btn" id="settingsBtn" title="Settings">&#9881;</button>
+                </div>
+            </div>
+
+            <!-- Main Canvas -->
+            <div class="canvas-wrapper" id="canvasWrapper">
+                <canvas id="mandalaCanvas"></canvas>
+                <!-- Chak-pur cursor overlay -->
+                <div class="chakpur-cursor" id="chakpurCursor" style="display:none;">
+                    <svg width="40" height="60" viewBox="0 0 40 60">
+                        <path d="M20 60 L18 20 Q18 8 20 2 Q22 8 22 20 Z" fill="var(--gold-dim)" stroke="var(--dark)" stroke-width="0.5"/>
+                        <ellipse cx="20" cy="15" rx="8" ry="3" fill="none" stroke="var(--dark)" stroke-width="0.5" opacity="0.3"/>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Sand Color Palette -->
+            <div class="sand-palette" id="sandPalette">
+                <div class="palette-label">Sand Colors</div>
+                <div class="palette-colors">
+                    <button class="sand-color sand-color--active" data-color="white" data-family="vairochana" title="White — Vairochana — Center" style="--sand: #F5F0E8;">
+                        <span class="color-swatch"></span>
+                        <span class="color-name">White</span>
+                    </button>
+                    <button class="sand-color sand-color--locked" data-color="blue" data-family="akshobhya" title="Blue — Akshobhya — East" style="--sand: #2B5797;">
+                        <span class="color-swatch"></span>
+                        <span class="color-name">Blue</span>
+                        <span class="lock-icon">&#128274;</span>
+                    </button>
+                    <button class="sand-color sand-color--locked" data-color="yellow" data-family="ratnasambhava" title="Yellow — Ratnasambhava — South" style="--sand: #E8B838;">
+                        <span class="color-swatch"></span>
+                        <span class="color-name">Yellow</span>
+                        <span class="lock-icon">&#128274;</span>
+                    </button>
+                    <button class="sand-color sand-color--locked" data-color="red" data-family="amitabha" title="Red — Amitabha — West" style="--sand: #C43030;">
+                        <span class="color-swatch"></span>
+                        <span class="color-name">Red</span>
+                        <span class="lock-icon">&#128274;</span>
+                    </button>
+                    <button class="sand-color sand-color--locked" data-color="green" data-family="amoghasiddhi" title="Green — Amoghasiddhi — North" style="--sand: #2E7D32;">
+                        <span class="color-swatch"></span>
+                        <span class="color-name">Green</span>
+                        <span class="lock-icon">&#128274;</span>
+                    </button>
+                </div>
+                <div class="brush-size">
+                    <span class="brush-label">Flow</span>
+                    <input type="range" id="brushSize" min="1" max="5" value="2" step="1">
+                </div>
+            </div>
+
+            <!-- Layer progress -->
+            <div class="layer-progress" id="layerProgress">
+                <div class="layer-dots">
+                    <span class="layer-dot layer-dot--active" data-layer="1" title="Central Seed"></span>
+                    <span class="layer-dot" data-layer="2" title="Inner Palace"></span>
+                    <span class="layer-dot" data-layer="3" title="Four Gates"></span>
+                    <span class="layer-dot" data-layer="4" title="Outer Rings"></span>
+                    <span class="layer-dot" data-layer="5" title="Fire Ring"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Teaching Modal -->
+        <div id="teachingModal" class="modal" style="display:none;">
+            <div class="modal-backdrop"></div>
+            <div class="modal-content teaching-modal">
+                <button class="modal-close" id="closeTeaching">&times;</button>
+                <div class="teaching-header">
+                    <span class="teaching-icon" id="teachingIcon">&#9784;</span>
+                    <h3 id="teachingTitle">The Nature of Mind</h3>
+                </div>
+                <div class="teaching-body" id="teachingBody">
+                    <p>Teaching content loads here...</p>
+                </div>
+                <div class="teaching-source">
+                    <span>From the Gelug tradition of Tibetan Buddhism</span>
+                </div>
+                <button class="btn btn-primary teaching-continue" id="teachingContinue">Continue Creating</button>
+            </div>
+        </div>
+
+        <!-- Buddha Family Unlock Modal -->
+        <div id="unlockModal" class="modal" style="display:none;">
+            <div class="modal-backdrop"></div>
+            <div class="modal-content unlock-modal">
+                <div class="unlock-glow" id="unlockGlow"></div>
+                <span class="unlock-icon" id="unlockIcon">&#128308;</span>
+                <h3 id="unlockTitle">New Sand Unlocked</h3>
+                <h2 id="unlockFamily">Akshobhya — Mirror-like Wisdom</h2>
+                <p id="unlockDesc">The blue sand of the East. Akshobhya, the Immovable One, transforms anger into the wisdom that reflects all phenomena clearly, like a perfect mirror.</p>
+                <div class="unlock-meta">
+                    <span class="unlock-meta-item"><strong>Direction:</strong> <span id="unlockDir">East</span></span>
+                    <span class="unlock-meta-item"><strong>Element:</strong> <span id="unlockElement">Water</span></span>
+                    <span class="unlock-meta-item"><strong>Transforms:</strong> <span id="unlockPoison">Anger</span></span>
+                </div>
+                <button class="btn btn-gold" id="unlockContinue">Use This Sand</button>
+            </div>
+        </div>
+
+        <!-- Phase 5: Dissolution -->
+        <div id="dissolutionScreen" class="game-screen">
+            <div class="dissolution-content">
+                <div class="teaching-moment teaching-moment--top">
+                    <p class="teaching-text">"The mandala is complete. But in the monastery, what comes next may be the most important moment of all..."</p>
+                </div>
+                <h2 class="phase-title">The Dissolution</h2>
+                <p class="phase-desc">All compounded things are impermanent. Draw a line through your creation to begin the sacred dissolution ceremony.</p>
+                <div class="dissolution-canvas-wrap">
+                    <canvas id="dissolutionCanvas"></canvas>
+                </div>
+                <div class="dissolution-actions" id="dissolutionActions" style="display:none;">
+                    <p class="dissolution-instruction">Now sweep the sand inward with circular motions...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 6: Completion / River -->
+        <div id="completionScreen" class="game-screen">
+            <div class="completion-content">
+                <div class="river-animation" id="riverAnimation">
+                    <canvas id="riverCanvas" width="600" height="300"></canvas>
+                </div>
+                <h2 class="phase-title">Dedication of Merit</h2>
+                <p class="completion-prayer">"By this merit, may all beings be free from suffering.<br>May the healing energies of this mandala flow outward<br>to all corners of the world."</p>
+                <div class="completion-stats">
+                    <div class="stat">
+                        <span class="stat-value" id="finalMerit">0</span>
+                        <span class="stat-label">Merit Earned</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value" id="finalGrains">0</span>
+                        <span class="stat-label">Grains Placed</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value" id="finalMindfulness">0%</span>
+                        <span class="stat-label">Avg. Mindfulness</span>
+                    </div>
+                </div>
+                <div class="completion-actions">
+                    <button class="btn btn-gold" id="newMandalaBtn">Create Another Mandala</button>
+                    <a href="../en/donate.html" class="btn btn-primary">
+                        <span>&#9825;</span>
+                        <span>Offer to the Monastery</span>
+                    </a>
+                </div>
+                <p class="completion-note">The sand has been released into the flowing water, carrying blessings to all beings.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Audio elements (will be created dynamically) -->
+
+    <script src="sand-engine.js"></script>
+    <script src="teachings.js"></script>
+    <script src="mandala-game.js"></script>
+
+    <script>
+        // Navbar scroll
+        const nav = document.getElementById('siteNav');
+        window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 20); });
+    </script>
+</body>
+</html>
