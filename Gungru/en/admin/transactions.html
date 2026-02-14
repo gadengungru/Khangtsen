@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transactions — Admin — Gungru Khangtsen</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="site-nav" id="siteNav">
+        <div class="site-nav__inner">
+            <a href="../index.html" class="site-nav__brand">
+                <img src="../../assets/images/logo.png" alt="Gungru Khangtsen">
+                <span>Gungru Khangtsen</span>
+            </a>
+            <button class="nav-toggle" onclick="document.querySelector('.site-nav__links').classList.toggle('open')" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="site-nav__links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../general-understanding.html">General Understanding</a></li>
+                <li><a href="../donate.html" class="site-nav__cta">
+                    <span>&#9825;</span>
+                    <span>Donate</span>
+                </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Admin Topbar -->
+    <div class="admin-topbar">
+        <span class="admin-topbar__label">&#128274; Admin Panel</span>
+        <nav class="admin-topbar__nav">
+            <a href="index.html">Dashboard</a>
+            <a href="members.html">Members</a>
+            <a href="events.html">Events</a>
+            <a href="transactions.html" class="active">Transactions</a>
+        </nav>
+    </div>
+
+    <!-- Admin Content -->
+    <div class="admin-layout">
+        <div class="admin-container">
+            <div class="admin-page-header">
+                <h1>Transactions</h1>
+                <p>Track donations, expenses, and financial records</p>
+            </div>
+
+            <div class="admin-toolbar">
+                <input type="text" class="admin-toolbar__search" id="txSearch" placeholder="Search transactions…">
+                <div class="admin-toolbar__actions">
+                    <button class="btn-sm btn-primary" id="addTxBtn">+ Add Transaction</button>
+                </div>
+            </div>
+
+            <div class="admin-filters" id="txFilters">
+                <button class="admin-filter-btn active" data-filter="all">All</button>
+                <button class="admin-filter-btn" data-filter="income">Income</button>
+                <button class="admin-filter-btn" data-filter="expense">Expense</button>
+                <button class="admin-filter-btn" data-filter="donation">Donation</button>
+            </div>
+
+            <div class="admin-table-wrap">
+                <table class="admin-table" id="txTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Description</th>
+                            <th>Type</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Method</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="txBody">
+                        <tr><td colspan="7" class="admin-empty"><div class="admin-empty__icon">&#128176;</div><div class="admin-empty__text">Loading transactions…</div></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Transaction Modal -->
+    <div class="admin-modal" id="txModal">
+        <div class="admin-modal__backdrop" id="txModalBackdrop"></div>
+        <div class="admin-modal__card">
+            <h2 class="admin-modal__title" id="txModalTitle">Add Transaction</h2>
+            <form class="admin-modal__form" id="txForm">
+                <input type="hidden" id="txId">
+                <div class="admin-modal__field">
+                    <label for="txDescription">Description</label>
+                    <input type="text" id="txDescription" required placeholder="What was this for?">
+                </div>
+                <div class="admin-modal__row">
+                    <div class="admin-modal__field">
+                        <label for="txAmount">Amount</label>
+                        <input type="number" id="txAmount" required step="0.01" min="0" placeholder="0.00">
+                    </div>
+                    <div class="admin-modal__field">
+                        <label for="txCurrency">Currency</label>
+                        <select id="txCurrency">
+                            <option value="INR">INR (₹)</option>
+                            <option value="USD">USD ($)</option>
+                            <option value="EUR">EUR (€)</option>
+                            <option value="AUD">AUD (A$)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="admin-modal__row">
+                    <div class="admin-modal__field">
+                        <label for="txType">Type</label>
+                        <select id="txType">
+                            <option value="donation">Donation</option>
+                            <option value="income">Income</option>
+                            <option value="expense">Expense</option>
+                            <option value="transfer">Transfer</option>
+                        </select>
+                    </div>
+                    <div class="admin-modal__field">
+                        <label for="txStatus">Status</label>
+                        <select id="txStatus">
+                            <option value="completed">Completed</option>
+                            <option value="pending">Pending</option>
+                            <option value="failed">Failed</option>
+                            <option value="refunded">Refunded</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="admin-modal__field">
+                    <label for="txMethod">Payment Method</label>
+                    <select id="txMethod">
+                        <option value="">— Select —</option>
+                        <option value="cash">Cash</option>
+                        <option value="bank_transfer">Bank Transfer</option>
+                        <option value="upi">UPI</option>
+                        <option value="card">Card</option>
+                        <option value="check">Check</option>
+                        <option value="paypal">PayPal</option>
+                        <option value="crypto">Crypto</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="admin-modal__actions">
+                    <button type="button" class="btn-cancel" id="txCancel">Cancel</button>
+                    <button type="submit" class="btn-sm btn-primary" id="txSaveBtn">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <span class="footer-wheel">&#9784;</span>
+            <h3 class="footer-name">Gaden Shartse Gungru Khangtsen Monastery</h3>
+            <div class="footer-badges">
+                <div class="footer-badge"><span>&#128421;</span><span>Built with AlpacApps Infrastructure</span></div>
+                <div class="footer-badge"><span>&#10024;</span><span>Powered by Claude</span></div>
+            </div>
+            <div class="footer-version">Admin</div>
+        </div>
+    </footer>
+
+    <script>
+        const nav = document.getElementById('siteNav');
+        window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 20); });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script>
+        requireAuth(function(user) {
+            var sb = window.adminSupabase;
+            var allTx = [];
+            var currentFilter = 'all';
+
+            function showToast(msg, type) {
+                var existing = document.querySelector('.toast-notification');
+                if (existing) existing.remove();
+                var t = document.createElement('div');
+                t.className = 'toast-notification';
+                t.style.cssText = 'position:fixed;top:80px;left:50%;transform:translateX(-50%) translateY(-10px);z-index:10000;padding:14px 24px;border-radius:12px;font-size:14px;font-weight:500;font-family:DM Sans,sans-serif;max-width:90vw;text-align:center;opacity:0;transition:all 0.3s ease;box-shadow:0 8px 32px rgba(0,0,0,0.12);';
+                if (type === 'success') { t.style.background = '#f0fdf4'; t.style.color = '#166534'; t.style.border = '1px solid #bbf7d0'; }
+                else { t.style.background = '#fef2f2'; t.style.color = '#991b1b'; t.style.border = '1px solid #fecaca'; }
+                t.textContent = msg; document.body.appendChild(t);
+                requestAnimationFrame(function() { t.style.opacity = '1'; t.style.transform = 'translateX(-50%) translateY(0)'; });
+                setTimeout(function() { t.style.opacity = '0'; setTimeout(function() { t.remove(); }, 300); }, 4000);
+            }
+
+            function escapeHtml(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+            var currencySymbol = { USD: '$', INR: '₹', EUR: '€', AUD: 'A$' };
+
+            function formatAmount(amount, currency) {
+                var sym = currencySymbol[currency] || currency || '';
+                var num = parseFloat(amount);
+                if (isNaN(num)) return '—';
+                return sym + num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            }
+
+            function formatDate(d) {
+                if (!d) return '—';
+                return new Date(d).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+            }
+
+            function loadTransactions() {
+                sb.from('transactions').select('*').order('created_at', { ascending: false }).then(function(result) {
+                    if (result.error) { showToast('Failed to load transactions', 'error'); return; }
+                    allTx = result.data || [];
+                    renderTransactions();
+                });
+            }
+
+            function renderTransactions() {
+                var search = document.getElementById('txSearch').value.toLowerCase();
+                var filtered = allTx.filter(function(t) {
+                    if (currentFilter !== 'all' && t.transaction_type !== currentFilter) return false;
+                    if (search && !(t.description || '').toLowerCase().includes(search)) return false;
+                    return true;
+                });
+
+                var tbody = document.getElementById('txBody');
+                if (!filtered.length) {
+                    tbody.innerHTML = '<tr><td colspan="7" class="admin-empty"><div class="admin-empty__icon">&#128176;</div><div class="admin-empty__text">No transactions found</div></td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = filtered.map(function(t) {
+                    var typeBadge = (t.transaction_type === 'expense') ? 'admin-badge--expense' :
+                                    (t.transaction_type === 'income' || t.transaction_type === 'donation') ? 'admin-badge--income' : 'admin-badge--pending';
+                    var statusBadge = t.status === 'completed' ? 'admin-badge--active' :
+                                      t.status === 'pending' ? 'admin-badge--pending' : 'admin-badge--expense';
+                    return '<tr>' +
+                        '<td>' + formatDate(t.created_at) + '</td>' +
+                        '<td><strong>' + escapeHtml(t.description || '—') + '</strong></td>' +
+                        '<td><span class="admin-badge ' + typeBadge + '">' + escapeHtml(t.transaction_type || '—') + '</span></td>' +
+                        '<td>' + formatAmount(t.amount, t.currency) + '</td>' +
+                        '<td><span class="admin-badge ' + statusBadge + '">' + escapeHtml(t.status || '—') + '</span></td>' +
+                        '<td>' + escapeHtml(t.payment_method || '—') + '</td>' +
+                        '<td><div class="admin-table__actions">' +
+                            '<button onclick="editTx(\'' + t.id + '\')">Edit</button>' +
+                        '</div></td>' +
+                    '</tr>';
+                }).join('');
+            }
+
+            document.getElementById('txSearch').addEventListener('input', renderTransactions);
+            document.getElementById('txFilters').addEventListener('click', function(ev) {
+                if (!ev.target.classList.contains('admin-filter-btn')) return;
+                document.querySelectorAll('.admin-filter-btn').forEach(function(b) { b.classList.remove('active'); });
+                ev.target.classList.add('active');
+                currentFilter = ev.target.dataset.filter;
+                renderTransactions();
+            });
+
+            var modal = document.getElementById('txModal');
+            function openModal(title) {
+                document.getElementById('txModalTitle').textContent = title;
+                modal.classList.add('admin-modal--open');
+            }
+            function closeModal() {
+                modal.classList.remove('admin-modal--open');
+                document.getElementById('txForm').reset();
+                document.getElementById('txId').value = '';
+            }
+
+            document.getElementById('txModalBackdrop').addEventListener('click', closeModal);
+            document.getElementById('txCancel').addEventListener('click', closeModal);
+
+            document.getElementById('addTxBtn').addEventListener('click', function() {
+                openModal('Add Transaction');
+            });
+
+            window.editTx = function(id) {
+                var t = allTx.find(function(x) { return x.id === id; });
+                if (!t) return;
+                document.getElementById('txId').value = t.id;
+                document.getElementById('txDescription').value = t.description || '';
+                document.getElementById('txAmount').value = t.amount || '';
+                document.getElementById('txCurrency').value = t.currency || 'INR';
+                document.getElementById('txType').value = t.transaction_type || 'donation';
+                document.getElementById('txStatus').value = t.status || 'completed';
+                document.getElementById('txMethod').value = t.payment_method || '';
+                openModal('Edit Transaction');
+            };
+
+            document.getElementById('txForm').addEventListener('submit', function(ev) {
+                ev.preventDefault();
+                var id = document.getElementById('txId').value;
+                var data = {
+                    description: document.getElementById('txDescription').value.trim(),
+                    amount: parseFloat(document.getElementById('txAmount').value),
+                    currency: document.getElementById('txCurrency').value,
+                    transaction_type: document.getElementById('txType').value,
+                    status: document.getElementById('txStatus').value,
+                    payment_method: document.getElementById('txMethod').value || null
+                };
+
+                var saveBtn = document.getElementById('txSaveBtn');
+                saveBtn.disabled = true; saveBtn.textContent = 'Saving…';
+
+                var query = id
+                    ? sb.from('transactions').update(data).eq('id', id)
+                    : sb.from('transactions').insert(data);
+
+                query.then(function(result) {
+                    saveBtn.disabled = false; saveBtn.textContent = 'Save';
+                    if (result.error) { showToast(result.error.message || 'Save failed', 'error'); return; }
+                    closeModal();
+                    showToast(id ? 'Transaction updated' : 'Transaction added', 'success');
+                    loadTransactions();
+                });
+            });
+
+            loadTransactions();
+        });
+    </script>
+    <script src="../../assets/js/version.js"></script>
+</body>
+</html>

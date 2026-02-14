@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin — Gungru Khangtsen</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="site-nav" id="siteNav">
+        <div class="site-nav__inner">
+            <a href="../index.html" class="site-nav__brand">
+                <img src="../../assets/images/logo.png" alt="Gungru Khangtsen">
+                <span>Gungru Khangtsen</span>
+            </a>
+            <button class="nav-toggle" onclick="document.querySelector('.site-nav__links').classList.toggle('open')" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="site-nav__links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../general-understanding.html">General Understanding</a></li>
+                <li><a href="../donate.html" class="site-nav__cta">
+                    <span>&#9825;</span>
+                    <span>Donate</span>
+                </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Admin Topbar -->
+    <div class="admin-topbar">
+        <span class="admin-topbar__label">&#128274; Admin Panel</span>
+        <nav class="admin-topbar__nav">
+            <a href="index.html" class="active">Dashboard</a>
+            <a href="members.html">Members</a>
+            <a href="events.html">Events</a>
+            <a href="transactions.html">Transactions</a>
+        </nav>
+    </div>
+
+    <!-- Admin Content -->
+    <div class="admin-layout">
+        <div class="admin-container">
+            <div class="admin-page-header">
+                <h1>Dashboard</h1>
+                <p>Overview of Gungru Khangtsen data</p>
+            </div>
+
+            <!-- Stats -->
+            <div class="admin-stats" id="adminStats">
+                <div class="admin-stat">
+                    <div class="admin-stat__icon">&#128100;</div>
+                    <div class="admin-stat__value" id="statMembers">—</div>
+                    <div class="admin-stat__label">Members</div>
+                </div>
+                <div class="admin-stat">
+                    <div class="admin-stat__icon">&#128197;</div>
+                    <div class="admin-stat__value" id="statEvents">—</div>
+                    <div class="admin-stat__label">Events</div>
+                </div>
+                <div class="admin-stat">
+                    <div class="admin-stat__icon">&#128176;</div>
+                    <div class="admin-stat__value" id="statTransactions">—</div>
+                    <div class="admin-stat__label">Transactions</div>
+                </div>
+                <div class="admin-stat">
+                    <div class="admin-stat__icon">&#128587;</div>
+                    <div class="admin-stat__value" id="statContacts">—</div>
+                    <div class="admin-stat__label">Contacts</div>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="section-header" style="margin-top: 24px;">
+                <h2 class="section-header__title" style="font-size: 1.4rem;">Manage</h2>
+            </div>
+
+            <div class="admin-cards">
+                <a href="members.html" class="admin-card">
+                    <div class="admin-card__icon">&#128100;</div>
+                    <div>
+                        <div class="admin-card__title">Members</div>
+                        <div class="admin-card__desc">View, add, and manage community members, their roles, and contact info.</div>
+                    </div>
+                </a>
+                <a href="events.html" class="admin-card">
+                    <div class="admin-card__icon">&#128197;</div>
+                    <div>
+                        <div class="admin-card__title">Events</div>
+                        <div class="admin-card__desc">Create and manage ceremonies, gatherings, meetings, and tour dates.</div>
+                    </div>
+                </a>
+                <a href="transactions.html" class="admin-card">
+                    <div class="admin-card__icon">&#128176;</div>
+                    <div>
+                        <div class="admin-card__title">Transactions</div>
+                        <div class="admin-card__desc">Track donations, expenses, and all financial records.</div>
+                    </div>
+                </a>
+                <a href="contacts.html" class="admin-card" style="opacity: 0.5; pointer-events: none;">
+                    <div class="admin-card__icon">&#128587;</div>
+                    <div>
+                        <div class="admin-card__title">Contacts</div>
+                        <div class="admin-card__desc">Donors, partners, and vendors. Coming soon.</div>
+                    </div>
+                </a>
+                <a href="documents.html" class="admin-card" style="opacity: 0.5; pointer-events: none;">
+                    <div class="admin-card__icon">&#128196;</div>
+                    <div>
+                        <div class="admin-card__title">Documents</div>
+                        <div class="admin-card__desc">Agreements, forms, and records. Coming soon.</div>
+                    </div>
+                </a>
+                <a href="messages.html" class="admin-card" style="opacity: 0.5; pointer-events: none;">
+                    <div class="admin-card__icon">&#128172;</div>
+                    <div>
+                        <div class="admin-card__title">Messages</div>
+                        <div class="admin-card__desc">SMS and email logs. Coming soon.</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <span class="footer-wheel">&#9784;</span>
+            <h3 class="footer-name">Gaden Shartse Gungru Khangtsen Monastery</h3>
+            <div class="footer-badges">
+                <div class="footer-badge">
+                    <span>&#128421;</span>
+                    <span>Built with AlpacApps Infrastructure</span>
+                </div>
+                <div class="footer-badge">
+                    <span>&#10024;</span>
+                    <span>Powered by Claude</span>
+                </div>
+            </div>
+            <div class="footer-version">Admin</div>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll
+        const nav = document.getElementById('siteNav');
+        window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 20); });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script>
+        // Require auth, then load dashboard data
+        requireAuth(function(user, sb) {
+            var supabase = window.adminSupabase;
+
+            // Fetch counts
+            Promise.all([
+                supabase.from('members').select('id', { count: 'exact', head: true }),
+                supabase.from('events').select('id', { count: 'exact', head: true }),
+                supabase.from('transactions').select('id', { count: 'exact', head: true }),
+                supabase.from('contacts').select('id', { count: 'exact', head: true })
+            ]).then(function(results) {
+                document.getElementById('statMembers').textContent = (results[0].count != null) ? results[0].count : '0';
+                document.getElementById('statEvents').textContent = (results[1].count != null) ? results[1].count : '0';
+                document.getElementById('statTransactions').textContent = (results[2].count != null) ? results[2].count : '0';
+                document.getElementById('statContacts').textContent = (results[3].count != null) ? results[3].count : '0';
+            }).catch(function() {
+                // Counts unavailable
+            });
+        });
+    </script>
+    <script src="../../assets/js/version.js"></script>
+</body>
+</html>
