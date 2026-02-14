@@ -1,0 +1,682 @@
+/* ========================================
+   Sacred Sands — Mandala Game Styles
+   ======================================== */
+
+.mandala-body {
+    overflow-x: hidden;
+    background: var(--dark);
+}
+
+/* ======================================== Game Container ======================================== */
+.game-container {
+    position: relative;
+    min-height: 100vh;
+    padding-top: 60px;
+}
+
+.game-screen {
+    display: none;
+    min-height: calc(100vh - 60px);
+    position: relative;
+}
+.game-screen--active { display: flex; }
+
+/* ======================================== Start Screen ======================================== */
+#startScreen {
+    align-items: center; justify-content: center;
+    background:
+        radial-gradient(ellipse 80% 60% at 50% 40%, rgba(212,168,67,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 30% 70%, rgba(123,26,44,0.06) 0%, transparent 50%),
+        var(--dark);
+    text-align: center;
+}
+.start-content {
+    max-width: 520px; padding: 40px 24px;
+    animation: fadeInUp 0.8s ease-out;
+}
+.start-mandala-icon {
+    margin: 0 auto 24px;
+    animation: slowSpin 30s linear infinite;
+}
+@keyframes slowSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+.start-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 400;
+    color: var(--gold);
+    margin-bottom: 8px;
+    letter-spacing: 0.05em;
+}
+.start-subtitle {
+    font-size: 1.1rem;
+    color: var(--gold-dim);
+    font-weight: 300;
+    margin-bottom: 24px;
+    font-style: italic;
+}
+.start-desc {
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.8;
+    margin-bottom: 32px;
+}
+.start-btn {
+    font-size: 16px;
+    padding: 16px 48px;
+    animation: gentlePulse 3s ease-in-out infinite;
+}
+@keyframes gentlePulse {
+    0%, 100% { box-shadow: 0 4px 16px rgba(212,168,67,0.3); }
+    50% { box-shadow: 0 4px 30px rgba(212,168,67,0.5); }
+}
+.start-tradition {
+    margin-top: 32px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 0.05em;
+}
+
+/* ======================================== Intention Screen ======================================== */
+#intentionScreen {
+    align-items: center; justify-content: center; flex-direction: column;
+    background:
+        radial-gradient(ellipse 80% 50% at 50% 30%, rgba(123,26,44,0.08) 0%, transparent 60%),
+        var(--dark);
+    padding: 24px;
+}
+.intention-content {
+    max-width: 700px; width: 100%;
+    animation: fadeInUp 0.6s ease-out;
+}
+.phase-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    color: var(--gold);
+    text-align: center;
+    margin-bottom: 8px;
+}
+.phase-desc {
+    text-align: center;
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 28px;
+}
+.intention-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+.intention-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius-lg);
+    padding: 24px 20px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    color: inherit;
+}
+.intention-card:hover {
+    background: rgba(212,168,67,0.06);
+    border-color: var(--gold-dim);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(212,168,67,0.15);
+}
+.intention-card:active { transform: translateY(-2px); }
+.intention-icon { font-size: 36px; display: block; margin-bottom: 12px; }
+.intention-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; color: var(--gold);
+    margin-bottom: 4px;
+}
+.intention-card p {
+    font-size: 13px; color: rgba(255,255,255,0.4);
+    margin-bottom: 8px;
+}
+.intention-detail {
+    font-size: 11px; color: rgba(255,255,255,0.25);
+    font-style: italic;
+}
+
+@media (max-width: 480px) {
+    .intention-grid { grid-template-columns: 1fr; }
+}
+
+/* ======================================== Teaching Moments ======================================== */
+.teaching-moment {
+    background: rgba(212,168,67,0.04);
+    border: 1px solid rgba(212,168,67,0.12);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin-bottom: 24px;
+    position: relative;
+}
+.teaching-moment--top { margin-bottom: 28px; }
+.teaching-moment::before {
+    content: '\2638'; /* dharma wheel */
+    position: absolute;
+    top: -10px; left: 20px;
+    font-size: 18px;
+    color: var(--gold);
+    background: var(--dark);
+    padding: 0 8px;
+}
+.teaching-text {
+    font-size: 14px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.7;
+    font-style: italic;
+}
+
+/* ======================================== Consecration Screen ======================================== */
+#consecrationScreen {
+    align-items: center; justify-content: center; flex-direction: column;
+    background: var(--dark);
+    padding: 24px;
+}
+.consecration-content {
+    max-width: 500px; width: 100%; text-align: center;
+    animation: fadeInUp 0.6s ease-out;
+}
+.consecration-platform {
+    position: relative;
+    width: 300px; height: 300px;
+    margin: 20px auto;
+}
+#consecrateCanvas {
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+}
+.lamp {
+    position: absolute;
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+}
+.lamp-icon {
+    font-size: 32px;
+    filter: grayscale(1) brightness(0.5);
+    transition: all 0.4s ease;
+}
+.lamp[data-lit="true"] .lamp-icon {
+    filter: none;
+    animation: flicker 2s ease-in-out infinite;
+}
+@keyframes flicker {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.85; transform: scale(1.05); }
+}
+.lamp-label {
+    font-size: 10px;
+    color: rgba(255,255,255,0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+}
+.lamp[data-lit="true"] .lamp-label { color: var(--gold); }
+.lamp--north { top: -40px; left: 50%; transform: translateX(-50%); }
+.lamp--east { right: -50px; top: 50%; transform: translateY(-50%); }
+.lamp--south { bottom: -40px; left: 50%; transform: translateX(-50%); }
+.lamp--west { left: -50px; top: 50%; transform: translateY(-50%); }
+
+.consecration-teaching { margin-top: 24px; }
+
+/* ======================================== Main Game HUD ======================================== */
+#gameScreen {
+    flex-direction: column;
+    background: var(--dark);
+}
+.game-hud {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px;
+    background: rgba(0,0,0,0.4);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    z-index: 10;
+    flex-shrink: 0;
+}
+.hud-left, .hud-right { display: flex; align-items: center; gap: 12px; }
+.mandala-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    color: var(--gold);
+    font-weight: 600;
+}
+.layer-indicator {
+    font-size: 11px;
+    color: rgba(255,255,255,0.35);
+}
+.layer-indicator span { color: rgba(255,255,255,0.6); font-weight: 600; }
+
+.mindfulness-meter { display: flex; align-items: center; gap: 8px; }
+.mindfulness-label {
+    font-size: 10px;
+    color: rgba(255,255,255,0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+}
+.mindfulness-bar {
+    width: 120px; height: 6px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 3px;
+    overflow: hidden;
+}
+.mindfulness-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--maroon), var(--gold));
+    border-radius: 3px;
+    transition: width 0.5s ease;
+}
+
+.merit-display {
+    font-size: 13px;
+    color: var(--gold);
+    font-weight: 600;
+    display: flex; align-items: center; gap: 4px;
+}
+.merit-icon { font-size: 14px; }
+.hud-btn {
+    width: 32px; height: 32px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    color: rgba(255,255,255,0.4);
+    cursor: pointer;
+    font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s ease;
+}
+.hud-btn:hover {
+    background: rgba(212,168,67,0.1);
+    border-color: var(--gold-dim);
+    color: var(--gold);
+}
+
+/* ======================================== Main Canvas ======================================== */
+.canvas-wrapper {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    cursor: none;
+}
+#mandalaCanvas {
+    display: block;
+    background: transparent;
+}
+.chakpur-cursor {
+    position: fixed;
+    pointer-events: none;
+    z-index: 100;
+    transform: translate(-20px, -58px);
+    opacity: 0.9;
+    transition: opacity 0.1s;
+}
+
+/* ======================================== Sand Palette ======================================== */
+.sand-palette {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    background: rgba(0,0,0,0.4);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    z-index: 10;
+    flex-shrink: 0;
+}
+.palette-label {
+    font-size: 10px;
+    color: rgba(255,255,255,0.25);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+    white-space: nowrap;
+}
+.palette-colors {
+    display: flex;
+    gap: 8px;
+    flex: 1;
+}
+.sand-color {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: rgba(255,255,255,0.03);
+    border: 1.5px solid rgba(255,255,255,0.08);
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+    position: relative;
+}
+.sand-color:hover:not(.sand-color--locked) {
+    border-color: rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.06);
+}
+.sand-color--active {
+    border-color: var(--gold) !important;
+    background: rgba(212,168,67,0.1) !important;
+}
+.sand-color--locked {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+.color-swatch {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--sand);
+    border: 1px solid rgba(255,255,255,0.15);
+    flex-shrink: 0;
+}
+.color-name {
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    font-weight: 500;
+}
+.sand-color--active .color-name { color: var(--gold); }
+.lock-icon {
+    font-size: 10px;
+    position: absolute;
+    top: -4px; right: -2px;
+}
+
+.brush-size {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+}
+.brush-label {
+    font-size: 10px;
+    color: rgba(255,255,255,0.25);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+}
+#brushSize {
+    width: 80px;
+    accent-color: var(--gold);
+}
+
+/* ======================================== Layer Progress ======================================== */
+.layer-progress {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+}
+.layer-dots {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.layer-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    border: 1.5px solid rgba(255,255,255,0.15);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+.layer-dot--active {
+    background: var(--gold);
+    border-color: var(--gold);
+    box-shadow: 0 0 8px rgba(212,168,67,0.4);
+}
+.layer-dot--complete {
+    background: var(--maroon);
+    border-color: var(--maroon);
+}
+
+/* ======================================== Modals ======================================== */
+.modal {
+    position: fixed; inset: 0; z-index: 1000;
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px;
+}
+.modal-backdrop {
+    position: absolute; inset: 0;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(8px);
+}
+.modal-content {
+    position: relative;
+    max-width: 480px; width: 100%;
+    background: var(--dark-soft);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius-xl);
+    padding: 32px;
+    text-align: center;
+    animation: modalIn 0.3s ease-out;
+}
+@keyframes modalIn {
+    from { opacity: 0; transform: scale(0.95) translateY(10px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.modal-close {
+    position: absolute;
+    top: 12px; right: 16px;
+    background: none; border: none;
+    color: rgba(255,255,255,0.3);
+    font-size: 24px;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.modal-close:hover { color: rgba(255,255,255,0.7); }
+
+/* Teaching Modal */
+.teaching-modal { text-align: left; }
+.teaching-header {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 16px;
+}
+.teaching-header .teaching-icon {
+    font-size: 28px;
+    color: var(--gold);
+}
+.teaching-header h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    color: var(--gold);
+}
+.teaching-body {
+    font-size: 14px;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.8;
+    margin-bottom: 16px;
+}
+.teaching-body p { margin-bottom: 12px; }
+.teaching-source {
+    font-size: 11px;
+    color: rgba(255,255,255,0.2);
+    font-style: italic;
+    margin-bottom: 20px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+}
+.teaching-continue { width: 100%; }
+
+/* Unlock Modal */
+.unlock-modal {
+    text-align: center;
+    overflow: hidden;
+}
+.unlock-glow {
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle at center, rgba(212,168,67,0.08) 0%, transparent 50%);
+    animation: glowPulse 2s ease-in-out infinite;
+    pointer-events: none;
+}
+@keyframes glowPulse {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.1); }
+}
+.unlock-icon { font-size: 48px; display: block; margin-bottom: 12px; }
+.unlock-modal h3 {
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+}
+.unlock-modal h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    color: var(--gold);
+    margin-bottom: 16px;
+}
+.unlock-modal p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+.unlock-meta {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+.unlock-meta-item {
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+}
+.unlock-meta-item strong { color: rgba(255,255,255,0.5); }
+
+/* ======================================== Dissolution Screen ======================================== */
+#dissolutionScreen {
+    align-items: center; justify-content: center; flex-direction: column;
+    background: var(--dark);
+    padding: 24px;
+}
+.dissolution-content {
+    max-width: 600px; width: 100%; text-align: center;
+    animation: fadeInUp 0.8s ease-out;
+}
+.dissolution-canvas-wrap {
+    margin: 20px auto;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.06);
+}
+#dissolutionCanvas {
+    display: block;
+    cursor: crosshair;
+}
+.dissolution-instruction {
+    font-size: 14px;
+    color: rgba(255,255,255,0.4);
+    margin-top: 16px;
+    font-style: italic;
+}
+
+/* ======================================== Completion Screen ======================================== */
+#completionScreen {
+    align-items: center; justify-content: center; flex-direction: column;
+    background:
+        radial-gradient(ellipse 80% 50% at 50% 60%, rgba(212,168,67,0.06) 0%, transparent 60%),
+        var(--dark);
+    padding: 24px;
+}
+.completion-content {
+    max-width: 600px; width: 100%; text-align: center;
+    animation: fadeInUp 0.8s ease-out;
+}
+.river-animation {
+    margin: 0 auto 24px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+#riverCanvas {
+    display: block;
+    width: 100%;
+    max-width: 600px;
+}
+.completion-prayer {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.8;
+    font-style: italic;
+    margin-bottom: 32px;
+}
+.completion-stats {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+}
+.stat { text-align: center; }
+.stat-value {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--gold);
+    line-height: 1.2;
+}
+.stat-label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+.completion-actions {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+.completion-note {
+    font-size: 12px;
+    color: rgba(255,255,255,0.2);
+    font-style: italic;
+}
+
+/* ======================================== Animations ======================================== */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* ======================================== Responsive ======================================== */
+@media (max-width: 768px) {
+    .game-hud {
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 6px 12px;
+    }
+    .hud-center { order: 3; width: 100%; }
+    .mindfulness-bar { width: 100%; flex: 1; }
+    .mindfulness-meter { width: 100%; }
+    .sand-palette { flex-wrap: wrap; gap: 8px; }
+    .palette-colors { flex-wrap: wrap; }
+    .layer-progress { display: none; }
+    .consecration-platform { width: 250px; height: 250px; }
+}
+
+@media (max-width: 480px) {
+    .sand-color .color-name { display: none; }
+    .sand-color { padding: 6px 8px; }
+    .mandala-name { font-size: 13px; }
+    .merit-display { font-size: 12px; }
+}
