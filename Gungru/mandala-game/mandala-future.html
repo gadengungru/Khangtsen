@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sacred Sands — Future Vision</title>
+    <meta name="description" content="A preview of where Sacred Sands is heading — premium sands, physical kits, and more ways to support the monastery.">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="mandala.css">
+    <style>
+        /* ======================================== Future Demo Overrides ======================================== */
+        .future-body {
+            background: var(--dark);
+            color: rgba(255,255,255,0.6);
+        }
+
+        .future-hero {
+            min-height: 380px;
+            display: flex; align-items: center; justify-content: center;
+            text-align: center; padding: 100px 24px 48px;
+            background:
+                radial-gradient(ellipse 80% 60% at 50% 40%, rgba(212,168,67,0.06) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 40% at 70% 80%, rgba(123,26,44,0.05) 0%, transparent 50%),
+                var(--dark);
+        }
+        .future-hero__content { max-width: 600px; animation: fadeInUp 0.6s ease-out; }
+        .future-hero__badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 6px 16px; background: rgba(212,168,67,0.08);
+            border: 1px solid rgba(212,168,67,0.15); border-radius: 100px;
+            font-size: 11px; font-weight: 600; color: var(--gold-dim);
+            letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 20px;
+        }
+        .future-hero__title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 5vw, 3rem); color: var(--gold);
+            margin-bottom: 12px;
+        }
+        .future-hero__desc {
+            font-size: 1rem; color: rgba(255,255,255,0.4);
+            line-height: 1.7; margin-bottom: 8px;
+        }
+        .future-hero__note {
+            font-size: 12px; color: rgba(255,255,255,0.2);
+            font-style: italic;
+        }
+
+        /* Section styling */
+        .future-section {
+            padding: 48px 24px;
+            border-top: 1px solid rgba(255,255,255,0.04);
+        }
+        .future-section__header {
+            text-align: center; margin-bottom: 36px;
+        }
+        .future-section__label {
+            font-size: 11px; font-weight: 700; color: var(--gold-dim);
+            letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px;
+        }
+        .future-section__title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.5rem, 3vw, 2rem); color: var(--gold);
+            margin-bottom: 8px;
+        }
+        .future-section__subtitle {
+            font-size: 14px; color: rgba(255,255,255,0.3);
+            max-width: 500px; margin: 0 auto;
+        }
+
+        /* ======================================== Premium Sand Packs ======================================== */
+        .sand-packs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px; max-width: 900px; margin: 0 auto;
+        }
+        .sand-pack {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: var(--radius-lg);
+            padding: 24px 16px; text-align: center;
+            transition: all 0.3s ease;
+            position: relative; overflow: hidden;
+        }
+        .sand-pack:hover {
+            border-color: rgba(212,168,67,0.2);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        }
+        .sand-pack--featured {
+            border-color: rgba(212,168,67,0.15);
+            background: rgba(212,168,67,0.03);
+        }
+        .sand-pack--featured::before {
+            content: 'Most Popular';
+            position: absolute; top: 12px; right: -28px;
+            background: var(--gold-dim); color: var(--dark);
+            font-size: 9px; font-weight: 700; padding: 3px 32px;
+            transform: rotate(45deg); letter-spacing: 0.05em;
+        }
+        .sand-pack__preview {
+            display: flex; justify-content: center; gap: 6px;
+            margin-bottom: 16px;
+        }
+        .sand-pack__swatch {
+            width: 24px; height: 24px; border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.1);
+            box-shadow: inset 0 -3px 6px rgba(0,0,0,0.3);
+        }
+        .sand-pack__name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem; color: rgba(255,255,255,0.7);
+            margin-bottom: 4px;
+        }
+        .sand-pack__desc {
+            font-size: 12px; color: rgba(255,255,255,0.25);
+            margin-bottom: 12px; line-height: 1.5;
+        }
+        .sand-pack__price {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem; font-weight: 600;
+            color: var(--gold); margin-bottom: 12px;
+        }
+        .sand-pack__price .period {
+            font-size: 12px; color: rgba(255,255,255,0.2);
+            font-family: 'DM Sans', sans-serif; font-weight: 400;
+        }
+        .sand-pack__btn {
+            display: inline-block; padding: 8px 24px;
+            background: rgba(212,168,67,0.1); border: 1px solid rgba(212,168,67,0.2);
+            border-radius: 100px; color: var(--gold); font-size: 12px;
+            font-weight: 600; cursor: pointer; transition: all 0.2s;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .sand-pack__btn:hover {
+            background: rgba(212,168,67,0.2);
+            border-color: var(--gold);
+        }
+
+        /* ======================================== Offering Section ======================================== */
+        .offering-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px; max-width: 900px; margin: 0 auto;
+        }
+        .offering-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: var(--radius-lg);
+            padding: 28px; position: relative; overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .offering-card:hover {
+            border-color: rgba(212,168,67,0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        }
+        .offering-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, var(--maroon), var(--gold));
+            opacity: 0; transition: opacity 0.3s;
+        }
+        .offering-card:hover::before { opacity: 1; }
+        .offering-card__icon { font-size: 32px; margin-bottom: 12px; display: block; }
+        .offering-card__title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem; color: rgba(255,255,255,0.7);
+            margin-bottom: 8px;
+        }
+        .offering-card__desc {
+            font-size: 13px; color: rgba(255,255,255,0.3);
+            line-height: 1.6; margin-bottom: 16px;
+        }
+        .offering-card__price-row {
+            display: flex; align-items: baseline; gap: 8px;
+            margin-bottom: 16px;
+        }
+        .offering-card__price {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem; font-weight: 600; color: var(--gold);
+        }
+        .offering-card__note {
+            font-size: 11px; color: rgba(255,255,255,0.2);
+        }
+        .offering-card__cta {
+            display: flex; align-items: center; gap: 6px;
+            font-size: 13px; font-weight: 600; color: var(--gold-dim);
+            transition: gap 0.2s;
+        }
+        .offering-card:hover .offering-card__cta { gap: 10px; color: var(--gold); }
+
+        /* ======================================== Physical Products ======================================== */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px; max-width: 900px; margin: 0 auto;
+        }
+        .product-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: var(--radius-lg);
+            overflow: hidden; transition: all 0.3s ease;
+        }
+        .product-card:hover {
+            border-color: rgba(212,168,67,0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        }
+        .product-card__image {
+            height: 180px; position: relative; overflow: hidden;
+        }
+        .product-card__image-placeholder {
+            width: 100%; height: 100%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 48px;
+        }
+        .product-card__image-placeholder--sand {
+            background: linear-gradient(135deg, #E8B838 0%, #C43030 25%, #2B5797 50%, #2E7D32 75%, #F5F0E8 100%);
+            opacity: 0.6;
+        }
+        .product-card__image-placeholder--chakpur {
+            background: linear-gradient(135deg, rgba(139,115,85,0.3), rgba(212,168,67,0.2));
+        }
+        .product-card__image-placeholder--print {
+            background: linear-gradient(135deg, rgba(123,26,44,0.2), rgba(212,168,67,0.15));
+        }
+        .product-card__body { padding: 20px; }
+        .product-card__name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem; color: rgba(255,255,255,0.7);
+            margin-bottom: 6px;
+        }
+        .product-card__desc {
+            font-size: 13px; color: rgba(255,255,255,0.3);
+            line-height: 1.5; margin-bottom: 12px;
+        }
+        .product-card__price-row {
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .product-card__price {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem; font-weight: 600; color: var(--gold);
+        }
+        .product-card__tag {
+            font-size: 10px; font-weight: 600; color: var(--maroon-light);
+            background: rgba(123,26,44,0.1); border: 1px solid rgba(123,26,44,0.15);
+            padding: 3px 10px; border-radius: 100px;
+            text-transform: uppercase; letter-spacing: 0.05em;
+        }
+
+        /* ======================================== App Preview ======================================== */
+        .app-preview {
+            max-width: 800px; margin: 0 auto;
+            display: flex; align-items: center; gap: 40px;
+        }
+        .app-mockup {
+            flex-shrink: 0;
+            width: 220px; height: 440px;
+            background: #0a0a0a;
+            border-radius: 36px;
+            border: 3px solid rgba(255,255,255,0.08);
+            padding: 16px 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            position: relative; overflow: hidden;
+        }
+        .app-mockup__notch {
+            position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+            width: 120px; height: 28px; background: #0a0a0a;
+            border-radius: 0 0 16px 16px; z-index: 2;
+        }
+        .app-mockup__screen {
+            width: 100%; height: 100%;
+            border-radius: 22px; overflow: hidden;
+            background:
+                radial-gradient(circle at 50% 40%, rgba(212,168,67,0.1), transparent 60%),
+                var(--dark);
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            padding: 20px; text-align: center;
+        }
+        .app-mockup__icon {
+            width: 60px; height: 60px;
+            background: linear-gradient(135deg, var(--maroon), var(--gold-dim));
+            border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 28px; margin-bottom: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+        }
+        .app-mockup__title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 16px; color: var(--gold);
+            margin-bottom: 4px;
+        }
+        .app-mockup__sub {
+            font-size: 10px; color: rgba(255,255,255,0.3);
+            margin-bottom: 16px;
+        }
+        .app-mockup__features {
+            width: 100%; text-align: left;
+        }
+        .app-mockup__feature {
+            display: flex; align-items: center; gap: 8px;
+            padding: 6px 0; font-size: 10px; color: rgba(255,255,255,0.4);
+        }
+        .app-mockup__feature-dot {
+            width: 4px; height: 4px; border-radius: 50%;
+            background: var(--gold); flex-shrink: 0;
+        }
+        .app-info { flex: 1; }
+        .app-info__title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.5rem, 3vw, 2rem); color: var(--gold);
+            margin-bottom: 12px;
+        }
+        .app-info__desc {
+            font-size: 14px; color: rgba(255,255,255,0.35);
+            line-height: 1.7; margin-bottom: 20px;
+        }
+        .app-info__features { list-style: none; padding: 0; margin-bottom: 24px; }
+        .app-info__features li {
+            display: flex; align-items: center; gap: 10px;
+            padding: 8px 0; font-size: 14px; color: rgba(255,255,255,0.4);
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+        }
+        .app-info__features li span:first-child {
+            color: var(--gold); font-size: 16px; width: 24px; text-align: center;
+        }
+        .app-info__cta {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 12px 28px;
+            background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 100px; color: rgba(255,255,255,0.5);
+            font-size: 13px; font-weight: 600; cursor: default;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        /* ======================================== Revenue Model ======================================== */
+        .revenue-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 16px; max-width: 900px; margin: 0 auto;
+        }
+        .revenue-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: var(--radius);
+            padding: 20px; text-align: center;
+        }
+        .revenue-card__icon { font-size: 28px; margin-bottom: 8px; display: block; }
+        .revenue-card__title {
+            font-size: 14px; font-weight: 600;
+            color: rgba(255,255,255,0.5); margin-bottom: 4px;
+        }
+        .revenue-card__amount {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem; font-weight: 600;
+            color: var(--gold); margin-bottom: 4px;
+        }
+        .revenue-card__detail {
+            font-size: 11px; color: rgba(255,255,255,0.2);
+        }
+
+        /* ======================================== Demo Banner ======================================== */
+        .demo-tag {
+            position: fixed; top: 70px; right: 16px; z-index: 999;
+            display: flex; align-items: center; gap: 6px;
+            padding: 6px 14px;
+            background: rgba(212,168,67,0.12);
+            border: 1px solid rgba(212,168,67,0.2);
+            border-radius: 100px;
+            font-size: 11px; font-weight: 600;
+            color: var(--gold-dim); letter-spacing: 0.03em;
+        }
+        .demo-tag__dot {
+            width: 6px; height: 6px;
+            background: var(--gold);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* ======================================== Back Link ======================================== */
+        .back-link {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 48px 24px 0;
+            max-width: 900px; margin: 0 auto;
+            font-size: 13px; color: rgba(255,255,255,0.25);
+            text-decoration: none;
+        }
+        .back-link:hover { color: var(--gold-dim); }
+
+        /* Footer override */
+        .future-footer {
+            padding: 48px 24px 32px;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.04);
+        }
+        .future-footer__text {
+            font-size: 12px; color: rgba(255,255,255,0.15);
+            line-height: 1.7; max-width: 500px; margin: 0 auto;
+        }
+        .future-footer__text a { color: var(--gold-dim); }
+
+        @media (max-width: 768px) {
+            .app-preview { flex-direction: column; text-align: center; }
+            .app-mockup { width: 180px; height: 360px; }
+            .app-info__features { text-align: left; }
+        }
+    </style>
+</head>
+<body class="mandala-body future-body">
+
+    <!-- Navigation -->
+    <nav class="site-nav" id="siteNav">
+        <div class="site-nav__inner">
+            <a href="../en/index.html" class="site-nav__brand">
+                <img src="../assets/images/logo.png" alt="Gungru Khangtsen">
+                <span>Gungru Khangtsen</span>
+            </a>
+            <button class="nav-toggle" onclick="document.querySelector('.site-nav__links').classList.toggle('open')" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="site-nav__links">
+                <li><a href="../en/index.html">Home</a></li>
+                <li><a href="index.html">Sacred Sands</a></li>
+                <li><a href="../en/donate.html" class="site-nav__cta">
+                    <span>&#9825;</span>
+                    <span>Donate</span>
+                </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Demo Tag -->
+    <div class="demo-tag">
+        <span class="demo-tag__dot"></span>
+        Concept Preview
+    </div>
+
+    <!-- Back link -->
+    <a href="index.html" class="back-link">&larr; Back to Sacred Sands</a>
+
+    <!-- Hero -->
+    <section class="future-hero">
+        <div class="future-hero__content">
+            <div class="future-hero__badge">&#10024; Future Vision</div>
+            <h1 class="future-hero__title">The Road Ahead for Sacred Sands</h1>
+            <p class="future-hero__desc">
+                A preview of how Sacred Sands will grow into a self-sustaining platform
+                that funds the monastery through premium digital content, physical products,
+                and an iPhone app.
+            </p>
+            <p class="future-hero__note">All concepts below are interactive mockups &mdash; not yet available for purchase.</p>
+        </div>
+    </section>
+
+    <!-- ======================================== 1. Premium Sand Packs ======================================== -->
+    <section class="future-section">
+        <div class="future-section__header">
+            <div class="future-section__label">&#127912; In-App Purchases</div>
+            <h2 class="future-section__title">Premium Sand Collections</h2>
+            <p class="future-section__subtitle">Cosmetic sand colors that unlock new creative possibilities. Each pack supports the monastery directly.</p>
+        </div>
+
+        <div class="sand-packs-grid">
+            <div class="sand-pack">
+                <div class="sand-pack__preview">
+                    <span class="sand-pack__swatch" style="background: linear-gradient(135deg, #FFD700, #B8860B);"></span>
+                    <span class="sand-pack__swatch" style="background: linear-gradient(135deg, #C0C0C0, #808080);"></span>
+                </div>
+                <div class="sand-pack__name">Precious Metals</div>
+                <div class="sand-pack__desc">Gold leaf and silver dust, as monks once used</div>
+                <div class="sand-pack__price">$2.99</div>
+                <button class="sand-pack__btn" onclick="alert('This is a concept preview. Not yet available!')">Get Pack</button>
+            </div>
+
+            <div class="sand-pack sand-pack--featured">
+                <div class="sand-pack__preview">
+                    <span class="sand-pack__swatch" style="background: linear-gradient(135deg, #1a3a8f, #4169E1);"></span>
+                    <span class="sand-pack__swatch" style="background: linear-gradient(135deg, #9B111E, #DC143C);"></span>
+                    <span class="sand-pack__swatch" style="background: linear-gradient(135deg, #00897B, #26A69A);"></span>
+                </div>
+                <div class="sand-pack__name">Crushed Jewels</div>
+                <div class="sand-pack__desc">Lapis lazuli, ruby, and turquoise &mdash; the traditional pigments</div>
+                <div class="sand-pack__price">$4.99</div>
+                <button class="sand-pack__btn" onclick="alert('This is a concept preview. Not yet available!')">Get Pack</button>
+            </div>
+
+            <div class="sand-pack">
+                <div class="sand-pack__preview">
+                    <span class="sand-pack__swatch" style="background: linear-gradient(135deg, #FFE4B5, #FFDEAD); border-color: rgba(255,255,255,0.2);"></span>
+                    <span class="sand-pack__swatch" style="background: linear-gradient(135deg, #DEB887, #D2B48C);"></span>
+                </div>
+                <div class="sand-pack__name">Natural Earth</div>
+                <div class="sand-pack__desc">Ochre, sienna, and clay &mdash; grounding earth tones</div>
+                <div class="sand-pack__price">$1.99</div>
+                <button class="sand-pack__btn" onclick="alert('This is a concept preview. Not yet available!')">Get Pack</button>
+            </div>
+
+            <div class="sand-pack">
+                <div class="sand-pack__preview">
+                    <span class="sand-pack__swatch" style="background: linear-gradient(135deg, #E8B838, #FFD700); box-shadow: 0 0 12px rgba(232,184,56,0.3);"></span>
+                </div>
+                <div class="sand-pack__name">Iridescent Gold</div>
+                <div class="sand-pack__desc">Shimmering sand that catches light as you pour</div>
+                <div class="sand-pack__price">$3.99</div>
+                <button class="sand-pack__btn" onclick="alert('This is a concept preview. Not yet available!')">Get Pack</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======================================== 2. Offerings / Sponsored Items ======================================== -->
+    <section class="future-section">
+        <div class="future-section__header">
+            <div class="future-section__label">&#128367; Digital Offerings</div>
+            <h2 class="future-section__title">Offer to the Monastery</h2>
+            <p class="future-section__subtitle">Digital offerings that create real impact. Every purchase is a direct donation to the monks of Gungru Khangtsen.</p>
+        </div>
+
+        <div class="offering-cards">
+            <div class="offering-card">
+                <span class="offering-card__icon">&#128367;</span>
+                <h3 class="offering-card__title">Sponsored Butter Lamp</h3>
+                <p class="offering-card__desc">Light a virtual butter lamp in the game that persists for 7 days. Your real donation lights an actual butter lamp at the monastery. The flame dispels darkness and illuminates wisdom.</p>
+                <div class="offering-card__price-row">
+                    <span class="offering-card__price">$5</span>
+                    <span class="offering-card__note">lights a real lamp in Mundgod</span>
+                </div>
+                <span class="offering-card__cta">Light a Lamp &rarr;</span>
+            </div>
+
+            <div class="offering-card">
+                <span class="offering-card__icon">&#128144;</span>
+                <h3 class="offering-card__title">Flower Offering</h3>
+                <p class="offering-card__desc">Decorate your mandala with lotus flowers, marigolds, and jasmine. Each offering adds beauty to your creation and contributes to the monks' daily sustenance fund.</p>
+                <div class="offering-card__price-row">
+                    <span class="offering-card__price">$3</span>
+                    <span class="offering-card__note">supports monks' daily meals</span>
+                </div>
+                <span class="offering-card__cta">Make an Offering &rarr;</span>
+            </div>
+
+            <div class="offering-card">
+                <span class="offering-card__icon">&#128214;</span>
+                <h3 class="offering-card__title">Extended Teachings</h3>
+                <p class="offering-card__desc">Unlock deeper teachings from the Lamrim (Stages of the Path), recorded by senior monks. Audio teachings play softly while you create, deepening your understanding.</p>
+                <div class="offering-card__price-row">
+                    <span class="offering-card__price">$7.99</span>
+                    <span class="offering-card__note">funds monastic education</span>
+                </div>
+                <span class="offering-card__cta">Unlock Teachings &rarr;</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======================================== 3. Physical Products ======================================== -->
+    <section class="future-section">
+        <div class="future-section__header">
+            <div class="future-section__label">&#128230; Physical Products</div>
+            <h2 class="future-section__title">From Digital to Physical</h2>
+            <p class="future-section__subtitle">Bridge the virtual and real with physical sand kits, tools, and prints. All proceeds benefit the monastery.</p>
+        </div>
+
+        <div class="products-grid">
+            <div class="product-card">
+                <div class="product-card__image">
+                    <div class="product-card__image-placeholder product-card__image-placeholder--sand">
+                        <span style="font-size: 48px; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));">&#127912;</span>
+                    </div>
+                </div>
+                <div class="product-card__body">
+                    <h3 class="product-card__name">Sacred Sand Kit</h3>
+                    <p class="product-card__desc">5 colors of fine marble sand matching the Five Buddha Families. Includes traditional cloth and instruction booklet blessed by the monks.</p>
+                    <div class="product-card__price-row">
+                        <span class="product-card__price">$29.99</span>
+                        <span class="product-card__tag">Bestseller</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-card__image">
+                    <div class="product-card__image-placeholder product-card__image-placeholder--chakpur">
+                        <span style="font-size: 48px; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));">&#9997;</span>
+                    </div>
+                </div>
+                <div class="product-card__body">
+                    <h3 class="product-card__name">Chak-pur Tool Set</h3>
+                    <p class="product-card__desc">Authentic brass chak-pur (metal funnel) and scraping rod, handcrafted in India. The same tools monks use to create sand mandalas.</p>
+                    <div class="product-card__price-row">
+                        <span class="product-card__price">$49.99</span>
+                        <span class="product-card__tag">Handcrafted</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-card__image">
+                    <div class="product-card__image-placeholder product-card__image-placeholder--print">
+                        <span style="font-size: 48px; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));">&#128444;</span>
+                    </div>
+                </div>
+                <div class="product-card__body">
+                    <h3 class="product-card__name">Mandala Art Print</h3>
+                    <p class="product-card__desc">High-quality print of your completed digital mandala on archival paper. A beautiful reminder of impermanence to hang in your space.</p>
+                    <div class="product-card__price-row">
+                        <span class="product-card__price">$19.99</span>
+                        <span class="product-card__tag">Custom</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======================================== 4. iPhone App Preview ======================================== -->
+    <section class="future-section">
+        <div class="app-preview">
+            <div class="app-mockup">
+                <div class="app-mockup__notch"></div>
+                <div class="app-mockup__screen">
+                    <div class="app-mockup__icon">&#9784;</div>
+                    <div class="app-mockup__title">Sacred Sands</div>
+                    <div class="app-mockup__sub">Mandala Creation</div>
+                    <div class="app-mockup__features">
+                        <div class="app-mockup__feature">
+                            <span class="app-mockup__feature-dot"></span>
+                            Haptic feedback sand pouring
+                        </div>
+                        <div class="app-mockup__feature">
+                            <span class="app-mockup__feature-dot"></span>
+                            Apple Pencil precision
+                        </div>
+                        <div class="app-mockup__feature">
+                            <span class="app-mockup__feature-dot"></span>
+                            Daily mindfulness streaks
+                        </div>
+                        <div class="app-mockup__feature">
+                            <span class="app-mockup__feature-dot"></span>
+                            Mandala gallery + sharing
+                        </div>
+                        <div class="app-mockup__feature">
+                            <span class="app-mockup__feature-dot"></span>
+                            Ambient monastery audio
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="app-info">
+                <h2 class="app-info__title">Coming to iPhone &amp; iPad</h2>
+                <p class="app-info__desc">
+                    The full Sacred Sands experience, optimized for touch.
+                    Apple Pencil support transforms the iPad into a true chak-pur,
+                    with pressure sensitivity controlling sand flow.
+                </p>
+                <ul class="app-info__features">
+                    <li><span>&#128241;</span> Haptic feedback when sand pours</li>
+                    <li><span>&#9997;</span> Apple Pencil pressure = sand flow</li>
+                    <li><span>&#128276;</span> Daily reminders for your practice</li>
+                    <li><span>&#127760;</span> Community mandala gallery</li>
+                    <li><span>&#127925;</span> Real monastery chanting audio</li>
+                    <li><span>&#128274;</span> Offline mode for meditation retreats</li>
+                </ul>
+                <div class="app-info__cta">
+                    &#63743; Coming Soon to the App Store
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======================================== 5. Revenue Model Summary ======================================== -->
+    <section class="future-section">
+        <div class="future-section__header">
+            <div class="future-section__label">&#128200; Revenue Model</div>
+            <h2 class="future-section__title">How Sacred Sands Supports the Monastery</h2>
+            <p class="future-section__subtitle">Multiple revenue streams, each creating value for players while directly funding monastic life.</p>
+        </div>
+
+        <div class="revenue-grid">
+            <div class="revenue-card">
+                <span class="revenue-card__icon">&#127912;</span>
+                <div class="revenue-card__title">Premium Sand Packs</div>
+                <div class="revenue-card__amount">$1.99 &ndash; $4.99</div>
+                <div class="revenue-card__detail">Cosmetic colors, high margin</div>
+            </div>
+            <div class="revenue-card">
+                <span class="revenue-card__icon">&#128367;</span>
+                <div class="revenue-card__title">Digital Offerings</div>
+                <div class="revenue-card__amount">$3 &ndash; $10</div>
+                <div class="revenue-card__detail">Direct donations with in-game benefit</div>
+            </div>
+            <div class="revenue-card">
+                <span class="revenue-card__icon">&#128230;</span>
+                <div class="revenue-card__title">Physical Products</div>
+                <div class="revenue-card__amount">$19 &ndash; $49</div>
+                <div class="revenue-card__detail">Sand kits, tools, prints</div>
+            </div>
+            <div class="revenue-card">
+                <span class="revenue-card__icon">&#128241;</span>
+                <div class="revenue-card__title">App Revenue</div>
+                <div class="revenue-card__amount">Freemium</div>
+                <div class="revenue-card__detail">Free game + premium content</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="future-footer">
+        <p class="future-footer__text">
+            This is a concept preview for internal planning purposes.<br>
+            All proceeds from Sacred Sands will directly support the monks of<br>
+            <a href="../en/index.html">Gaden Shartse Gungru Khangtsen Monastery</a>, Mundgod, India.
+        </p>
+    </footer>
+
+    <script>
+        // Navbar scroll
+        const nav = document.getElementById('siteNav');
+        window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 20); });
+    </script>
+</body>
+</html>
