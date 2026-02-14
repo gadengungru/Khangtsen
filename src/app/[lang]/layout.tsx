@@ -36,6 +36,8 @@ const fontFamilyMap: Record<Locale, string> = {
   ne: "'Noto Sans Devanagari', sans-serif",
   ta: "'Noto Sans Tamil', sans-serif",
   te: "'Noto Sans Telugu', sans-serif",
+  vi: "var(--font-geist), sans-serif",
+  "zh-CN": "'Noto Sans SC', sans-serif",
 };
 
 export default async function LangLayout({

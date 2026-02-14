@@ -1,0 +1,65 @@
+{
+  "metadata": {
+    "title": "Khangtsen",
+    "description": "Bảo tồn và phát huy văn hóa, giáo dục và cộng đồng Tây Tạng"
+  },
+  "nav": {
+    "home": "Trang chủ",
+    "about": "Giới thiệu",
+    "programs": "Chương trình",
+    "contact": "Liên hệ",
+    "signIn": "Đăng nhập",
+    "intranet": "Mạng nội bộ"
+  },
+  "home": {
+    "hero": {
+      "title": "Chào mừng đến với Khangtsen",
+      "subtitle": "Bảo tồn di sản, xây dựng cộng đồng, trao quyền cho tương lai",
+      "cta": "Tìm hiểu thêm"
+    },
+    "mission": {
+      "title": "Sứ mệnh của Chúng tôi",
+      "description": "Chúng tôi tận tụy bảo tồn và phát huy văn hóa Tây Tạng, hỗ trợ giáo dục và tăng cường kết nối cộng đồng qua các thế hệ."
+    }
+  },
+  "about": {
+    "title": "Giới thiệu",
+    "description": "Tìm hiểu về lịch sử, sứ mệnh và cộng đồng mà chúng tôi phục vụ.",
+    "history": {
+      "title": "Lịch sử của Chúng tôi",
+      "content": "Khangtsen có lịch sử phong phú bắt nguồn từ việc bảo tồn di sản văn hóa Tây Tạng. Chúng tôi nỗ lực duy trì truyền thống trong khi đón nhận tương lai."
+    }
+  },
+  "programs": {
+    "title": "Chương trình",
+    "description": "Khám phá các chương trình và sáng kiến mà chúng tôi cung cấp cho cộng đồng.",
+    "list": [
+      {
+        "title": "Bảo tồn Văn hóa",
+        "description": "Các chương trình dành riêng cho việc bảo tồn ngôn ngữ, nghệ thuật và truyền thống Tây Tạng."
+      },
+      {
+        "title": "Giáo dục",
+        "description": "Các sáng kiến giáo dục hỗ trợ thanh niên và học tập suốt đời."
+      },
+      {
+        "title": "Hỗ trợ Cộng đồng",
+        "description": "Nguồn lực và dịch vụ tăng cường kết nối cộng đồng."
+      }
+    ]
+  },
+  "contact": {
+    "title": "Liên hệ với Chúng tôi",
+    "description": "Hãy liên hệ với chúng tôi. Chúng tôi rất vui được lắng nghe bạn.",
+    "form": {
+      "name": "Họ và Tên",
+      "email": "Email của bạn",
+      "message": "Tin nhắn của bạn",
+      "submit": "Gửi tin nhắn"
+    }
+  },
+  "footer": {
+    "rights": "Đã đăng ký bản quyền.",
+    "language": "Ngôn ngữ"
+  }
+}
