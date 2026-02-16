@@ -1,37 +1,37 @@
 // instagram-feed.js — Instagram feed for Gungru Khangtsen homepage
+// Reads cached posts from Supabase settings (server-side cached, auto-refreshed)
 (function() {
     'use strict';
 
     var INSTAGRAM_PROFILE = 'https://www.instagram.com/gadengungru';
     var SUPABASE_URL = 'https://axnongwefdafwflekysk.supabase.co';
     var SUPABASE_KEY = 'sb_publishable_pFwy1o_CK9ps98dK-yDyTQ_zXaCU2_y';
-    var CACHE_KEY = 'gungru-instagram-cache';
-    var CACHE_DURATION = 30 * 60 * 1000; // 30 minutes
-    var POST_COUNT = 6;
+    var LOCAL_CACHE_KEY = 'gungru-instagram-cache';
+    var LOCAL_CACHE_DURATION = 60 * 60 * 1000; // 1 hour
 
     var feedContainer = document.getElementById('instagramFeed');
     if (!feedContainer) return;
 
-    // Check cache first
-    function getCached() {
+    // Local browser cache
+    function getLocalCache() {
         try {
-            var cached = JSON.parse(localStorage.getItem(CACHE_KEY));
-            if (cached && Date.now() - cached.ts < CACHE_DURATION && cached.posts && cached.posts.length) {
+            var cached = JSON.parse(localStorage.getItem(LOCAL_CACHE_KEY));
+            if (cached && Date.now() - cached.ts < LOCAL_CACHE_DURATION && cached.posts && cached.posts.length) {
                 return cached.posts;
             }
         } catch (e) {}
         return null;
     }
 
-    function setCache(posts) {
+    function setLocalCache(posts) {
         try {
-            localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), posts: posts }));
+            localStorage.setItem(LOCAL_CACHE_KEY, JSON.stringify({ ts: Date.now(), posts: posts }));
         } catch (e) {}
     }
 
-    // Fetch Instagram token from Supabase settings
-    function fetchToken() {
-        return fetch(SUPABASE_URL + '/rest/v1/settings?key=eq.instagram_token&select=value', {
+    // Fetch cached posts from Supabase settings (no token exposed)
+    function fetchCachedFeed() {
+        return fetch(SUPABASE_URL + '/rest/v1/settings?key=eq.instagram_feed_cache&select=value', {
             headers: {
                 'apikey': SUPABASE_KEY,
                 'Authorization': 'Bearer ' + SUPABASE_KEY
@@ -41,63 +41,49 @@
         .then(function(rows) {
             if (rows && rows.length && rows[0].value) {
                 var val = rows[0].value;
-                // value might be JSON string with {token: "..."} or plain string
+                // Handle both string and object
                 if (typeof val === 'string') {
-                    try {
-                        var parsed = JSON.parse(val);
-                        return parsed.token || parsed.access_token || val;
-                    } catch (e) {
-                        return val;
-                    }
+                    val = JSON.parse(val);
                 }
-                return val.token || val.access_token || null;
+                return val.posts || [];
             }
-            return null;
+            return [];
         });
-    }
-
-    // Fetch posts from Instagram Graph API
-    function fetchPosts(token) {
-        var url = 'https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url,thumbnail_url,permalink,timestamp&limit=' + POST_COUNT + '&access_token=' + token;
-        return fetch(url)
-            .then(function(r) {
-                if (!r.ok) throw new Error('Instagram API error: ' + r.status);
-                return r.json();
-            })
-            .then(function(data) {
-                return data.data || [];
-            });
     }
 
     // Render feed grid
     function renderFeed(posts) {
         feedContainer.innerHTML = '';
+        var count = 0;
         posts.forEach(function(post) {
             var imgUrl = post.media_type === 'VIDEO' ? post.thumbnail_url : post.media_url;
-            if (!imgUrl) return;
+            if (!imgUrl || count >= 6) return;
+            count++;
 
             var item = document.createElement('a');
             item.className = 'instagram-feed__item reveal';
             item.href = post.permalink || INSTAGRAM_PROFILE;
             item.target = '_blank';
             item.rel = 'noopener';
-            item.setAttribute('aria-label', post.caption ? post.caption.substring(0, 80) : 'Instagram post');
+
+            var caption = post.caption ? post.caption.substring(0, 80) : 'Instagram post';
+            item.setAttribute('aria-label', caption);
 
             var img = document.createElement('img');
             img.src = imgUrl;
-            img.alt = post.caption ? post.caption.substring(0, 100) : 'Instagram post';
+            img.alt = caption;
             img.loading = 'lazy';
 
             var overlay = document.createElement('div');
             overlay.className = 'instagram-feed__overlay';
-            overlay.innerHTML = '<span>&#10084; View</span>';
+            overlay.innerHTML = '<span>&#9654; View</span>';
 
             item.appendChild(img);
             item.appendChild(overlay);
             feedContainer.appendChild(item);
         });
 
-        // Re-observe for scroll reveal
+        // Scroll reveal animation
         if (window.IntersectionObserver) {
             var observer = new IntersectionObserver(function(entries) {
                 entries.forEach(function(entry) {
@@ -108,7 +94,7 @@
         }
     }
 
-    // Render fallback — beautiful placeholder grid
+    // Render fallback — beautiful placeholder grid linking to Instagram
     function renderFallback() {
         feedContainer.innerHTML = '';
         var errorDiv = document.createElement('div');
@@ -117,61 +103,42 @@
         var grid = document.createElement('div');
         grid.className = 'instagram-feed__error-grid';
 
-        var emojis = ['&#128591;', '&#127748;', '&#9784;', '&#127912;', '&#128214;', '&#127760;'];
+        var emojis = ['\uD83D\uDE4F', '\uD83C\uDF04', '\u2638', '\uD83C\uDFA8', '\uD83D\uDCD6', '\uD83C\uDF0E'];
         for (var i = 0; i < 6; i++) {
             var placeholder = document.createElement('a');
             placeholder.href = INSTAGRAM_PROFILE;
             placeholder.target = '_blank';
             placeholder.rel = 'noopener';
             placeholder.className = 'instagram-feed__placeholder';
-            placeholder.innerHTML = emojis[i];
+            placeholder.textContent = emojis[i];
             placeholder.setAttribute('aria-label', 'Visit our Instagram');
             grid.appendChild(placeholder);
         }
 
         errorDiv.appendChild(grid);
-        feedContainer.innerHTML = '';
         feedContainer.style.display = 'block';
         feedContainer.appendChild(errorDiv);
     }
 
     // Main flow
     function init() {
-        // Try cache first
-        var cached = getCached();
+        // Try local browser cache first
+        var cached = getLocalCache();
         if (cached) {
             renderFeed(cached);
-            // Refresh in background
-            refreshInBackground();
             return;
         }
 
-        // Fetch fresh
-        fetchToken()
-            .then(function(token) {
-                if (!token) throw new Error('No Instagram token');
-                return fetchPosts(token);
-            })
+        // Fetch from Supabase server cache
+        fetchCachedFeed()
             .then(function(posts) {
                 if (!posts || !posts.length) throw new Error('No posts');
-                setCache(posts);
+                setLocalCache(posts);
                 renderFeed(posts);
             })
             .catch(function() {
                 renderFallback();
             });
-    }
-
-    function refreshInBackground() {
-        fetchToken()
-            .then(function(token) {
-                if (!token) return;
-                return fetchPosts(token);
-            })
-            .then(function(posts) {
-                if (posts && posts.length) setCache(posts);
-            })
-            .catch(function() {});
     }
 
     // Start
