@@ -64,9 +64,9 @@ const DharmaCards = (function() {
             compassion: 10,
             merit: 10,
             shortDesc: 'Bodhisattva of compassion. HHDL is considered his emanation.',
-            teaching: 'Chenrezig (Avalokiteshvara) is the bodhisattva of universal compassion, depicted with four arms representing loving-kindness, compassion, sympathetic joy, and equanimity \u2014 the Four Boundless Thoughts. In the Gelug tradition, His Holiness the Dalai Lama is revered as the living emanation of Chenrezig. The monks of Gaden Shartse chant the six-syllable mantra OM MANI PADME HUM daily, invoking this boundless compassion for all sentient beings. The sand mandalas created on tour often feature Chenrezig as the central deity.',
+            teaching: 'Chenrezig (Avalokiteshvara) is the bodhisattva of universal compassion, depicted with four arms representing loving-kindness, compassion, sympathetic joy, and equanimity \u2014 the Four Boundless Thoughts. In the Gelug tradition, His Holiness the Dalai Lama is revered as the living emanation of Chenrezig. The monks of Gaden Shartse chant the six-syllable mantra OM MANI PADME HUM daily, invoking this boundless compassion for all sentient beings. The sand mandalas often feature Chenrezig as the central deity.',
             quote: 'OM MANI PADME HUM \u2014 The jewel is in the lotus.',
-            related: ['dalai-lama', 'four-boundless', 'usa-tours']
+            related: ['dalai-lama', 'four-boundless', 'sand-mandala']
         },
         {
             id: 'manjushri',
@@ -188,9 +188,9 @@ const DharmaCards = (function() {
             compassion: 8,
             merit: 10,
             shortDesc: 'Millions of sand grains forming a sacred palace. Created to be dissolved.',
-            teaching: 'A sand mandala is an intricate sacred design created from millions of grains of colored sand, placed one at a time using traditional metal funnels called chak-pur. The mandala represents the celestial palace of a specific deity \u2014 a three-dimensional architectural blueprint rendered in two dimensions. Monks of Gungru Khangtsen spend years learning this art, and they share it with the world during their annual tours. Each mandala is a meditation in itself: the act of creation cultivates patience, precision, and mindful awareness.',
+            teaching: 'A sand mandala is an intricate sacred design created from millions of grains of colored sand, placed one at a time using traditional metal funnels called chak-pur. The mandala represents the celestial palace of a specific deity \u2014 a three-dimensional architectural blueprint rendered in two dimensions. Monks of Gungru Khangtsen spend years learning this art. Each mandala is a meditation in itself: the act of creation cultivates patience, precision, and mindful awareness.',
             quote: 'Each grain of sand is placed with the intention to benefit all beings.',
-            related: ['impermanence', 'dissolution', 'usa-tours']
+            related: ['impermanence', 'dissolution', 'mundgod']
         },
         {
             id: 'butter-lamp',
@@ -235,7 +235,7 @@ const DharmaCards = (function() {
             shortDesc: 'The ceremonial sweeping away. Days of creation released in a single act.',
             teaching: 'The dissolution ceremony is the climax of every sand mandala creation. After days of painstaking work, the monks chant prayers, then draw lines through the mandala with a ceremonial brush. The intricate design is swept inward to the center, mixed together, and distributed to attendees as blessed sand. A portion is carried to the nearest body of water and released, spreading the blessings to all beings. This is not destruction \u2014 it is the mandala\'s ultimate teaching: that attachment to even the most beautiful things causes suffering. Letting go is itself enlightenment.',
             quote: 'In the letting go, the mandala gives its greatest gift.',
-            related: ['sand-mandala', 'impermanence', 'usa-tours']
+            related: ['sand-mandala', 'impermanence', 'mundgod']
         },
 
         // ── Place & History Cards ──
@@ -330,21 +330,6 @@ const DharmaCards = (function() {
             teaching: 'A puja is a Buddhist prayer ceremony in which monks chant sacred texts, make offerings, and perform rituals directed toward specific intentions. At Gungru Khangtsen, pujas are performed daily and can be requested by anyone worldwide \u2014 for healing (Medicine Buddha Puja), protection (Tara Puja), wisdom (Manjushri Puja), spiritual growth (Lama Choepa), or for the deceased. When the entire assembly of sixty monks chants together in the prayer hall, the sound carries the collective intention and merit of centuries of unbroken practice.',
             quote: 'Sixty voices, one intention. Merit ripples outward without end.',
             related: ['butter-lamp', 'tara', 'manjushri']
-        },
-        {
-            id: 'usa-tours',
-            name: 'Sacred Arts Tour',
-            subtitle: 'Sharing the Dharma',
-            category: 'monastic',
-            rarity: 'uncommon',
-            emoji: '\u2708',
-            wisdom: 6,
-            compassion: 8,
-            merit: 8,
-            shortDesc: 'Annual tours bringing sand mandalas and teachings around the world.',
-            teaching: 'Each year, monks from Gaden Shartse Gungru Khangtsen travel on Sacred Arts Tours, creating sand mandalas at universities, museums, and cultural centers. These tours serve a dual purpose: they share the living traditions of Tibetan Buddhism with audiences worldwide, and they raise essential funds to support the monastery in Karnataka. Visitors watch in awe as monks spend days creating intricate mandalas grain by grain, then participate in the powerful dissolution ceremony that teaches impermanence.',
-            quote: 'The monks carry the tradition across oceans, one grain of sand at a time.',
-            related: ['sand-mandala', 'dissolution', 'mundgod']
         },
         {
             id: 'khangtsen',
