@@ -1,8 +1,9 @@
 // i18n — Language switcher for Gungru Khangtsen static site
 (function() {
+    var FLAG_IMG_BASE = '../assets/images/';
     var LANGS = {
         en: { flag: '\uD83C\uDDEC\uD83C\uDDE7', name: 'English' },
-        bo: { flag: '\uD83C\uDFF3\uFE0F', name: '\u0F56\u0F7C\u0F51\u0F0B\u0F66\u0F90\u0F51\u0F0B' },
+        bo: { flagImg: 'flag-tibet.svg', name: '\u0F56\u0F7C\u0F51\u0F0B\u0F66\u0F90\u0F51\u0F0B' },
         hi: { flag: '\uD83C\uDDEE\uD83C\uDDF3', name: '\u0939\u093F\u0928\u094D\u0926\u0940' },
         'zh-TW': { flag: '\uD83C\uDDF9\uD83C\uDDFC', name: '\u4E2D\u6587' },
         kn: { flag: '\uD83C\uDDEE\uD83C\uDDF3', name: '\u0C95\u0CA8\u0CCD\u0CA8\u0CA1' },
@@ -50,7 +51,10 @@
             item.setAttribute('role', 'option');
             item.setAttribute('data-lang', code);
             item.setAttribute('aria-selected', code === currentLang ? 'true' : 'false');
-            item.innerHTML = '<span class="lang-picker__item-flag">' + LANGS[code].flag + '</span>' +
+            var flagHtml = LANGS[code].flagImg
+                ? '<img src="' + FLAG_IMG_BASE + LANGS[code].flagImg + '" alt="" style="width:18px;height:14px;object-fit:cover;border-radius:2px;">'
+                : LANGS[code].flag;
+            item.innerHTML = '<span class="lang-picker__item-flag">' + flagHtml + '</span>' +
                 '<span class="lang-picker__item-name">' + LANGS[code].name + '</span>';
             item.addEventListener('click', function(e) {
                 e.stopPropagation();
@@ -75,7 +79,10 @@
 
     function updateToggle(toggle) {
         var lang = LANGS[currentLang] || LANGS[DEFAULT_LANG];
-        toggle.innerHTML = '<span class="lang-picker__toggle-flag">' + lang.flag + '</span>' +
+        var flagHtml = lang.flagImg
+            ? '<img src="' + FLAG_IMG_BASE + lang.flagImg + '" alt="" style="width:16px;height:12px;object-fit:cover;border-radius:2px;">'
+            : lang.flag;
+        toggle.innerHTML = '<span class="lang-picker__toggle-flag">' + flagHtml + '</span>' +
             '<span class="lang-picker__toggle-label">Language</span>' +
             '<span class="lang-picker__toggle-arrow">&#9662;</span>';
         toggle.setAttribute('title', 'Language: ' + lang.name);
