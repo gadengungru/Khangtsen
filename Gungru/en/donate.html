@@ -486,8 +486,11 @@
         // Language to default currency mapping
         const LANG_CURRENCY = { en: 'USD', hi: 'INR', kn: 'INR', bo: 'INR', fr: 'EUR', es: 'EUR', 'zh-TW': 'TWD', 'zh-CN': 'CNY', vi: 'USD', dz: 'INR', ja: 'JPY', mr: 'INR', ne: 'INR', ta: 'INR', te: 'INR' };
 
-        // Detect language from <html lang>, URL path, or default to 'en'
+        // Detect language from localStorage (i18n), <html lang>, URL path, or default to 'en'
         function detectLang() {
+            // Check localStorage first — the i18n system stores the user's language choice here
+            const storedLang = localStorage.getItem('gungru-lang') || '';
+            if (storedLang && LANG_CURRENCY[storedLang]) return storedLang;
             const htmlLang = document.documentElement.lang || '';
             if (LANG_CURRENCY[htmlLang]) return htmlLang;
             const pathMatch = window.location.pathname.match(/\/([a-zA-Z]{2}(?:-[a-zA-Z]{2})?)\//);
@@ -580,6 +583,20 @@
             select.value = currentCurrency;
             changeCurrency(currentCurrency);
         }
+
+        // Re-detect currency when language is switched (i18n updates <html lang>)
+        new MutationObserver(function() {
+            const newLang = document.documentElement.lang;
+            if (newLang && LANG_CURRENCY[newLang]) {
+                const newCurrency = LANG_CURRENCY[newLang];
+                if (newCurrency !== currentCurrency) {
+                    currentCurrency = newCurrency;
+                    const select = document.getElementById('donationCurrency');
+                    select.value = currentCurrency;
+                    changeCurrency(currentCurrency);
+                }
+            }
+        }).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
 
         // ── Core Functions ──
 

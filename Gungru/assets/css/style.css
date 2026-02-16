@@ -537,7 +537,7 @@ section { position: relative; }
     position: relative; min-height: 400px;
     display: flex; align-items: center; justify-content: center; text-align: center;
     padding: 80px 20px 32px; overflow: hidden;
-    background: linear-gradient(180deg, var(--saffron) 0%, var(--saffron-light) 60%, var(--saffron-pale) 100%);
+    background: var(--saffron);
 }
 .hero--small { min-height: auto; padding: 80px 20px 28px; }
 .hero__orb {
@@ -615,7 +615,7 @@ section { position: relative; }
 .section-divider .divider-symbol { color: var(--saffron); font-size: 14px; letter-spacing: 6px; }
 
 /* ======================================== About Card ======================================== */
-.about { padding: 0 20px 24px; }
+.about { padding: 24px 20px 24px; background: var(--saffron-wash); }
 .about__card {
     max-width: 800px; margin: 0 auto; background: var(--surface-warm);
     border: 1px solid var(--border); border-radius: var(--radius-xl);
@@ -638,6 +638,7 @@ section { position: relative; }
 
 /* ======================================== Image Gallery / Grid ======================================== */
 .gallery-section { padding: 24px 20px 28px; background: var(--saffron-pale); }
+.gallery-section .section-header__label { color: var(--saffron-deep); }
 .gallery-grid {
     display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 16px; max-width: 1100px; margin: 0 auto;
@@ -658,6 +659,10 @@ section { position: relative; }
 
 /* ======================================== Features / Info Cards ======================================== */
 .features-section { padding: 28px 20px; background: var(--saffron); border-top: none; border-bottom: none; }
+.features-section--alt { background: var(--saffron-wash); }
+.features-section--alt .section-header__label { color: var(--saffron-deep); }
+.features-section--alt .section-header__title { color: var(--saffron-deep); }
+.features-section--alt .section-header__subtitle { color: var(--text-soft); }
 .features-grid {
     display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 14px; max-width: 1100px; margin: 0 auto;
@@ -682,7 +687,7 @@ section { position: relative; }
 .feature-card__desc { font-size: 14px; color: var(--text-soft); line-height: 1.55; }
 
 /* ======================================== CTA Section ======================================== */
-.cta-section { padding: 24px 20px 28px; text-align: center; background: var(--saffron-wash); }
+.cta-section { padding: 24px 20px 28px; text-align: center; background: var(--saffron-pale); }
 .cta-card {
     max-width: 600px; margin: 0 auto; background: var(--surface);
     border: 1px solid var(--border); border-radius: var(--radius-xl);
