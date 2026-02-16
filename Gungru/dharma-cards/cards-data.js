@@ -64,7 +64,7 @@ const DharmaCards = (function() {
             compassion: 10,
             merit: 10,
             shortDesc: 'Bodhisattva of compassion. HHDL is considered his emanation.',
-            teaching: 'Chenrezig (Avalokiteshvara) is the bodhisattva of universal compassion, depicted with four arms representing loving-kindness, compassion, sympathetic joy, and equanimity \u2014 the Four Boundless Thoughts. In the Gelug tradition, His Holiness the Dalai Lama is revered as the living emanation of Chenrezig. The monks of Gaden Shartse chant the six-syllable mantra OM MANI PADME HUM daily, invoking this boundless compassion for all sentient beings. The sand mandalas created on USA tours often feature Chenrezig as the central deity.',
+            teaching: 'Chenrezig (Avalokiteshvara) is the bodhisattva of universal compassion, depicted with four arms representing loving-kindness, compassion, sympathetic joy, and equanimity \u2014 the Four Boundless Thoughts. In the Gelug tradition, His Holiness the Dalai Lama is revered as the living emanation of Chenrezig. The monks of Gaden Shartse chant the six-syllable mantra OM MANI PADME HUM daily, invoking this boundless compassion for all sentient beings. The sand mandalas created on tour often feature Chenrezig as the central deity.',
             quote: 'OM MANI PADME HUM \u2014 The jewel is in the lotus.',
             related: ['dalai-lama', 'four-boundless', 'usa-tours']
         },
@@ -188,7 +188,7 @@ const DharmaCards = (function() {
             compassion: 8,
             merit: 10,
             shortDesc: 'Millions of sand grains forming a sacred palace. Created to be dissolved.',
-            teaching: 'A sand mandala is an intricate sacred design created from millions of grains of colored sand, placed one at a time using traditional metal funnels called chak-pur. The mandala represents the celestial palace of a specific deity \u2014 a three-dimensional architectural blueprint rendered in two dimensions. Monks of Gungru Khangtsen spend years learning this art, and they share it with the world during their annual USA tours. Each mandala is a meditation in itself: the act of creation cultivates patience, precision, and mindful awareness.',
+            teaching: 'A sand mandala is an intricate sacred design created from millions of grains of colored sand, placed one at a time using traditional metal funnels called chak-pur. The mandala represents the celestial palace of a specific deity \u2014 a three-dimensional architectural blueprint rendered in two dimensions. Monks of Gungru Khangtsen spend years learning this art, and they share it with the world during their annual tours. Each mandala is a meditation in itself: the act of creation cultivates patience, precision, and mindful awareness.',
             quote: 'Each grain of sand is placed with the intention to benefit all beings.',
             related: ['impermanence', 'dissolution', 'usa-tours']
         },
@@ -341,8 +341,8 @@ const DharmaCards = (function() {
             wisdom: 6,
             compassion: 8,
             merit: 8,
-            shortDesc: 'Annual tours bringing sand mandalas and teachings to the United States.',
-            teaching: 'Each year, monks from Gaden Shartse Gungru Khangtsen travel to the United States on Sacred Arts Tours, creating sand mandalas at universities, museums, and cultural centers. These tours serve a dual purpose: they share the living traditions of Tibetan Buddhism with Western audiences, and they raise essential funds to support the monastery in Karnataka. Visitors watch in awe as monks spend days creating intricate mandalas grain by grain, then participate in the powerful dissolution ceremony that teaches impermanence.',
+            shortDesc: 'Annual tours bringing sand mandalas and teachings around the world.',
+            teaching: 'Each year, monks from Gaden Shartse Gungru Khangtsen travel on Sacred Arts Tours, creating sand mandalas at universities, museums, and cultural centers. These tours serve a dual purpose: they share the living traditions of Tibetan Buddhism with audiences worldwide, and they raise essential funds to support the monastery in Karnataka. Visitors watch in awe as monks spend days creating intricate mandalas grain by grain, then participate in the powerful dissolution ceremony that teaches impermanence.',
             quote: 'The monks carry the tradition across oceans, one grain of sand at a time.',
             related: ['sand-mandala', 'dissolution', 'mundgod']
         },
