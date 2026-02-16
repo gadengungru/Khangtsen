@@ -3,7 +3,7 @@
     var FLAG_IMG_BASE = '../assets/images/';
     var LANGS = {
         en: { flag: '\uD83C\uDDEC\uD83C\uDDE7', name: 'English' },
-        bo: { flagImg: 'flag-tibet.svg', name: '\u0F56\u0F7C\u0F51\u0F0B\u0F66\u0F90\u0F51\u0F0B' },
+        bo: { flagImg: 'flag-tibet.svg', name: '\u0F56\u0F7C\u0F51\u0F0B\u0F66\u0F90\u0F51\u0F0D' },
         hi: { flag: '\uD83C\uDDEE\uD83C\uDDF3', name: '\u0939\u093F\u0928\u094D\u0926\u0940' },
         'zh-TW': { flag: '\uD83C\uDDF9\uD83C\uDDFC', name: '\u4E2D\u6587' },
         kn: { flag: '\uD83C\uDDEE\uD83C\uDDF3', name: '\u0C95\u0CA8\u0CCD\u0CA8\u0CA1' },
