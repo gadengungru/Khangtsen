@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dharma Games — Gaden Shartse Gungru Khangtsen Monastery</title>
+    <meta name="description" content="Learn Buddhist wisdom through interactive games created in partnership with the monks of Gungru Khangtsen Monastery.">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        .games-section { padding: 28px 20px 40px; }
+        .games-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px; max-width: 900px; margin: 0 auto;
+        }
+        .game-card {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--radius-xl); overflow: hidden;
+            transition: all var(--transition); text-decoration: none; color: inherit;
+            display: flex; flex-direction: column;
+        }
+        .game-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-xl); border-color: var(--gold); }
+        .game-card__visual {
+            height: 200px; display: flex; align-items: center; justify-content: center;
+            position: relative; overflow: hidden;
+        }
+        .game-card__visual--sands {
+            background: linear-gradient(135deg, #2d1b4e 0%, #1a1040 40%, #0d0a20 100%);
+        }
+        .game-card__visual--cards {
+            background: linear-gradient(135deg, #1a0a12 0%, #3d1525 40%, #5a1a2c 100%);
+        }
+        .game-card__visual-icon {
+            font-size: 64px; position: relative; z-index: 1;
+            filter: drop-shadow(0 4px 20px rgba(0,0,0,0.3));
+        }
+        .game-card__visual::after {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(circle at 50% 60%, rgba(212,168,67,0.15) 0%, transparent 70%);
+        }
+        .game-card__badge {
+            position: absolute; top: 14px; right: 14px; z-index: 2;
+            padding: 4px 12px; border-radius: 100px;
+            font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+        }
+        .game-card__badge--live { background: rgba(46,125,50,0.9); color: #fff; }
+        .game-card__badge--new { background: rgba(212,168,67,0.9); color: var(--dark); }
+        .game-card__body { padding: 22px; flex: 1; display: flex; flex-direction: column; }
+        .game-card__title {
+            font-family: 'Cormorant Garamond', serif; font-size: 1.4rem;
+            font-weight: 600; color: var(--dark); margin-bottom: 4px;
+        }
+        .game-card__subtitle {
+            font-size: 13px; font-weight: 600; color: var(--gold-dim);
+            letter-spacing: 0.03em; margin-bottom: 10px;
+        }
+        .game-card__desc {
+            font-size: 14px; color: var(--text-soft); line-height: 1.6; margin-bottom: 16px; flex: 1;
+        }
+        .game-card__tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+        .game-card__tag {
+            display: inline-flex; align-items: center; gap: 4px;
+            padding: 4px 10px; background: rgba(123,26,44,0.04);
+            border: 1px solid rgba(123,26,44,0.1); border-radius: 100px;
+            font-size: 11px; font-weight: 600; color: var(--maroon);
+        }
+        .game-card__play {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 12px 24px; background: var(--maroon); color: #fff;
+            border-radius: 100px; font-size: 14px; font-weight: 600;
+            transition: all var(--transition); text-align: center;
+        }
+        .game-card:hover .game-card__play {
+            background: var(--maroon-deep); box-shadow: 0 4px 16px rgba(123,26,44,0.3);
+        }
+
+        /* Coming soon card */
+        .game-card--soon { opacity: 0.7; pointer-events: none; }
+        .game-card--soon .game-card__visual { filter: grayscale(0.5); }
+        .game-card--soon .game-card__play {
+            background: var(--border); color: var(--text-dim); cursor: default;
+        }
+        .game-card__badge--soon { background: rgba(92,74,62,0.8); color: rgba(255,255,255,0.7); }
+
+        /* Stats row */
+        .games-stats {
+            display: flex; justify-content: center; gap: 32px; flex-wrap: wrap;
+            max-width: 600px; margin: 0 auto 28px; padding: 20px;
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+        }
+        .games-stat { text-align: center; }
+        .games-stat__value {
+            font-family: 'Cormorant Garamond', serif; font-size: 1.6rem;
+            font-weight: 700; color: var(--maroon); line-height: 1;
+        }
+        .games-stat__label { font-size: 12px; color: var(--text-dim); margin-top: 4px; font-weight: 500; }
+
+        @media (max-width: 768px) {
+            .games-grid { grid-template-columns: 1fr; gap: 16px; }
+            .game-card__visual { height: 160px; }
+            .game-card__visual-icon { font-size: 48px; }
+            .games-stats { gap: 24px; padding: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="site-nav" id="siteNav">
+        <div class="site-nav__inner">
+            <a href="index.html" class="site-nav__brand">
+                <img src="../assets/images/logo.png" alt="Gungru Khangtsen">
+                <span>Gungru Khangtsen</span>
+            </a>
+            <button class="nav-toggle" onclick="document.querySelector('.site-nav__links').classList.toggle('open')" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="site-nav__links">
+                <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+                <li><a href="general-understanding.html" data-i18n="nav.general_understanding">General Understanding</a></li>
+                <li class="nav-dropdown">
+                    <a href="dharma-games.html" class="nav-dropdown__toggle active">Dharma Games</a><button class="nav-dropdown__arrow" onclick="this.parentElement.classList.toggle('open');event.preventDefault();event.stopPropagation();" aria-label="Toggle games menu"><span class="nav-arrow">&#9662;</span></button>
+                    <div class="nav-dropdown__menu">
+                        <a href="../mandala-game/index.html">Sacred Sands</a>
+                        <a href="../dharma-cards/index.html">Dharma Guardians</a>
+                    </div>
+                </li>
+                <li><a href="donate.html" class="site-nav__cta">
+                    <span>&#9825;</span>
+                    <span data-i18n="nav.donate">Donate</span>
+                </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero hero--small">
+        <div class="hero__orb hero__orb--1"></div>
+        <div class="hero__orb hero__orb--2"></div>
+        <div class="hero__content">
+            <div class="hero__location">
+                <span>&#127918;</span>
+                <span>Interactive Experiences</span>
+            </div>
+            <h1 class="hero__title">Dharma Games</h1>
+            <p class="hero__tagline">
+                Learn Buddhist wisdom through hands-on interactive experiences created in partnership with our monks.
+            </p>
+        </div>
+    </section>
+
+    <!-- Divider -->
+    <div class="section-divider">
+        <span class="divider-symbol">&#10043;</span>
+        <span class="divider-symbol">&#10043;</span>
+        <span class="divider-symbol">&#10043;</span>
+    </div>
+
+    <!-- Stats -->
+    <section class="games-section" style="padding-bottom:0;">
+        <div class="games-stats reveal">
+            <div class="games-stat">
+                <div class="games-stat__value">2</div>
+                <div class="games-stat__label">Games Available</div>
+            </div>
+            <div class="games-stat">
+                <div class="games-stat__value">20</div>
+                <div class="games-stat__label">Trading Cards</div>
+            </div>
+            <div class="games-stat">
+                <div class="games-stat__value">5</div>
+                <div class="games-stat__label">Buddha Families</div>
+            </div>
+            <div class="games-stat">
+                <div class="games-stat__value">&#8734;</div>
+                <div class="games-stat__label">Wisdom to Discover</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Games Catalog -->
+    <section class="games-section">
+        <div class="games-grid">
+
+            <!-- Sacred Sands -->
+            <a href="../mandala-game/index.html" class="game-card reveal">
+                <div class="game-card__visual game-card__visual--sands">
+                    <span class="game-card__badge game-card__badge--live">Play Now</span>
+                    <span class="game-card__visual-icon">&#127912;</span>
+                </div>
+                <div class="game-card__body">
+                    <h2 class="game-card__title">Sacred Sands</h2>
+                    <div class="game-card__subtitle">Mandala Creation Experience</div>
+                    <p class="game-card__desc">
+                        Create a sacred sand mandala in the Tibetan Buddhist tradition. Place grains of colored sand layer by layer, unlock the Five Buddha Families, set your intention, and experience the profound teaching of impermanence through the dissolution ceremony.
+                    </p>
+                    <div class="game-card__tags">
+                        <span class="game-card__tag">&#127912; Creative</span>
+                        <span class="game-card__tag">&#128992; 5 Layers</span>
+                        <span class="game-card__tag">&#9784; Meditation</span>
+                    </div>
+                    <div class="game-card__play">Play Sacred Sands &#8594;</div>
+                </div>
+            </a>
+
+            <!-- Dharma Guardians -->
+            <a href="../dharma-cards/index.html" class="game-card reveal">
+                <div class="game-card__visual game-card__visual--cards">
+                    <span class="game-card__badge game-card__badge--live">Play Now</span>
+                    <span class="game-card__visual-icon">&#9784;</span>
+                </div>
+                <div class="game-card__body">
+                    <h2 class="game-card__title">Dharma Guardians</h2>
+                    <div class="game-card__subtitle">Buddhist Trading Card Game</div>
+                    <p class="game-card__desc">
+                        Collect wisdom, not victories. Discover 20 beautifully illustrated cards across five categories &mdash; from Buddha &amp; Bodhisattva to Monastic Life. Each card reveals teachings rooted in the Gelug tradition of Gaden Shartse Monastery.
+                    </p>
+                    <div class="game-card__tags">
+                        <span class="game-card__tag">&#9784; 20 Cards</span>
+                        <span class="game-card__tag">&#128218; 5 Categories</span>
+                        <span class="game-card__tag">&#10024; 4 Rarities</span>
+                    </div>
+                    <div class="game-card__play">Play Dharma Guardians &#8594;</div>
+                </div>
+            </a>
+
+        </div>
+    </section>
+
+    <!-- Divider -->
+    <div class="section-divider">
+        <span class="divider-symbol">&#10043;</span>
+        <span class="divider-symbol">&#10043;</span>
+        <span class="divider-symbol">&#10043;</span>
+    </div>
+
+    <!-- About Section -->
+    <section class="about">
+        <div class="about__card reveal">
+            <span class="about__icon">&#128591;</span>
+            <h2 class="about__title">Created with the Monks</h2>
+            <p class="about__text">
+                Every game in the Dharma Games collection is created in partnership with the monks of <strong>Gaden Shartse Gungru Khangtsen Monastery</strong>. The teachings, stories, and wisdom woven into each experience are authentic reflections of the <strong>Gelug tradition</strong> of Tibetan Buddhism. These games are offered freely as a way to share the Dharma with the world.
+            </p>
+            <div class="about__badges">
+                <div class="about__badge"><span>&#9784;</span> Authentic Teachings</div>
+                <div class="about__badge"><span>&#127381;</span> Free to Play</div>
+                <div class="about__badge"><span>&#128241;</span> Works on Mobile</div>
+                <div class="about__badge"><span>&#128154;</span> No Ads</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Divider -->
+    <div class="section-divider">
+        <span class="divider-symbol">&#10043;</span>
+        <span class="divider-symbol">&#10043;</span>
+        <span class="divider-symbol">&#10043;</span>
+    </div>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="cta-card reveal">
+            <h2 class="cta-card__title">Support Our Mission</h2>
+            <p class="cta-card__text">
+                Your generosity directly supports the monks' education, healthcare, daily sustenance, and the preservation of Tibetan Buddhist wisdom for future generations.
+            </p>
+            <div class="cta-card__actions">
+                <a href="donate.html" class="btn btn-primary">
+                    <span>&#9825;</span>
+                    <span>Make a Donation</span>
+                </a>
+                <a href="index.html" class="btn btn-secondary">Back to Home</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <span class="footer-wheel">&#9784;</span>
+            <h3 class="footer-name" data-i18n="footer.name">Gaden Shartse Gungru Khangtsen Monastery</h3>
+            <div class="footer-address" data-i18n="footer.address">
+                P.O. Tibetan Colony, Mundgod<br>
+                N. Kanara, Karnataka 581411, India<br>
+                info@gadengungru.com
+            </div>
+            <div class="footer-social">
+                <a href="https://www.facebook.com/profile.php?id=100094601593205" target="_blank" rel="noopener" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                </a>
+                <a href="https://www.instagram.com/gadengungru" target="_blank" rel="noopener" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                </a>
+            </div>
+            <div class="footer-links">
+                <a href="index.html" data-i18n="nav.home">Home</a>
+                <a href="general-understanding.html" data-i18n="nav.general_understanding">General Understanding</a>
+                <a href="../mandala-game/index.html">Sacred Sands</a>
+                <a href="../dharma-cards/index.html">Dharma Guardians</a>
+                <a href="donate.html" data-i18n="nav.donate">Donate</a>
+            </div>
+            <div class="footer-badges">
+                <div class="footer-badge">
+                    <span>&#128421;</span>
+                    <span>Built with AlpacApps Infrastructure</span>
+                </div>
+                <div class="footer-badge">
+                    <span>&#10024;</span>
+                    <span>Powered by Claude</span>
+                </div>
+            </div>
+            <div class="footer-version">v260217.2</div>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll
+        const nav = document.getElementById('siteNav');
+        window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 20); });
+
+        // Scroll reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/version.js"></script>
+    <script src="../assets/js/i18n.js"></script>
+</body>
+</html>
