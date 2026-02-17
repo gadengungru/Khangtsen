@@ -82,10 +82,11 @@
         var flagHtml = lang.flagImg
             ? '<img src="' + FLAG_IMG_BASE + lang.flagImg + '" alt="" style="width:16px;height:12px;object-fit:cover;border-radius:2px;">'
             : lang.flag;
+        var labelText = (dictCache[currentLang] && dictCache[currentLang].nav && dictCache[currentLang].nav.language_label) || 'Language';
         toggle.innerHTML = '<span class="lang-picker__toggle-flag">' + flagHtml + '</span>' +
-            '<span class="lang-picker__toggle-label">Language</span>' +
+            '<span class="lang-picker__toggle-label">' + labelText + '</span>' +
             '<span class="lang-picker__toggle-arrow">&#9662;</span>';
-        toggle.setAttribute('title', 'Language: ' + lang.name);
+        toggle.setAttribute('title', labelText + ': ' + lang.name);
     }
 
     // Insert picker into navbar
@@ -151,7 +152,12 @@
         });
 
         // Load and apply
-        loadDict(lang).then(applyTranslations).catch(function() {
+        loadDict(lang).then(function(dict) {
+            applyTranslations(dict);
+            // Re-update toggle now that dict is cached (for language label)
+            var t = document.querySelector('.lang-picker__toggle');
+            if (t) updateToggle(t);
+        }).catch(function() {
             if (lang !== DEFAULT_LANG) {
                 loadDict(DEFAULT_LANG).then(applyTranslations);
             }
