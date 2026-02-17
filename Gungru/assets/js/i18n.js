@@ -110,6 +110,13 @@
         return key.split('.').reduce(function(o, k) { return o && o[k]; }, obj);
     }
 
+    // Apply Tibetan font class
+    function applyTibetanFont(lang) {
+        var isTibetan = (lang === 'bo' || lang === 'dz');
+        document.documentElement.classList.toggle('tibetan-font', isTibetan);
+        document.documentElement.lang = lang;
+    }
+
     // Apply translations to DOM
     function applyTranslations(dict) {
         document.querySelectorAll('[data-i18n]').forEach(function(el) {
@@ -124,7 +131,7 @@
                 }
             }
         });
-        document.documentElement.lang = currentLang;
+        applyTibetanFont(currentLang);
     }
 
     // Switch language
@@ -153,8 +160,8 @@
 
     // Initialize
     function init() {
-        // Set lang attribute immediately so CSS font applies before translations load
-        document.documentElement.lang = currentLang;
+        // Set lang attribute and font class immediately so CSS applies before translations load
+        applyTibetanFont(currentLang);
         insertPicker();
         if (currentLang !== DEFAULT_LANG) {
             loadDict(currentLang).then(applyTranslations).catch(function() {});

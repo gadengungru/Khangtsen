@@ -16,7 +16,12 @@
 
 /* Apply Tibetan font when lang is set to bo or dz */
 :lang(bo), :lang(bo) *,
-:lang(dz), :lang(dz) * {
+:lang(dz), :lang(dz) *,
+html.tibetan-font, html.tibetan-font *,
+html.tibetan-font h1, html.tibetan-font h2, html.tibetan-font h3,
+html.tibetan-font p, html.tibetan-font a, html.tibetan-font span,
+html.tibetan-font button, html.tibetan-font input, html.tibetan-font select,
+html.tibetan-font label, html.tibetan-font li, html.tibetan-font div {
     font-family: 'Monlam Uni OuChan', 'DM Sans', sans-serif !important;
 }
 
