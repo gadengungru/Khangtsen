@@ -2,7 +2,8 @@
   "nav": {
     "home": "Inicio",
     "general_understanding": "Comprensión General",
-    "donate": "Donar"
+    "donate": "Donar",
+    "language_label": "Idioma"
   },
   "home": {
     "location": "Mundgod, Karnataka, India",

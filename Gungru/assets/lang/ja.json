@@ -2,7 +2,8 @@
   "nav": {
     "home": "ホーム",
     "general_understanding": "一般情報",
-    "donate": "寄付"
+    "donate": "寄付",
+    "language_label": "言語"
   },
   "home": {
     "location": "インド、カルナータカ州ムンドゴッド",
