@@ -153,6 +153,8 @@
 
     // Initialize
     function init() {
+        // Set lang attribute immediately so CSS font applies before translations load
+        document.documentElement.lang = currentLang;
         insertPicker();
         if (currentLang !== DEFAULT_LANG) {
             loadDict(currentLang).then(applyTranslations).catch(function() {});
