@@ -100,7 +100,7 @@
     function loadDict(lang) {
         if (dictCache[lang]) return Promise.resolve(dictCache[lang]);
         var prefix = '../assets/lang/';
-        return fetch(prefix + lang + '.json')
+        return fetch(prefix + lang + '.json?v=260217')
             .then(function(r) { return r.json(); })
             .then(function(d) { dictCache[lang] = d; return d; });
     }
