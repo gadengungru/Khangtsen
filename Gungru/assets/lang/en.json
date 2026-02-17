@@ -153,7 +153,10 @@
     "a_where_see": "Our monks create sand mandalas during their annual tours of the United States. These events are typically held at universities, museums, cultural centers, and community venues. Follow us on social media or contact us at info@gadengungru.com to learn about upcoming tour dates and locations near you.",
     "cta_title": "Have More Questions?",
     "cta_text": "Feel free to reach out to us. We're happy to help you understand more about our tradition and how you can get involved.",
-    "cta_contact": "Contact Us"
+    "cta_contact": "Contact Us",
+    "contact_subtitle": "Choose how you'd like to reach us",
+    "contact_facebook": "Message us on Facebook",
+    "contact_email": "Email"
   },
   "footer": {
     "name": "Gaden Shartse Gungru Khangtsen Monastery",
