@@ -2,7 +2,9 @@
   "nav": {
     "home": "Home",
     "general_understanding": "General Understanding",
-    "donate": "Donate"
+    "donate": "Donate",
+    "brand": "Gungru Khangtsen",
+    "language_label": "Language"
   },
   "home": {
     "location": "Mundgod, Karnataka, India",
