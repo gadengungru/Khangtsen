@@ -2,7 +2,8 @@
   "nav": {
     "home": "गृहपृष्ठ",
     "general_understanding": "सामान्य जानकारी",
-    "donate": "दान गर्नुहोस्"
+    "donate": "दान गर्नुहोस्",
+    "language_label": "भाषा"
   },
   "home": {
     "location": "मुण्डगोड, कर्नाटक, भारत",
