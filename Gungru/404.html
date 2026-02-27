@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+    <link rel="apple-touch-icon" href="assets/images/favicon.png">
+    <title>Page Not Found — Gungru Khangtsen Monastery</title>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #FDF5ED;
+            color: #2A1F1A;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+        @media (prefers-color-scheme: dark) {
+            body { background: #1C1410; color: #E8DDD2; }
+            .error-card { background: #261E18; border-color: #3E322A; }
+            .error-card a { color: #C4495E; }
+            .error-card a:hover { color: #D46A7E; }
+        }
+        .error-icon { font-size: 64px; margin-bottom: 16px; }
+        .error-card {
+            max-width: 520px;
+            background: #fff;
+            border: 1px solid #ECDCCA;
+            border-radius: 28px;
+            padding: 48px 36px;
+            box-shadow: 0 12px 40px rgba(28,20,16,0.08);
+        }
+        .error-title {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 2rem;
+            font-weight: 600;
+            color: inherit;
+            margin-bottom: 8px;
+        }
+        .error-subtitle {
+            font-size: 14px;
+            color: #8A7668;
+            margin-bottom: 20px;
+        }
+        .error-text {
+            font-size: 15px;
+            color: #5C4A3E;
+            margin-bottom: 28px;
+        }
+        .error-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        .error-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 20px;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+        .btn-home {
+            background: #7B1A2C;
+            color: #fff;
+        }
+        .btn-home:hover { background: #5A0F1E; }
+        .btn-other {
+            background: rgba(123,26,44,0.06);
+            color: #7B1A2C;
+            border: 1px solid rgba(123,26,44,0.15);
+        }
+        .btn-other:hover { background: rgba(123,26,44,0.1); }
+        .error-wheel {
+            margin-top: 32px;
+            font-size: 24px;
+            opacity: 0.3;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-card">
+        <div class="error-icon">&#9784;</div>
+        <h1 class="error-title">Page Not Found</h1>
+        <p class="error-subtitle">Error 404</p>
+        <p class="error-text">
+            Like a sand mandala swept away, the page you're looking for no longer exists. But the path forward remains clear.
+        </p>
+        <div class="error-links">
+            <a href="en/index.html" class="btn-home">
+                <span>&#127968;</span> Go Home
+            </a>
+            <a href="en/donate.html" class="btn-other">
+                <span>&#9825;</span> Donate
+            </a>
+            <a href="en/general-understanding.html" class="btn-other">
+                <span>&#128218;</span> Learn More
+            </a>
+        </div>
+    </div>
+    <div class="error-wheel">&#10043; &#10043; &#10043;</div>
+</body>
+</html>

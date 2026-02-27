@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://gadengungru.github.io/Khangtsen/Gungru/sitemap.xml
+
+# Block admin pages
+Disallow: /Khangtsen/Gungru/en/admin/
+Disallow: /Khangtsen/Gungru/en/payment-setup.html

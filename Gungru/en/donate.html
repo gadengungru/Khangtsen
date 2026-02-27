@@ -2,11 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="../assets/images/favicon.png">
     <link rel="apple-touch-icon" href="../assets/images/favicon.png">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#7B1A2C">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Donate — Gaden Shartse Gungru Khangtsen Monastery</title>
     <meta name="description" content="Support the monks of Gungru Khangtsen through donations, sponsorships, and offerings.">
+    <link rel="canonical" href="https://gadengungru.github.io/Khangtsen/Gungru/en/donate.html">
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Donate — Gaden Shartse Gungru Khangtsen Monastery">
+    <meta property="og:description" content="Support the monks of Gungru Khangtsen through donations, sponsorships, and offerings.">
+    <meta property="og:url" content="https://gadengungru.github.io/Khangtsen/Gungru/en/donate.html">
+    <meta property="og:image" content="https://gadengungru.github.io/Khangtsen/Gungru/assets/images/monastery-main.jpg">
+    <meta property="og:site_name" content="Gungru Khangtsen Monastery">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Donate — Gungru Khangtsen Monastery">
+    <meta name="twitter:description" content="Support the monks of Gungru Khangtsen through donations, sponsorships, and offerings.">
+    <meta name="twitter:image" content="https://gadengungru.github.io/Khangtsen/Gungru/assets/images/monastery-main.jpg">
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
@@ -104,8 +122,8 @@
             <div class="donate-card reveal">
                 <!-- Frequency Toggle -->
                 <div class="freq-toggle">
-                    <button class="freq-toggle__btn active" data-freq="one-time" onclick="toggleFreq(this)" data-i18n="donate.one_time">One-Time</button>
-                    <button class="freq-toggle__btn" data-freq="monthly" onclick="toggleFreq(this)" data-i18n="donate.monthly">Monthly</button>
+                    <button class="freq-toggle__btn active" data-freq="one-time" onclick="toggleFreq(this)" data-i18n="donate.one_time" role="tab" aria-pressed="true">One-Time</button>
+                    <button class="freq-toggle__btn" data-freq="monthly" onclick="toggleFreq(this)" data-i18n="donate.monthly" role="tab" aria-pressed="false">Monthly</button>
                 </div>
 
                 <!-- Currency Selector -->
@@ -584,8 +602,9 @@
 
         // Frequency toggle
         function toggleFreq(btn) {
-            document.querySelectorAll('.freq-toggle__btn').forEach(b => { b.classList.remove('active'); });
+            document.querySelectorAll('.freq-toggle__btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
             btn.classList.add('active');
+            btn.setAttribute('aria-pressed', 'true');
             document.getElementById('monthlyNote').style.display = btn.dataset.freq === 'monthly' ? 'block' : 'none';
             buildAmountGrid(currentCurrency);
         }

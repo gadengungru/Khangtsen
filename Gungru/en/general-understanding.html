@@ -2,11 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="../assets/images/favicon.png">
     <link rel="apple-touch-icon" href="../assets/images/favicon.png">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#7B1A2C">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>General Understanding — Gungru Khangtsen Monastery</title>
     <meta name="description" content="Frequently asked questions about Tibetan Buddhism, Pujas, and the Gaden Shartse Gungru Khangtsen Monastery.">
+    <link rel="canonical" href="https://gadengungru.github.io/Khangtsen/Gungru/en/general-understanding.html">
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="General Understanding — Gungru Khangtsen Monastery">
+    <meta property="og:description" content="Frequently asked questions about Tibetan Buddhism, Pujas, and the Gaden Shartse Gungru Khangtsen Monastery.">
+    <meta property="og:url" content="https://gadengungru.github.io/Khangtsen/Gungru/en/general-understanding.html">
+    <meta property="og:image" content="https://gadengungru.github.io/Khangtsen/Gungru/assets/images/monastery-main.jpg">
+    <meta property="og:site_name" content="Gungru Khangtsen Monastery">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="General Understanding — Gungru Khangtsen Monastery">
+    <meta name="twitter:description" content="Frequently asked questions about Tibetan Buddhism, Pujas, and the Gaden Shartse Gungru Khangtsen Monastery.">
+    <meta name="twitter:image" content="https://gadengungru.github.io/Khangtsen/Gungru/assets/images/monastery-main.jpg">
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
@@ -374,6 +392,11 @@
             entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
         }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Close contact modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') document.getElementById('contactModal').classList.remove('contact-modal--open');
+        });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
     <script src="../assets/js/auth.js"></script>
@@ -381,13 +404,13 @@
     <script src="../assets/js/i18n.js"></script>
 
     <!-- Contact Modal -->
-    <div class="contact-modal" id="contactModal">
+    <div class="contact-modal" id="contactModal" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle">
         <div class="contact-modal__backdrop" onclick="document.getElementById('contactModal').classList.remove('contact-modal--open')"></div>
         <div class="contact-modal__card">
-            <button class="contact-modal__close" onclick="document.getElementById('contactModal').classList.remove('contact-modal--open')">&times;</button>
+            <button class="contact-modal__close" onclick="document.getElementById('contactModal').classList.remove('contact-modal--open')" aria-label="Close contact dialog">&times;</button>
             <div class="contact-modal__header">
                 <span class="contact-modal__icon">&#128591;</span>
-                <h3 class="contact-modal__title" data-i18n="faq.cta_contact">Contact Us</h3>
+                <h3 class="contact-modal__title" id="contactModalTitle" data-i18n="faq.cta_contact">Contact Us</h3>
                 <p class="contact-modal__subtitle" data-i18n="faq.contact_subtitle">Choose how you'd like to reach us</p>
             </div>
             <div class="contact-modal__options">

@@ -1,0 +1,27 @@
+{
+    "name": "Gaden Shartse Gungru Khangtsen Monastery",
+    "short_name": "Gungru Khangtsen",
+    "description": "Supporting the preservation of Tibetan Buddhist wisdom through education, sacred arts, and compassionate action.",
+    "start_url": "/Khangtsen/Gungru/en/index.html",
+    "scope": "/Khangtsen/Gungru/",
+    "display": "standalone",
+    "background_color": "#FDF5ED",
+    "theme_color": "#7B1A2C",
+    "orientation": "any",
+    "lang": "en",
+    "icons": [
+        {
+            "src": "assets/images/favicon.png",
+            "sizes": "180x180",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "assets/images/logo.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        }
+    ],
+    "categories": ["education", "lifestyle"]
+}
