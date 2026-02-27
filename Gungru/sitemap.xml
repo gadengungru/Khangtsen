@@ -35,4 +35,9 @@
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
+  <url>
+    <loc>https://gadengungru.github.io/Khangtsen/Gungru/en/terms-and-conditions.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
 </urlset>
