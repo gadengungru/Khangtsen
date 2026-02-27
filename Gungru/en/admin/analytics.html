@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="../../assets/images/favicon.png">
+    <link rel="apple-touch-icon" href="../../assets/images/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics — Admin — Gungru Khangtsen</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <style>
+        .analytics-section-title {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.4rem; font-weight: 600; color: var(--dark);
+            margin: 32px 0 16px; padding-bottom: 8px;
+            border-bottom: 2px solid var(--border);
+            display: flex; align-items: center; gap: 10px;
+        }
+        .analytics-section-title span { font-size: 1.2em; }
+        .analytics-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 20px; margin-bottom: 24px;
+        }
+        .analytics-chart-card {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--radius-xl); padding: 24px;
+        }
+        .analytics-chart-card h3 {
+            font-family: 'DM Sans', sans-serif; font-size: 0.95rem;
+            font-weight: 600; color: var(--dark); margin-bottom: 16px;
+        }
+        .analytics-chart-card canvas { max-height: 280px; }
+        .chart-full { grid-column: 1 / -1; }
+        .analytics-kpi { text-align: center; padding: 10px 0; }
+        .analytics-kpi__value {
+            font-size: 2rem; font-weight: 700; color: var(--dark);
+            font-family: 'DM Sans', sans-serif;
+        }
+        .analytics-kpi__value.green { color: #16a34a; }
+        .analytics-kpi__value.red { color: #dc2626; }
+        .analytics-kpi__value.gold { color: #b8860b; }
+        .analytics-kpi__label {
+            font-size: 0.8rem; color: var(--text-dim); margin-top: 4px;
+            text-transform: uppercase; letter-spacing: 0.05em;
+        }
+        @media (max-width: 768px) {
+            .analytics-grid { grid-template-columns: 1fr; }
+            .analytics-chart-card { padding: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="site-nav" id="siteNav">
+        <div class="site-nav__inner">
+            <a href="../index.html" class="site-nav__brand">
+                <img src="../../assets/images/logo.png" alt="Gungru Khangtsen">
+                <span data-i18n="nav.brand">Gungru Khangtsen</span>
+            </a>
+            <button class="nav-toggle" onclick="document.querySelector('.site-nav__links').classList.toggle('open')" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="site-nav__links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../general-understanding.html">General Understanding</a></li>
+                <li><a href="../donate.html" class="site-nav__cta">
+                    <span>&#9825;</span>
+                    <span>Donate</span>
+                </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Admin Topbar -->
+    <div class="admin-topbar">
+        <span class="admin-topbar__label">&#128274; Admin Panel</span>
+        <nav class="admin-topbar__nav">
+            <a href="index.html">Dashboard</a>
+            <a href="members.html">Members</a>
+            <a href="events.html">Events</a>
+            <a href="transactions.html">Transactions</a>
+            <a href="analytics.html" class="active">Analytics</a>
+        </nav>
+    </div>
+
+    <!-- Admin Content -->
+    <div class="admin-layout">
+        <div class="admin-container">
+            <div class="admin-page-header">
+                <h1>Analytics</h1>
+                <p>Website traffic, financial insights, and community overview</p>
+            </div>
+
+            <!-- ===== WEBSITE TRAFFIC ===== -->
+            <h2 class="analytics-section-title"><span>&#127760;</span> Website Traffic</h2>
+
+            <div class="admin-stats" id="trafficStats">
+                <div class="admin-stat">
+                    <div class="admin-stat__icon">&#128200;</div>
+                    <div class="admin-stat__value" id="statToday">—</div>
+                    <div class="admin-stat__label">Today</div>
+                </div>
+                <div class="admin-stat">
+                    <div class="admin-stat__icon">&#128197;</div>
+                    <div class="admin-stat__value" id="statWeek">—</div>
+                    <div class="admin-stat__label">This Week</div>
+                </div>
+                <div class="admin-stat">
+                    <div class="admin-stat__icon">&#128198;</div>
+                    <div class="admin-stat__value" id="statMonth">—</div>
+                    <div class="admin-stat__label">This Month</div>
+                </div>
+                <div class="admin-stat">
+                    <div class="admin-stat__icon">&#127919;</div>
+                    <div class="admin-stat__value" id="statTotal">—</div>
+                    <div class="admin-stat__label">All Time</div>
+                </div>
+            </div>
+
+            <div class="analytics-grid">
+                <div class="analytics-chart-card chart-full">
+                    <h3>&#128200; Daily Page Views (Last 30 Days)</h3>
+                    <canvas id="chartDailyViews"></canvas>
+                </div>
+                <div class="analytics-chart-card">
+                    <h3>&#128196; Most Visited Pages</h3>
+                    <canvas id="chartTopPages"></canvas>
+                </div>
+                <div class="analytics-chart-card">
+                    <h3>&#127758; Visitor Locations</h3>
+                    <canvas id="chartLocations"></canvas>
+                </div>
+                <div class="analytics-chart-card">
+                    <h3>&#128241; Device Types</h3>
+                    <canvas id="chartDevices"></canvas>
+                </div>
+                <div class="analytics-chart-card">
+                    <h3>&#127912; Browsers</h3>
+                    <canvas id="chartBrowsers"></canvas>
+                </div>
+            </div>
+
+            <!-- ===== FINANCIAL ANALYTICS ===== -->
+            <h2 class="analytics-section-title"><span>&#128176;</span> Financial Overview</h2>
+
+            <div class="admin-stats" id="financeStats">
+                <div class="admin-stat">
+                    <div class="admin-stat__icon">&#128200;</div>
+                    <div class="admin-stat__value" id="statIncome" style="color:#16a34a">—</div>
+                    <div class="admin-stat__label">Total Income</div>
+                </div>
+                <div class="admin-stat">
+                    <div class="admin-stat__icon">&#128201;</div>
+                    <div class="admin-stat__value" id="statExpenses" style="color:#dc2626">—</div>
+                    <div class="admin-stat__label">Total Expenses</div>
+                </div>
+                <div class="admin-stat">
+                    <div class="admin-stat__icon">&#128178;</div>
+                    <div class="admin-stat__value" id="statNet">—</div>
+                    <div class="admin-stat__label">Net Balance</div>
+                </div>
+                <div class="admin-stat">
+                    <div class="admin-stat__icon">&#128176;</div>
+                    <div class="admin-stat__value" id="statTxCount">—</div>
+                    <div class="admin-stat__label">Transactions</div>
+                </div>
+            </div>
+
+            <div class="analytics-grid">
+                <div class="analytics-chart-card chart-full">
+                    <h3>&#128202; Monthly Income vs Expenses (Last 12 Months)</h3>
+                    <canvas id="chartMonthly"></canvas>
+                </div>
+                <div class="analytics-chart-card">
+                    <h3>&#128178; Donations by Currency</h3>
+                    <canvas id="chartCurrency"></canvas>
+                </div>
+                <div class="analytics-chart-card">
+                    <h3>&#128179; Transactions by Type</h3>
+                    <canvas id="chartTxType"></canvas>
+                </div>
+            </div>
+
+            <!-- ===== COMMUNITY ANALYTICS ===== -->
+            <h2 class="analytics-section-title"><span>&#128101;</span> Community Overview</h2>
+
+            <div class="analytics-grid">
+                <div class="analytics-chart-card">
+                    <h3>&#128100; Members by Role</h3>
+                    <canvas id="chartMemberRoles"></canvas>
+                </div>
+                <div class="analytics-chart-card">
+                    <h3>&#128101; Members by Gender</h3>
+                    <canvas id="chartMemberGender"></canvas>
+                </div>
+                <div class="analytics-chart-card">
+                    <h3>&#128197; Events by Type</h3>
+                    <canvas id="chartEventTypes"></canvas>
+                </div>
+                <div class="analytics-chart-card">
+                    <h3>&#128994; Members by Status</h3>
+                    <canvas id="chartMemberStatus"></canvas>
+                </div>
+            </div>
+
+            <!-- ===== RECENT ACTIVITY ===== -->
+            <h2 class="analytics-section-title"><span>&#128339;</span> Recent Activity</h2>
+
+            <div class="admin-table-wrap">
+                <table class="admin-table" id="recentTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Description</th>
+                            <th>Type</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recentBody">
+                        <tr><td colspan="5" class="admin-empty"><div class="admin-empty__icon">&#128202;</div><div class="admin-empty__text">Loading...</div></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <span class="footer-wheel">&#9784;</span>
+            <h3 class="footer-name">Gaden Shartse Gungru Khangtsen Monastery</h3>
+            <div class="footer-badges">
+                <div class="footer-badge"><span>&#128421;</span><span>Built with AlpacApps Infrastructure</span></div>
+                <div class="footer-badge"><span>&#10024;</span><span>Powered by Claude</span></div>
+            </div>
+            <div class="footer-version">Admin</div>
+        </div>
+    </footer>
+
+    <script>
+        const nav = document.getElementById('siteNav');
+        window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 20); });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script>
+        requireAuth(function(user) {
+            var sb = window.adminSupabase;
+
+            // Chart.js global defaults
+            Chart.defaults.font.family = "'DM Sans', sans-serif";
+            Chart.defaults.font.size = 12;
+            Chart.defaults.plugins.legend.position = 'bottom';
+
+            // Color palette
+            var COLORS = [
+                '#7B1A2C', '#D4A843', '#2563eb', '#16a34a', '#dc2626',
+                '#8b5cf6', '#ec4899', '#06b6d4', '#f59e0b', '#64748b'
+            ];
+            var COLORS_ALPHA = COLORS.map(function(c) { return c + '33'; });
+
+            function escapeHtml(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+            var currencySymbol = { USD: '$', INR: '\u20B9', EUR: '\u20AC', AUD: 'A$' };
+            function formatAmount(amount, currency) {
+                var sym = currencySymbol[currency] || currency || '\u20B9';
+                var num = parseFloat(amount);
+                if (isNaN(num)) return '\u2014';
+                return sym + num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            }
+            function formatDate(d) {
+                if (!d) return '\u2014';
+                return new Date(d).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+            }
+
+            // Helper: count by field
+            function countByField(arr, field) {
+                var counts = {};
+                arr.forEach(function(item) {
+                    var val = item[field] || 'Unknown';
+                    counts[val] = (counts[val] || 0) + 1;
+                });
+                return counts;
+            }
+
+            // Helper: sum by field
+            function sumByField(arr, field, valueField) {
+                var sums = {};
+                arr.forEach(function(item) {
+                    var key = item[field] || 'Unknown';
+                    sums[key] = (sums[key] || 0) + (parseFloat(item[valueField]) || 0);
+                });
+                return sums;
+            }
+
+            // Create doughnut chart
+            function createDoughnut(canvasId, labels, data, colors) {
+                var ctx = document.getElementById(canvasId);
+                if (!ctx) return;
+                new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            data: data,
+                            backgroundColor: colors || COLORS.slice(0, labels.length),
+                            borderWidth: 2, borderColor: '#fff'
+                        }]
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: true,
+                        plugins: {
+                            legend: { position: 'right', labels: { padding: 12, usePointStyle: true, pointStyle: 'circle' } }
+                        }
+                    }
+                });
+            }
+
+            // ===== LOAD WEBSITE TRAFFIC =====
+            (function loadTraffic() {
+                sb.from('page_views').select('*').order('created_at', { ascending: false }).then(function(result) {
+                    if (result.error) { console.warn('page_views error:', result.error); return; }
+                    var views = result.data || [];
+
+                    var now = new Date();
+                    var todayStr = now.toISOString().slice(0, 10);
+                    var weekAgo = new Date(now - 7 * 86400000);
+                    var monthAgo = new Date(now - 30 * 86400000);
+
+                    var todayCount = 0, weekCount = 0, monthCount = 0;
+                    views.forEach(function(v) {
+                        var d = new Date(v.created_at);
+                        if (v.created_at && v.created_at.slice(0, 10) === todayStr) todayCount++;
+                        if (d >= weekAgo) weekCount++;
+                        if (d >= monthAgo) monthCount++;
+                    });
+
+                    document.getElementById('statToday').textContent = todayCount;
+                    document.getElementById('statWeek').textContent = weekCount;
+                    document.getElementById('statMonth').textContent = monthCount;
+                    document.getElementById('statTotal').textContent = views.length;
+
+                    // Daily views chart (last 30 days)
+                    var dailyCounts = {};
+                    for (var i = 29; i >= 0; i--) {
+                        var date = new Date(now - i * 86400000);
+                        dailyCounts[date.toISOString().slice(0, 10)] = 0;
+                    }
+                    views.forEach(function(v) {
+                        var dateKey = (v.created_at || '').slice(0, 10);
+                        if (dailyCounts.hasOwnProperty(dateKey)) dailyCounts[dateKey]++;
+                    });
+                    var dailyLabels = Object.keys(dailyCounts).map(function(d) {
+                        return new Date(d + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                    });
+                    new Chart(document.getElementById('chartDailyViews'), {
+                        type: 'line',
+                        data: {
+                            labels: dailyLabels,
+                            datasets: [{
+                                label: 'Page Views',
+                                data: Object.values(dailyCounts),
+                                borderColor: '#7B1A2C', backgroundColor: 'rgba(123,26,44,0.1)',
+                                fill: true, tension: 0.3, pointRadius: 3, pointHoverRadius: 6
+                            }]
+                        },
+                        options: {
+                            responsive: true, maintainAspectRatio: true,
+                            scales: {
+                                y: { beginAtZero: true, ticks: { stepSize: 1 } },
+                                x: { ticks: { maxTicksLimit: 10 } }
+                            },
+                            plugins: { legend: { display: false } }
+                        }
+                    });
+
+                    // Top pages
+                    var pageCounts = countByField(views, 'page_path');
+                    var pageEntries = Object.entries(pageCounts).sort(function(a, b) { return b[1] - a[1]; }).slice(0, 6);
+                    var pageLabels = pageEntries.map(function(e) {
+                        var p = e[0].replace(/.*\/Khangtsen\/Gungru\/en\//, '').replace('.html', '') || 'home';
+                        return p.charAt(0).toUpperCase() + p.slice(1);
+                    });
+                    new Chart(document.getElementById('chartTopPages'), {
+                        type: 'bar',
+                        data: {
+                            labels: pageLabels,
+                            datasets: [{
+                                label: 'Views',
+                                data: pageEntries.map(function(e) { return e[1]; }),
+                                backgroundColor: COLORS.slice(0, pageEntries.length),
+                                borderRadius: 6
+                            }]
+                        },
+                        options: {
+                            responsive: true, indexAxis: 'y',
+                            scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } } },
+                            plugins: { legend: { display: false } }
+                        }
+                    });
+
+                    // Locations
+                    var locCounts = countByField(views, 'country');
+                    var locEntries = Object.entries(locCounts).sort(function(a, b) { return b[1] - a[1]; }).slice(0, 8);
+                    createDoughnut('chartLocations',
+                        locEntries.map(function(e) { return e[0]; }),
+                        locEntries.map(function(e) { return e[1]; })
+                    );
+
+                    // Devices
+                    var devCounts = countByField(views, 'device_type');
+                    var devColors = { desktop: '#2563eb', mobile: '#16a34a', tablet: '#f59e0b' };
+                    var devEntries = Object.entries(devCounts);
+                    createDoughnut('chartDevices',
+                        devEntries.map(function(e) { return e[0].charAt(0).toUpperCase() + e[0].slice(1); }),
+                        devEntries.map(function(e) { return e[1]; }),
+                        devEntries.map(function(e) { return devColors[e[0]] || '#64748b'; })
+                    );
+
+                    // Browsers
+                    var brCounts = countByField(views, 'browser');
+                    var brEntries = Object.entries(brCounts).sort(function(a, b) { return b[1] - a[1]; }).slice(0, 6);
+                    createDoughnut('chartBrowsers',
+                        brEntries.map(function(e) { return e[0]; }),
+                        brEntries.map(function(e) { return e[1]; })
+                    );
+                });
+            })();
+
+            // ===== LOAD FINANCIAL DATA =====
+            sb.from('transactions').select('*').order('created_at', { ascending: false }).then(function(result) {
+                if (result.error) return;
+                var txs = result.data || [];
+                var completed = txs.filter(function(t) { return t.status === 'completed'; });
+
+                var totalIncome = 0, totalExpense = 0;
+                completed.forEach(function(t) {
+                    var amt = parseFloat(t.amount) || 0;
+                    if (t.transaction_type === 'income' || t.transaction_type === 'donation') totalIncome += amt;
+                    else if (t.transaction_type === 'expense') totalExpense += amt;
+                });
+
+                document.getElementById('statIncome').textContent = '\u20B9' + totalIncome.toLocaleString('en-US', { minimumFractionDigits: 2 });
+                document.getElementById('statExpenses').textContent = '\u20B9' + totalExpense.toLocaleString('en-US', { minimumFractionDigits: 2 });
+                var net = totalIncome - totalExpense;
+                var netEl = document.getElementById('statNet');
+                netEl.textContent = (net >= 0 ? '+' : '') + '\u20B9' + net.toLocaleString('en-US', { minimumFractionDigits: 2 });
+                netEl.style.color = net >= 0 ? '#16a34a' : '#dc2626';
+                document.getElementById('statTxCount').textContent = txs.length;
+
+                // Monthly income vs expenses (last 12 months)
+                var monthLabels = [];
+                var incomeByMonth = {};
+                var expenseByMonth = {};
+                var now = new Date();
+                for (var i = 11; i >= 0; i--) {
+                    var d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+                    var key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+                    monthLabels.push(key);
+                    incomeByMonth[key] = 0;
+                    expenseByMonth[key] = 0;
+                }
+                completed.forEach(function(t) {
+                    if (!t.created_at) return;
+                    var key = t.created_at.slice(0, 7);
+                    if (t.transaction_type === 'income' || t.transaction_type === 'donation') {
+                        if (incomeByMonth.hasOwnProperty(key)) incomeByMonth[key] += (parseFloat(t.amount) || 0);
+                    } else if (t.transaction_type === 'expense') {
+                        if (expenseByMonth.hasOwnProperty(key)) expenseByMonth[key] += (parseFloat(t.amount) || 0);
+                    }
+                });
+                var monthDisplayLabels = monthLabels.map(function(k) {
+                    var parts = k.split('-');
+                    return new Date(parseInt(parts[0]), parseInt(parts[1]) - 1).toLocaleDateString('en-US', { month: 'short', year: '2-digit' });
+                });
+                new Chart(document.getElementById('chartMonthly'), {
+                    type: 'bar',
+                    data: {
+                        labels: monthDisplayLabels,
+                        datasets: [
+                            {
+                                label: 'Income', data: monthLabels.map(function(k) { return incomeByMonth[k]; }),
+                                backgroundColor: '#16a34a', borderRadius: 4
+                            },
+                            {
+                                label: 'Expenses', data: monthLabels.map(function(k) { return expenseByMonth[k]; }),
+                                backgroundColor: '#dc2626', borderRadius: 4
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: true,
+                        scales: { y: { beginAtZero: true } },
+                        plugins: { legend: { position: 'top' } }
+                    }
+                });
+
+                // Donations by currency
+                var donations = completed.filter(function(t) { return t.transaction_type === 'donation'; });
+                var currSums = sumByField(donations, 'currency', 'amount');
+                var currEntries = Object.entries(currSums).filter(function(e) { return e[1] > 0; });
+                if (currEntries.length > 0) {
+                    createDoughnut('chartCurrency',
+                        currEntries.map(function(e) { return e[0] || 'Unknown'; }),
+                        currEntries.map(function(e) { return e[1]; })
+                    );
+                }
+
+                // Transaction types
+                var typeCounts = countByField(txs, 'transaction_type');
+                var typeEntries = Object.entries(typeCounts);
+                var typeColors = { donation: '#D4A843', income: '#16a34a', expense: '#dc2626', transfer: '#2563eb' };
+                createDoughnut('chartTxType',
+                    typeEntries.map(function(e) { return e[0].charAt(0).toUpperCase() + e[0].slice(1); }),
+                    typeEntries.map(function(e) { return e[1]; }),
+                    typeEntries.map(function(e) { return typeColors[e[0]] || '#64748b'; })
+                );
+
+                // Recent activity table
+                var recent = txs.slice(0, 10);
+                var tbody = document.getElementById('recentBody');
+                if (!recent.length) {
+                    tbody.innerHTML = '<tr><td colspan="5" class="admin-empty"><div class="admin-empty__icon">&#128202;</div><div class="admin-empty__text">No transactions yet</div></td></tr>';
+                } else {
+                    tbody.innerHTML = recent.map(function(t) {
+                        var typeBadge = (t.transaction_type === 'expense') ? 'admin-badge--expense' :
+                                        (t.transaction_type === 'income' || t.transaction_type === 'donation') ? 'admin-badge--income' : 'admin-badge--pending';
+                        var statusBadge = t.status === 'completed' ? 'admin-badge--active' :
+                                          t.status === 'pending' ? 'admin-badge--pending' : 'admin-badge--expense';
+                        return '<tr>' +
+                            '<td>' + formatDate(t.created_at) + '</td>' +
+                            '<td><strong>' + escapeHtml(t.description || '\u2014') + '</strong></td>' +
+                            '<td><span class="admin-badge ' + typeBadge + '">' + escapeHtml(t.transaction_type || '\u2014') + '</span></td>' +
+                            '<td>' + formatAmount(t.amount, t.currency) + '</td>' +
+                            '<td><span class="admin-badge ' + statusBadge + '">' + escapeHtml(t.status || '\u2014') + '</span></td>' +
+                        '</tr>';
+                    }).join('');
+                }
+            });
+
+            // ===== LOAD COMMUNITY DATA =====
+            Promise.all([
+                sb.from('members').select('*'),
+                sb.from('events').select('*')
+            ]).then(function(results) {
+                var members = (results[0].data || []);
+                var events = (results[1].data || []);
+
+                // Members by role
+                var roleCounts = countByField(members, 'role');
+                var roleEntries = Object.entries(roleCounts);
+                createDoughnut('chartMemberRoles',
+                    roleEntries.map(function(e) { return e[0].charAt(0).toUpperCase() + e[0].slice(1); }),
+                    roleEntries.map(function(e) { return e[1]; })
+                );
+
+                // Members by gender
+                var genderCounts = countByField(members, 'gender');
+                var genderEntries = Object.entries(genderCounts);
+                var genderColors = { Male: '#2563eb', Female: '#ec4899', Other: '#8b5cf6', Unknown: '#94a3b8' };
+                if (genderEntries.length > 0) {
+                    createDoughnut('chartMemberGender',
+                        genderEntries.map(function(e) { return e[0].charAt(0).toUpperCase() + e[0].slice(1); }),
+                        genderEntries.map(function(e) { return e[1]; }),
+                        genderEntries.map(function(e) { return genderColors[e[0].charAt(0).toUpperCase() + e[0].slice(1)] || '#64748b'; })
+                    );
+                }
+
+                // Members by status
+                var statusCounts = countByField(members, 'status');
+                var statusEntries = Object.entries(statusCounts);
+                var statusColors = { active: '#16a34a', inactive: '#94a3b8', pending: '#f59e0b', archived: '#dc2626' };
+                createDoughnut('chartMemberStatus',
+                    statusEntries.map(function(e) { return e[0].charAt(0).toUpperCase() + e[0].slice(1); }),
+                    statusEntries.map(function(e) { return e[1]; }),
+                    statusEntries.map(function(e) { return statusColors[e[0]] || '#64748b'; })
+                );
+
+                // Events by type
+                var eventTypeCounts = countByField(events, 'event_type');
+                var eventEntries = Object.entries(eventTypeCounts);
+                createDoughnut('chartEventTypes',
+                    eventEntries.map(function(e) { return e[0].charAt(0).toUpperCase() + e[0].slice(1).replace(/_/g, ' '); }),
+                    eventEntries.map(function(e) { return e[1]; })
+                );
+            });
+        });
+    </script>
+    <script src="../../assets/js/version.js"></script>
+</body>
+</html>
