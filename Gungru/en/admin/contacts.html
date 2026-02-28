@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="../../assets/images/favicon.png">
+    <link rel="apple-touch-icon" href="../../assets/images/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacts — Admin — Gungru Khangtsen</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="site-nav" id="siteNav">
+        <div class="site-nav__inner">
+            <a href="../index.html" class="site-nav__brand">
+                <img src="../../assets/images/logo.png" alt="Gungru Khangtsen">
+                <span data-i18n="nav.brand">Gungru Khangtsen</span>
+            </a>
+            <button class="nav-toggle" onclick="document.querySelector('.site-nav__links').classList.toggle('open')" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="site-nav__links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../general-understanding.html">General Understanding</a></li>
+                <li><a href="../donate.html" class="site-nav__cta">
+                    <span>&#9825;</span>
+                    <span>Donate</span>
+                </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Admin Topbar -->
+    <div class="admin-topbar">
+        <span class="admin-topbar__label">&#128274; Admin Panel</span>
+        <nav class="admin-topbar__nav">
+            <a href="index.html">Dashboard</a>
+            <a href="members.html">Members</a>
+            <a href="events.html">Events</a>
+            <a href="transactions.html">Transactions</a>
+            <a href="analytics.html">Analytics</a>
+            <a href="contacts.html" class="active">Contacts</a>
+        </nav>
+    </div>
+
+    <!-- Admin Content -->
+    <div class="admin-layout">
+        <div class="admin-container">
+            <div class="admin-page-header">
+                <h1>Contacts</h1>
+                <p>Manage donors, subscribers, and send emails</p>
+            </div>
+
+            <div class="admin-toolbar">
+                <input type="text" class="admin-toolbar__search" id="contactSearch" placeholder="Search contacts...">
+                <div class="admin-toolbar__actions">
+                    <button class="btn-sm" id="emailSubscribersBtn" style="background: #f3f4f6; color: #374151; border: 1px solid #d1d5db; cursor: pointer; margin-right: 8px;">Email Subscribers</button>
+                    <button class="btn-sm btn-primary" id="addContactBtn">+ Add Contact</button>
+                </div>
+            </div>
+
+            <div class="admin-filters" id="contactFilters">
+                <button class="admin-filter-btn active" data-filter="all">All</button>
+                <button class="admin-filter-btn" data-filter="donor">Donors</button>
+                <button class="admin-filter-btn" data-filter="subscriber">Subscribers</button>
+                <button class="admin-filter-btn" data-filter="subscribed">Subscribed</button>
+            </div>
+
+            <div class="admin-table-wrap">
+                <table class="admin-table" id="contactsTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Type</th>
+                            <th>Subscribed</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="contactsBody">
+                        <tr><td colspan="6" class="admin-empty"><div class="admin-empty__icon">&#128587;</div><div class="admin-empty__text">Loading contacts...</div></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Contact Modal -->
+    <div class="admin-modal" id="contactModal">
+        <div class="admin-modal__backdrop" id="contactModalBackdrop"></div>
+        <div class="admin-modal__card">
+            <h2 class="admin-modal__title" id="contactModalTitle">Add Contact</h2>
+            <form class="admin-modal__form" id="contactForm">
+                <input type="hidden" id="contactId">
+                <div class="admin-modal__row">
+                    <div class="admin-modal__field">
+                        <label for="contactName">Full Name</label>
+                        <input type="text" id="contactName" required placeholder="Full name">
+                    </div>
+                    <div class="admin-modal__field">
+                        <label for="contactEmail">Email</label>
+                        <input type="email" id="contactEmail" placeholder="Email address">
+                    </div>
+                </div>
+                <div class="admin-modal__row">
+                    <div class="admin-modal__field">
+                        <label for="contactPhone">Phone</label>
+                        <input type="text" id="contactPhone" placeholder="Phone number">
+                    </div>
+                    <div class="admin-modal__field">
+                        <label for="contactType">Type</label>
+                        <select id="contactType">
+                            <option value="general">General</option>
+                            <option value="donor">Donor</option>
+                            <option value="partner">Partner</option>
+                            <option value="vendor">Vendor</option>
+                            <option value="volunteer">Volunteer</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="admin-modal__field">
+                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                        <input type="checkbox" id="contactSubscribed" style="width: auto;">
+                        <span>Subscribed to emails</span>
+                    </label>
+                </div>
+                <div class="admin-modal__field">
+                    <label for="contactNotes">Notes</label>
+                    <textarea id="contactNotes" rows="3" placeholder="Optional notes..."></textarea>
+                </div>
+                <div class="admin-modal__actions">
+                    <button type="button" class="btn-cancel" id="contactCancel">Cancel</button>
+                    <button type="submit" class="btn-sm btn-primary" id="contactSaveBtn">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Email Compose Modal -->
+    <div class="admin-modal" id="emailModal">
+        <div class="admin-modal__backdrop" id="emailModalBackdrop"></div>
+        <div class="admin-modal__card">
+            <h2 class="admin-modal__title" id="emailModalTitle">Compose Email</h2>
+            <form class="admin-modal__form" id="emailForm">
+                <div class="admin-modal__field">
+                    <label for="emailTo">To</label>
+                    <input type="text" id="emailTo" readonly style="background: #f9fafb; color: #6b7280; cursor: default;">
+                </div>
+                <div class="admin-modal__field">
+                    <label for="emailSubject">Subject</label>
+                    <input type="text" id="emailSubject" required placeholder="Email subject">
+                </div>
+                <div class="admin-modal__field">
+                    <label for="emailBody">Message</label>
+                    <textarea id="emailBody" rows="8" required placeholder="Write your message here..." style="min-height: 180px; resize: vertical;"></textarea>
+                </div>
+                <div class="admin-modal__actions">
+                    <button type="button" class="btn-cancel" id="emailCancel">Cancel</button>
+                    <button type="submit" class="btn-sm btn-primary" id="emailSendBtn">Send Email</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <span class="footer-wheel">&#9784;</span>
+            <h3 class="footer-name">Gaden Shartse Gungru Khangtsen Monastery</h3>
+            <div class="footer-badges">
+                <div class="footer-badge"><span>&#128421;</span><span>Built with AlpacApps Infrastructure</span></div>
+                <div class="footer-badge"><span>&#10024;</span><span>Powered by Claude</span></div>
+            </div>
+            <div class="footer-version">Admin</div>
+        </div>
+    </footer>
+
+    <script>
+        const nav = document.getElementById('siteNav');
+        window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 20); });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script>
+        requireAuth(function(user) {
+            var sb = window.adminSupabase;
+            var allContacts = [];
+            var currentFilter = 'all';
+            var emailRecipients = [];
+
+            // Toast
+            function showToast(msg, type) {
+                var existing = document.querySelector('.toast-notification');
+                if (existing) existing.remove();
+                var t = document.createElement('div');
+                t.className = 'toast-notification';
+                t.style.cssText = 'position:fixed;top:80px;left:50%;transform:translateX(-50%) translateY(-10px);z-index:10000;padding:14px 24px;border-radius:12px;font-size:14px;font-weight:500;font-family:DM Sans,sans-serif;max-width:90vw;text-align:center;opacity:0;transition:all 0.3s ease;box-shadow:0 8px 32px rgba(0,0,0,0.12);';
+                if (type === 'success') { t.style.background = '#f0fdf4'; t.style.color = '#166534'; t.style.border = '1px solid #bbf7d0'; }
+                else { t.style.background = '#fef2f2'; t.style.color = '#991b1b'; t.style.border = '1px solid #fecaca'; }
+                t.textContent = msg; document.body.appendChild(t);
+                requestAnimationFrame(function() { t.style.opacity = '1'; t.style.transform = 'translateX(-50%) translateY(0)'; });
+                setTimeout(function() { t.style.opacity = '0'; setTimeout(function() { t.remove(); }, 300); }, 4000);
+            }
+
+            function escapeHtml(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+            function formatDate(d) {
+                if (!d) return '—';
+                return new Date(d).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+            }
+
+            // Load contacts
+            function loadContacts() {
+                sb.from('contacts').select('*').order('created_at', { ascending: false }).then(function(result) {
+                    if (result.error) { showToast('Failed to load contacts', 'error'); return; }
+                    allContacts = result.data || [];
+                    renderContacts();
+                });
+            }
+
+            function renderContacts() {
+                var search = document.getElementById('contactSearch').value.toLowerCase();
+                var filtered = allContacts.filter(function(c) {
+                    if (currentFilter === 'donor' && c.contact_type !== 'donor') return false;
+                    if (currentFilter === 'subscriber' && c.contact_type !== 'general') return false;
+                    if (currentFilter === 'subscribed' && !c.subscribed) return false;
+                    if (search && !(c.full_name || '').toLowerCase().includes(search) && !(c.email || '').toLowerCase().includes(search)) return false;
+                    return true;
+                });
+
+                var tbody = document.getElementById('contactsBody');
+                if (!filtered.length) {
+                    tbody.innerHTML = '<tr><td colspan="6" class="admin-empty"><div class="admin-empty__icon">&#128587;</div><div class="admin-empty__text">No contacts found</div></td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = filtered.map(function(c) {
+                    var typeBadge = c.contact_type === 'donor' ? 'admin-badge--income' :
+                                    c.contact_type === 'partner' ? 'admin-badge--active' :
+                                    c.contact_type === 'vendor' ? 'admin-badge--pending' : 'admin-badge--inactive';
+                    var subBadge = c.subscribed ? 'admin-badge--active' : 'admin-badge--inactive';
+                    var emailBtn = c.email ? '<button onclick="emailContact(\'' + c.id + '\')">Email</button>' : '';
+                    return '<tr>' +
+                        '<td><strong>' + escapeHtml(c.full_name || '') + '</strong></td>' +
+                        '<td>' + escapeHtml(c.email || '—') + '</td>' +
+                        '<td><span class="admin-badge ' + typeBadge + '">' + escapeHtml(c.contact_type || 'general') + '</span></td>' +
+                        '<td><span class="admin-badge ' + subBadge + '">' + (c.subscribed ? 'Yes' : 'No') + '</span></td>' +
+                        '<td>' + formatDate(c.created_at) + '</td>' +
+                        '<td><div class="admin-table__actions">' +
+                            '<button onclick="editContact(\'' + c.id + '\')">Edit</button>' +
+                            emailBtn +
+                        '</div></td>' +
+                    '</tr>';
+                }).join('');
+            }
+
+            // Search & filter
+            document.getElementById('contactSearch').addEventListener('input', renderContacts);
+            document.getElementById('contactFilters').addEventListener('click', function(e) {
+                if (!e.target.classList.contains('admin-filter-btn')) return;
+                document.querySelectorAll('.admin-filter-btn').forEach(function(b) { b.classList.remove('active'); });
+                e.target.classList.add('active');
+                currentFilter = e.target.dataset.filter;
+                renderContacts();
+            });
+
+            // Contact Modal
+            var contactModal = document.getElementById('contactModal');
+            function openContactModal(title) {
+                document.getElementById('contactModalTitle').textContent = title;
+                contactModal.classList.add('admin-modal--open');
+            }
+            function closeContactModal() {
+                contactModal.classList.remove('admin-modal--open');
+                document.getElementById('contactForm').reset();
+                document.getElementById('contactId').value = '';
+            }
+
+            document.getElementById('contactModalBackdrop').addEventListener('click', closeContactModal);
+            document.getElementById('contactCancel').addEventListener('click', closeContactModal);
+
+            // Add contact
+            document.getElementById('addContactBtn').addEventListener('click', function() {
+                openContactModal('Add Contact');
+            });
+
+            // Edit contact
+            window.editContact = function(id) {
+                var c = allContacts.find(function(x) { return x.id === id; });
+                if (!c) return;
+                document.getElementById('contactId').value = c.id;
+                document.getElementById('contactName').value = c.full_name || '';
+                document.getElementById('contactEmail').value = c.email || '';
+                document.getElementById('contactPhone').value = c.phone || '';
+                document.getElementById('contactType').value = c.contact_type || 'general';
+                document.getElementById('contactSubscribed').checked = !!c.subscribed;
+                document.getElementById('contactNotes').value = c.notes || '';
+                openContactModal('Edit Contact');
+            };
+
+            // Save contact
+            document.getElementById('contactForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                var id = document.getElementById('contactId').value;
+                var data = {
+                    full_name: document.getElementById('contactName').value.trim(),
+                    email: document.getElementById('contactEmail').value.trim() || null,
+                    phone: document.getElementById('contactPhone').value.trim() || null,
+                    contact_type: document.getElementById('contactType').value,
+                    subscribed: document.getElementById('contactSubscribed').checked,
+                    notes: document.getElementById('contactNotes').value.trim() || null
+                };
+
+                var saveBtn = document.getElementById('contactSaveBtn');
+                saveBtn.disabled = true; saveBtn.textContent = 'Saving...';
+
+                var query = id
+                    ? sb.from('contacts').update(data).eq('id', id)
+                    : sb.from('contacts').insert(data);
+
+                query.then(function(result) {
+                    saveBtn.disabled = false; saveBtn.textContent = 'Save';
+                    if (result.error) { showToast(result.error.message || 'Save failed', 'error'); return; }
+                    closeContactModal();
+                    showToast(id ? 'Contact updated' : 'Contact added', 'success');
+                    loadContacts();
+                });
+            });
+
+            // Email Modal
+            var emailModal = document.getElementById('emailModal');
+            function openEmailModal(title) {
+                document.getElementById('emailModalTitle').textContent = title;
+                emailModal.classList.add('admin-modal--open');
+            }
+            function closeEmailModal() {
+                emailModal.classList.remove('admin-modal--open');
+                document.getElementById('emailForm').reset();
+                emailRecipients = [];
+            }
+
+            document.getElementById('emailModalBackdrop').addEventListener('click', closeEmailModal);
+            document.getElementById('emailCancel').addEventListener('click', closeEmailModal);
+
+            // Email single contact
+            window.emailContact = function(id) {
+                var c = allContacts.find(function(x) { return x.id === id; });
+                if (!c || !c.email) { showToast('No email address for this contact', 'error'); return; }
+                emailRecipients = [c];
+                document.getElementById('emailTo').value = c.full_name + ' <' + c.email + '>';
+                openEmailModal('Compose Email');
+            };
+
+            // Email subscribers
+            document.getElementById('emailSubscribersBtn').addEventListener('click', function() {
+                var subscribers = allContacts.filter(function(c) { return c.subscribed && c.email; });
+                if (!subscribers.length) { showToast('No subscribed contacts with email addresses', 'error'); return; }
+                emailRecipients = subscribers;
+                document.getElementById('emailTo').value = subscribers.length + ' subscriber' + (subscribers.length === 1 ? '' : 's');
+                openEmailModal('Email Subscribers');
+            });
+
+            // Send email
+            document.getElementById('emailForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                if (!emailRecipients.length) { showToast('No recipients selected', 'error'); return; }
+
+                var subject = document.getElementById('emailSubject').value.trim();
+                var body = document.getElementById('emailBody').value.trim();
+                if (!subject || !body) { showToast('Subject and message are required', 'error'); return; }
+
+                var sendBtn = document.getElementById('emailSendBtn');
+                sendBtn.disabled = true; sendBtn.textContent = 'Sending...';
+
+                var emails = emailRecipients.map(function(c) { return c.email; });
+
+                sb.functions.invoke('send-email', {
+                    body: { to: emails, subject: subject, body: body }
+                }).then(function(result) {
+                    if (result.error) {
+                        sendBtn.disabled = false; sendBtn.textContent = 'Send Email';
+                        showToast(result.error.message || 'Failed to send email', 'error');
+                        return;
+                    }
+
+                    // Log to messages table
+                    var messageRows = emailRecipients.map(function(c) {
+                        return {
+                            channel: 'email',
+                            direction: 'outbound',
+                            from_address: 'admin',
+                            to_address: c.email,
+                            subject: subject,
+                            body: body,
+                            status: 'sent',
+                            contact_id: c.id
+                        };
+                    });
+
+                    sb.from('messages').insert(messageRows).then(function() {
+                        sendBtn.disabled = false; sendBtn.textContent = 'Send Email';
+                        closeEmailModal();
+                        showToast('Email sent to ' + emails.length + ' recipient' + (emails.length === 1 ? '' : 's'), 'success');
+                    });
+                }).catch(function() {
+                    sendBtn.disabled = false; sendBtn.textContent = 'Send Email';
+                    showToast('Failed to send email', 'error');
+                });
+            });
+
+            loadContacts();
+        });
+    </script>
+    <script src="../../assets/js/version.js"></script>
+</body>
+</html>
