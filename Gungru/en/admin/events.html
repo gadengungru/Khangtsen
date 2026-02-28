@@ -200,6 +200,12 @@
                 return dt.toISOString().slice(0, 16);
             }
 
+            // Convert datetime-local value (local time) to ISO string (UTC) for Supabase
+            function localInputToISO(val) {
+                if (!val) return null;
+                return new Date(val).toISOString();
+            }
+
             function loadEvents() {
                 sb.from('events').select('*').order('start_date', { ascending: false }).then(function(result) {
                     if (result.error) { showToast('Failed to load events', 'error'); return; }
@@ -289,8 +295,8 @@
                     event_type: document.getElementById('eventType').value,
                     status: document.getElementById('eventStatus').value,
                     location: document.getElementById('eventLocation').value.trim() || null,
-                    start_date: document.getElementById('eventStart').value || null,
-                    end_date: document.getElementById('eventEnd').value || null,
+                    start_date: localInputToISO(document.getElementById('eventStart').value),
+                    end_date: localInputToISO(document.getElementById('eventEnd').value),
                     description: document.getElementById('eventDesc').value.trim() || null
                 };
 
