@@ -882,7 +882,7 @@ section { position: relative; }
     background: linear-gradient(90deg, var(--saffron-dark), var(--saffron), var(--saffron-light), var(--saffron), var(--saffron-dark));
 }
 .footer-inner { max-width: 900px; margin: 0 auto; text-align: center; }
-.footer-wheel { width: 48px; height: 48px; margin-bottom: 10px; display: block; margin-left: auto; margin-right: auto; object-fit: contain; }
+.footer-wheel { width: 36px; height: 36px; margin: 0 auto 10px; display: block; object-fit: contain; }
 .footer-name {
     font-family: 'Cormorant Garamond', serif; font-size: 1.25rem;
     font-weight: 500; color: rgba(255,255,255,0.85); margin-bottom: 6px;
@@ -1282,7 +1282,7 @@ section { position: relative; }
     .cta-card__text { font-size: 0.9rem; margin-bottom: 16px; }
 
     .site-footer { padding: 20px 16px 18px; }
-    .footer-wheel { width: 40px; height: 40px; margin-bottom: 8px; }
+    .footer-wheel { width: 32px; height: 32px; margin-bottom: 8px; }
     .footer-name { font-size: 1.1rem; }
     .footer-address { margin-bottom: 12px; font-size: 12px; }
     .footer-links { gap: 16px; margin-bottom: 12px; }
