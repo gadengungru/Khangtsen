@@ -61,6 +61,9 @@
 </head>
 <body>
 
+    <!-- Skip to Content (Accessibility) -->
+    <a href="#about" class="skip-to-content">Skip to main content</a>
+
     <!-- Navigation -->
     <nav class="site-nav" id="siteNav">
         <div class="site-nav__inner">
@@ -167,21 +170,30 @@
 
         <div class="gallery-grid">
             <div class="gallery-card reveal">
-                <img src="../assets/images/monastery-main.jpg" alt="Monastery grounds" loading="lazy">
+                <picture>
+                    <source srcset="../assets/images/monastery-main.webp" type="image/webp">
+                    <img src="../assets/images/monastery-main.jpg" alt="Monastery grounds" loading="lazy">
+                </picture>
                 <div class="gallery-card__body">
                     <h3 class="gallery-card__title" data-i18n="home.gallery_monastery_title">The Monastery</h3>
                     <p class="gallery-card__desc" data-i18n="home.gallery_monastery_desc">Our home in Mundgod, South India, where monks study, debate, and practice the ancient Buddhist teachings.</p>
                 </div>
             </div>
             <div class="gallery-card reveal">
-                <img src="../assets/images/monks-ceremony.jpg" alt="Monks in ceremony" loading="lazy">
+                <picture>
+                    <source srcset="../assets/images/monks-ceremony.webp" type="image/webp">
+                    <img src="../assets/images/monks-ceremony.jpg" alt="Monks in ceremony" loading="lazy">
+                </picture>
                 <div class="gallery-card__body">
                     <h3 class="gallery-card__title" data-i18n="home.gallery_ceremony_title">Ceremonies &amp; Pujas</h3>
                     <p class="gallery-card__desc" data-i18n="home.gallery_ceremony_desc">Sacred prayer ceremonies performed daily for the benefit of all sentient beings and our supporters worldwide.</p>
                 </div>
             </div>
             <div class="gallery-card reveal">
-                <img src="../assets/images/sand-mandala.jpg" alt="Sand mandala creation" loading="lazy">
+                <picture>
+                    <source srcset="../assets/images/sand-mandala.webp" type="image/webp">
+                    <img src="../assets/images/sand-mandala.jpg" alt="Sand mandala creation" loading="lazy">
+                </picture>
                 <div class="gallery-card__body">
                     <h3 class="gallery-card__title" data-i18n="home.gallery_mandala_title">Sacred Sand Mandalas</h3>
                     <p class="gallery-card__desc" data-i18n="home.gallery_mandala_desc">Intricate designs created from millions of grains of colored sand, crafted by our monks as a sacred form of meditation and prayer.</p>
@@ -321,6 +333,59 @@
         <span class="divider-symbol">&#10043;</span>
     </div>
 
+    <!-- Testimonials -->
+    <section class="testimonials-section" id="testimonials">
+        <div class="section-header">
+            <div class="section-header__label">
+                <span>&#128172;</span>
+                <span>Voices of Support</span>
+            </div>
+            <h2 class="section-header__title" style="color:var(--maroon-deep);">What People Say</h2>
+            <p class="section-header__subtitle">
+                Hear from those who have visited, supported, or been touched by our monastery.
+            </p>
+        </div>
+        <div class="testimonials-grid">
+            <div class="testimonial-card reveal">
+                <p class="testimonial-card__text">Visiting Gungru Khangtsen was a life-changing experience. The monks' dedication to preserving Tibetan Buddhist wisdom is truly inspiring. I felt a deep sense of peace and connection.</p>
+                <div class="testimonial-card__author">
+                    <div class="testimonial-card__avatar">S</div>
+                    <div>
+                        <div class="testimonial-card__name">Sarah M.</div>
+                        <div class="testimonial-card__role">Visitor from Australia</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card reveal">
+                <p class="testimonial-card__text">Sponsoring a monk's education has been one of the most meaningful things I've done. Knowing that my support helps preserve these ancient teachings gives me great joy.</p>
+                <div class="testimonial-card__author">
+                    <div class="testimonial-card__avatar">R</div>
+                    <div>
+                        <div class="testimonial-card__name">Rajesh K.</div>
+                        <div class="testimonial-card__role">Monthly Donor, India</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card reveal">
+                <p class="testimonial-card__text">The sand mandala created by the Gungru monks at our university was breathtaking. Watching them work with such patience and skill was a meditation in itself.</p>
+                <div class="testimonial-card__author">
+                    <div class="testimonial-card__avatar">L</div>
+                    <div>
+                        <div class="testimonial-card__name">Dr. Lisa Chen</div>
+                        <div class="testimonial-card__role">University Event Organizer</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Divider -->
+    <div class="section-divider">
+        <span class="divider-symbol">&#10043;</span>
+        <span class="divider-symbol">&#10043;</span>
+        <span class="divider-symbol">&#10043;</span>
+    </div>
+
     <!-- Map -->
     <section class="map-section" id="location">
         <div class="section-header reveal">
@@ -367,6 +432,12 @@
         </div>
     </section>
 
+    <!-- Back to Top -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">&#8593;</button>
+
+    <!-- Dark Mode Toggle -->
+    <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">&#9790;</button>
+
     <!-- Footer -->
     <footer class="site-footer">
         <div class="footer-inner">
@@ -396,8 +467,11 @@
             <div class="footer-links">
                 <a href="index.html" data-i18n="nav.home">Home</a>
                 <a href="general-understanding.html" data-i18n="nav.general_understanding">General Understanding</a>
-                <a href="../mandala-game/index.html">Sacred Sands</a>
-                <a href="../dharma-cards/index.html">Dharma Guardians</a>
+                <a href="our-monks.html">Our Monks</a>
+                <a href="events.html">Events</a>
+                <a href="blog.html">Blog</a>
+                <a href="butter-lamp.html">Light a Lamp</a>
+                <a href="request-puja.html">Request Puja</a>
                 <a href="donate.html" data-i18n="nav.donate">Donate</a>
                 <a href="privacy-policy.html">Privacy Policy</a>
                 <a href="terms-and-conditions.html">Terms &amp; Conditions</a>
@@ -417,9 +491,27 @@
     </footer>
 
     <script>
-        // Navbar scroll
+        // Navbar scroll + Back to top visibility
         const nav = document.getElementById('siteNav');
-        window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 20); });
+        const backToTopBtn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 20);
+            if (backToTopBtn) backToTopBtn.classList.toggle('visible', window.scrollY > 400);
+        });
+        if (backToTopBtn) backToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+        // Dark mode toggle
+        const darkToggle = document.getElementById('darkModeToggle');
+        if (darkToggle) {
+            if (localStorage.getItem('darkMode') === 'true') document.documentElement.classList.add('dark');
+            darkToggle.textContent = document.documentElement.classList.contains('dark') ? '\u2600' : '\u263E';
+            darkToggle.addEventListener('click', () => {
+                document.documentElement.classList.toggle('dark');
+                const isDark = document.documentElement.classList.contains('dark');
+                localStorage.setItem('darkMode', isDark);
+                darkToggle.textContent = isDark ? '\u2600' : '\u263E';
+            });
+        }
 
         // Scroll reveal
         const observer = new IntersectionObserver((entries) => {

@@ -94,30 +94,59 @@
         }
     }
 
-    // Render fallback — beautiful placeholder grid linking to Instagram
+    // Render fallback — use real monastery images as Instagram-style grid
     function renderFallback() {
         feedContainer.innerHTML = '';
-        var errorDiv = document.createElement('div');
-        errorDiv.className = 'instagram-feed__error';
+        var basePath = feedContainer.closest('section') ? '../assets/images/' : 'assets/images/';
+        // Try to detect correct relative path
+        if (window.location.pathname.indexOf('/en/') !== -1) basePath = '../assets/images/';
 
-        var grid = document.createElement('div');
-        grid.className = 'instagram-feed__error-grid';
+        var fallbackImages = [
+            { src: 'monastery-main', alt: 'Monastery grounds' },
+            { src: 'monks-ceremony', alt: 'Monks in ceremony' },
+            { src: 'sand-mandala', alt: 'Sand mandala creation' },
+            { src: 'puja-ceremony', alt: 'Puja ceremony' },
+            { src: 'buddha-statue', alt: 'Buddha statue' },
+            { src: 'receiving-teachings', alt: 'Receiving teachings' }
+        ];
 
-        var emojis = ['\uD83D\uDE4F', '\uD83C\uDF04', '\u2638', '\uD83C\uDFA8', '\uD83D\uDCD6', '\uD83C\uDF0E'];
-        for (var i = 0; i < 6; i++) {
-            var placeholder = document.createElement('a');
-            placeholder.href = INSTAGRAM_PROFILE;
-            placeholder.target = '_blank';
-            placeholder.rel = 'noopener';
-            placeholder.className = 'instagram-feed__placeholder';
-            placeholder.textContent = emojis[i];
-            placeholder.setAttribute('aria-label', 'Visit our Instagram');
-            grid.appendChild(placeholder);
+        for (var i = 0; i < fallbackImages.length; i++) {
+            var item = document.createElement('a');
+            item.className = 'instagram-feed__item reveal';
+            item.href = INSTAGRAM_PROFILE;
+            item.target = '_blank';
+            item.rel = 'noopener';
+            item.setAttribute('aria-label', fallbackImages[i].alt + ' - View on Instagram');
+
+            var picture = document.createElement('picture');
+            var source = document.createElement('source');
+            source.srcset = basePath + fallbackImages[i].src + '.webp';
+            source.type = 'image/webp';
+            var img = document.createElement('img');
+            img.src = basePath + fallbackImages[i].src + '.jpg';
+            img.alt = fallbackImages[i].alt;
+            img.loading = 'lazy';
+            picture.appendChild(source);
+            picture.appendChild(img);
+
+            var overlay = document.createElement('div');
+            overlay.className = 'instagram-feed__overlay';
+            overlay.innerHTML = '<span>&#128247; @gadengungru</span>';
+
+            item.appendChild(picture);
+            item.appendChild(overlay);
+            feedContainer.appendChild(item);
         }
 
-        errorDiv.appendChild(grid);
-        feedContainer.style.display = 'block';
-        feedContainer.appendChild(errorDiv);
+        // Scroll reveal
+        if (window.IntersectionObserver) {
+            var fallbackObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) entry.target.classList.add('visible');
+                });
+            }, { threshold: 0.1 });
+            feedContainer.querySelectorAll('.reveal').forEach(function(el) { fallbackObserver.observe(el); });
+        }
     }
 
     // Main flow

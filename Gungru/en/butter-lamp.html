@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../assets/images/favicon.png">
+    <link rel="apple-touch-icon" href="../assets/images/favicon.png">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#7B1A2C">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Light a Butter Lamp — Gaden Shartse Gungru Khangtsen Monastery</title>
+    <meta name="description" content="Light a virtual butter lamp and dedicate merit. The monks of Gungru Khangtsen will light a physical lamp on your behalf at the monastery.">
+    <link rel="canonical" href="https://gadengungru.github.io/Khangtsen/Gungru/en/butter-lamp.html">
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Light a Butter Lamp — Gungru Khangtsen Monastery">
+    <meta property="og:description" content="Light a virtual butter lamp and dedicate merit. The monks will light a physical lamp on your behalf at the monastery.">
+    <meta property="og:url" content="https://gadengungru.github.io/Khangtsen/Gungru/en/butter-lamp.html">
+    <meta property="og:image" content="https://gadengungru.github.io/Khangtsen/Gungru/assets/images/monastery-main.jpg">
+    <meta property="og:site_name" content="Gungru Khangtsen Monastery">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Light a Butter Lamp — Gungru Khangtsen Monastery">
+    <meta name="twitter:description" content="Light a virtual butter lamp and dedicate merit. The monks will light a physical lamp on your behalf at the monastery.">
+    <meta name="twitter:image" content="https://gadengungru.github.io/Khangtsen/Gungru/assets/images/monastery-main.jpg">
+    <link rel="stylesheet" href="../assets/css/style.css">
+
+    <style>
+        /* Butter Lamp Page Styles */
+
+        .lamp-section {
+            padding: 4rem 1.5rem;
+            text-align: center;
+        }
+
+        .lamp-container {
+            max-width: 480px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .lamp {
+            font-size: 8rem;
+            line-height: 1;
+            display: inline-block;
+            cursor: pointer;
+            transition: filter 0.6s ease, transform 0.3s ease;
+            filter: grayscale(0.5) brightness(0.7);
+            user-select: none;
+            position: relative;
+        }
+
+        .lamp:hover:not(.lamp--lit) {
+            transform: scale(1.05);
+            filter: grayscale(0.3) brightness(0.85);
+        }
+
+        .lamp--lit {
+            filter: grayscale(0) brightness(1);
+            animation: glow-pulse 2.5s ease-in-out infinite;
+        }
+
+        .lamp--lighting {
+            animation: light-up 1.2s ease-out forwards;
+        }
+
+        @keyframes light-up {
+            0% {
+                filter: grayscale(0.5) brightness(0.7);
+                transform: scale(1);
+            }
+            30% {
+                filter: grayscale(0) brightness(1.3);
+                transform: scale(1.15);
+            }
+            60% {
+                filter: grayscale(0) brightness(1.1) drop-shadow(0 0 40px rgba(255, 183, 77, 0.9));
+                transform: scale(1.08);
+            }
+            100% {
+                filter: grayscale(0) brightness(1) drop-shadow(0 0 30px rgba(255, 183, 77, 0.7));
+                transform: scale(1);
+            }
+        }
+
+        @keyframes glow-pulse {
+            0%, 100% {
+                filter: drop-shadow(0 0 20px rgba(255, 183, 77, 0.6)) drop-shadow(0 0 40px rgba(255, 152, 0, 0.3)) brightness(1);
+            }
+            50% {
+                filter: drop-shadow(0 0 35px rgba(255, 183, 77, 0.9)) drop-shadow(0 0 60px rgba(255, 152, 0, 0.5)) brightness(1.08);
+            }
+        }
+
+        .lamp-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 183, 77, 0.3) 0%, rgba(255, 152, 0, 0.1) 40%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .lamp--lit .lamp-glow {
+            opacity: 1;
+            animation: glow-expand 2.5s ease-in-out infinite;
+        }
+
+        @keyframes glow-expand {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.8;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.3);
+                opacity: 1;
+            }
+        }
+
+        .lamp-prompt {
+            margin-top: 1.5rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            color: var(--text-muted, #888);
+            font-style: italic;
+        }
+
+        .lamp-prompt--hidden {
+            display: none;
+        }
+
+        .light-btn {
+            margin-top: 1.5rem;
+            padding: 1rem 2.5rem;
+            font-size: 1.15rem;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 600;
+            color: #fff;
+            background: linear-gradient(135deg, #D4A017, #C28A00);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(212, 160, 23, 0.4);
+        }
+
+        .light-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(212, 160, 23, 0.6);
+            background: linear-gradient(135deg, #E0B030, #D4A017);
+        }
+
+        .light-btn:active {
+            transform: translateY(0);
+        }
+
+        .light-btn--hidden {
+            display: none;
+        }
+
+        /* Lamp Counter */
+        .lamp-counter {
+            margin-top: 2.5rem;
+            padding: 1.2rem 2rem;
+            background: linear-gradient(135deg, rgba(212, 160, 23, 0.08), rgba(255, 183, 77, 0.05));
+            border: 1px solid rgba(212, 160, 23, 0.2);
+            border-radius: 16px;
+            display: inline-block;
+        }
+
+        .lamp-counter__label {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-muted, #888);
+            margin-bottom: 0.3rem;
+        }
+
+        .lamp-counter__number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #C28A00;
+            line-height: 1.2;
+        }
+
+        .lamp-counter__suffix {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--text-muted, #888);
+            font-style: italic;
+        }
+
+        /* Dedication Form */
+        .dedication-form {
+            max-width: 440px;
+            margin: 2.5rem auto 0;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(212, 160, 23, 0.15);
+            border-radius: 20px;
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            pointer-events: none;
+        }
+
+        .dedication-form--visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+
+        .dedication-form__title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary, #eee);
+            margin-bottom: 0.5rem;
+        }
+
+        .dedication-form__subtitle {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            color: var(--text-muted, #888);
+            margin-bottom: 1.5rem;
+        }
+
+        .dedication-field {
+            margin-bottom: 1.2rem;
+            text-align: left;
+        }
+
+        .dedication-field label {
+            display: block;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-secondary, #aaa);
+            margin-bottom: 0.4rem;
+            letter-spacing: 0.03em;
+        }
+
+        .dedication-field input,
+        .dedication-field textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            color: var(--text-primary, #eee);
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            outline: none;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .dedication-field input:focus,
+        .dedication-field textarea:focus {
+            border-color: rgba(212, 160, 23, 0.5);
+            box-shadow: 0 0 0 3px rgba(212, 160, 23, 0.1);
+        }
+
+        .dedication-field input::placeholder,
+        .dedication-field textarea::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .dedication-field textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .donation-note {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.88rem;
+            color: var(--text-muted, #888);
+            margin: 1rem 0 1.5rem;
+            padding: 0.8rem 1rem;
+            background: rgba(212, 160, 23, 0.06);
+            border-radius: 10px;
+            border-left: 3px solid rgba(212, 160, 23, 0.4);
+        }
+
+        .donation-note strong {
+            color: #D4A017;
+        }
+
+        .dedicate-btn {
+            width: 100%;
+            padding: 1rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+            background: linear-gradient(135deg, var(--maroon, #7B1A2C), var(--maroon-deep, #5A0F1E));
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(123, 26, 44, 0.3);
+        }
+
+        .dedicate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(123, 26, 44, 0.5);
+        }
+
+        .dedicate-btn:active {
+            transform: translateY(0);
+        }
+
+        .dedicate-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Confirmation */
+        .confirmation {
+            max-width: 480px;
+            margin: 2rem auto 0;
+            padding: 2.5rem 2rem;
+            background: linear-gradient(135deg, rgba(212, 160, 23, 0.08), rgba(123, 26, 44, 0.05));
+            border: 1px solid rgba(212, 160, 23, 0.25);
+            border-radius: 20px;
+            opacity: 0;
+            transform: translateY(20px) scale(0.95);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            pointer-events: none;
+        }
+
+        .confirmation--visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: all;
+        }
+
+        .confirmation__icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            animation: glow-pulse 2.5s ease-in-out infinite;
+        }
+
+        .confirmation__title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #D4A017;
+            margin-bottom: 0.8rem;
+        }
+
+        .confirmation__blessing {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.15rem;
+            font-style: italic;
+            color: var(--text-secondary, #aaa);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .confirmation__detail {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            color: var(--text-muted, #888);
+        }
+
+        .confirmation__another {
+            margin-top: 1.5rem;
+            padding: 0.7rem 1.8rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #D4A017;
+            background: transparent;
+            border: 1px solid rgba(212, 160, 23, 0.3);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .confirmation__another:hover {
+            background: rgba(212, 160, 23, 0.08);
+            border-color: rgba(212, 160, 23, 0.5);
+        }
+
+        /* Particles */
+        .lamp-particles {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #FFB74D;
+            border-radius: 50%;
+            opacity: 0;
+            animation: particle-rise 2s ease-out forwards;
+        }
+
+        @keyframes particle-rise {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-200px) scale(0);
+            }
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--maroon, #7B1A2C);
+            color: #fff;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            z-index: 10000;
+            opacity: 0;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .toast--visible {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .lamp {
+                font-size: 6rem;
+            }
+            .lamp-section {
+                padding: 2.5rem 1rem;
+            }
+            .dedication-form {
+                padding: 1.5rem;
+                margin-left: 0.5rem;
+                margin-right: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="site-nav" id="siteNav">
+        <div class="site-nav__inner">
+            <a href="index.html" class="site-nav__brand">
+                <img src="../assets/images/logo.png" alt="Gungru Khangtsen">
+                <span data-i18n="nav.brand">Gungru Khangtsen</span>
+            </a>
+            <button class="nav-toggle" onclick="document.querySelector('.site-nav__links').classList.toggle('open')" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="site-nav__links">
+                <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+                <li><a href="general-understanding.html" data-i18n="nav.general_understanding">General Understanding</a></li>
+                <li class="nav-dropdown">
+                    <a href="dharma-games.html" class="nav-dropdown__toggle">Dharma Games</a><button class="nav-dropdown__arrow" onclick="this.parentElement.classList.toggle('open');event.preventDefault();event.stopPropagation();" aria-label="Toggle games menu"><span class="nav-arrow">&#9662;</span></button>
+                    <div class="nav-dropdown__menu">
+                        <a href="../mandala-game/index.html">Sacred Sands</a>
+                        <a href="../dharma-cards/index.html">Dharma Guardians</a>
+                    </div>
+                </li>
+                <li><a href="donate.html" class="site-nav__cta">
+                    <span>&#9825;</span>
+                    <span data-i18n="nav.donate">Donate</span>
+                </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero hero--small">
+        <div class="hero__orb hero__orb--1"></div>
+        <div class="hero__orb hero__orb--2"></div>
+        <div class="hero__content">
+            <h1 class="hero__title">Light a Butter Lamp</h1>
+            <p class="hero__tagline">
+                An ancient offering of light &mdash; dispelling darkness, cultivating wisdom, and generating merit for all sentient beings.
+            </p>
+        </div>
+    </section>
+
+    <!-- Divider -->
+    <div class="section-divider">
+        <span class="divider-symbol">&#10043;</span>
+        <span class="divider-symbol">&#10043;</span>
+        <span class="divider-symbol">&#10043;</span>
+    </div>
+
+    <!-- About Butter Lamps -->
+    <section class="about">
+        <div class="about__card reveal">
+            <span class="about__icon">&#128367;</span>
+            <h2 class="about__title">The Tradition of Butter Lamp Offerings</h2>
+            <p class="about__text">
+                In Tibetan Buddhism, lighting a butter lamp is one of the most sacred and widely practiced offerings. The flame of a butter lamp symbolizes the <strong>dispelling of the darkness of ignorance</strong>, just as the light of wisdom illuminates the path to enlightenment. Each lamp offered is a prayer made visible &mdash; a luminous expression of devotion and compassion.
+            </p>
+            <p class="about__text" style="margin-top: 1rem;">
+                The act of offering light is considered to generate <strong>great merit</strong>, benefiting not only the one who offers but all sentient beings. Traditionally, butter lamps are lit before sacred images and texts as a way to honor the Buddha's teachings, dedicate prayers for loved ones, and cultivate the inner light of awareness.
+            </p>
+            <p class="about__text" style="margin-top: 1rem;">
+                When you light a lamp here, our monks at <strong>Gaden Shartse Gungru Khangtsen Monastery</strong> will light a physical butter lamp on your behalf in the prayer hall, accompanying it with prayers and dedications according to your intention.
+            </p>
+            <div class="about__badges">
+                <div class="about__badge">&#128367; Symbol of Wisdom</div>
+                <div class="about__badge">&#9784; Ancient Tradition</div>
+                <div class="about__badge">&#128591; Merit for All Beings</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Divider -->
+    <div class="section-divider">
+        <span class="divider-symbol">&#10043;</span>
+        <span class="divider-symbol">&#10043;</span>
+        <span class="divider-symbol">&#10043;</span>
+    </div>
+
+    <!-- Interactive Lamp Section -->
+    <section class="lamp-section" id="lampSection">
+        <div class="lamp-container">
+
+            <!-- The Lamp -->
+            <div class="lamp" id="butterLamp" onclick="lightTheLamp()" role="button" aria-label="Click to light a butter lamp" tabindex="0">
+                <div class="lamp-glow"></div>
+                &#128367;
+            </div>
+
+            <!-- Prompt (before lighting) -->
+            <p class="lamp-prompt" id="lampPrompt">Touch the lamp to light it</p>
+
+            <!-- Light Button (before lighting) -->
+            <div>
+                <button class="light-btn" id="lightBtn" onclick="lightTheLamp()">
+                    &#10024; Light a Lamp
+                </button>
+            </div>
+
+            <!-- Lamp Counter -->
+            <div class="lamp-counter">
+                <div class="lamp-counter__label">Lamps Lit Worldwide</div>
+                <div class="lamp-counter__number" id="lampCount">...</div>
+                <div class="lamp-counter__suffix">butter lamps offered</div>
+            </div>
+
+            <!-- Dedication Form (appears after lighting) -->
+            <div class="dedication-form" id="dedicationForm">
+                <h3 class="dedication-form__title">Dedicate Your Offering</h3>
+                <p class="dedication-form__subtitle">Share your name and intention for this lamp offering</p>
+
+                <div class="dedication-field">
+                    <label for="offeringName">Your Name</label>
+                    <input type="text" id="offeringName" placeholder="Enter your name (optional)">
+                </div>
+
+                <div class="dedication-field">
+                    <label for="offeringEmail">Email Address</label>
+                    <input type="email" id="offeringEmail" placeholder="For confirmation (optional)">
+                </div>
+
+                <div class="dedication-field">
+                    <label for="offeringDedication">Dedication / Prayer Intention</label>
+                    <textarea id="offeringDedication" placeholder="e.g., For the health and happiness of my family&#10;For the swift enlightenment of all beings&#10;In memory of a loved one..." rows="3"></textarea>
+                </div>
+
+                <div class="donation-note">
+                    &#128367; <strong>Suggested offering:</strong> $5 USD / &#8377;200 INR per lamp. The monks will light a physical butter lamp at the monastery on your behalf. Offerings help sustain the monastery and its monks.
+                </div>
+
+                <button class="dedicate-btn" id="dedicateBtn" onclick="submitDedication()">
+                    &#128591; Dedicate &amp; Offer
+                </button>
+            </div>
+
+            <!-- Confirmation (after submission) -->
+            <div class="confirmation" id="confirmationCard">
+                <div class="confirmation__icon">&#128367;</div>
+                <h3 class="confirmation__title">Your Lamp Has Been Offered</h3>
+                <p class="confirmation__blessing">
+                    &ldquo;May the light of this offering dispel the darkness of ignorance in all realms. May all beings find peace, happiness, and the causes of lasting joy.&rdquo;
+                </p>
+                <p class="confirmation__detail" id="confirmationDetail">
+                    The monks of Gungru Khangtsen will light a butter lamp in the prayer hall with your dedication.
+                </p>
+                <button class="confirmation__another" onclick="resetLamp()">Light Another Lamp</button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="cta-card reveal">
+            <h2 class="cta-card__title">Support Our Monastery</h2>
+            <p class="cta-card__text">
+                Your generosity directly supports the monks' education, healthcare, daily sustenance, and the preservation of Tibetan Buddhist wisdom for future generations.
+            </p>
+            <div class="cta-card__actions">
+                <a href="donate.html" class="btn btn-primary">
+                    <span>&#9825;</span>
+                    <span>Make a Donation</span>
+                </a>
+                <a href="general-understanding.html" class="btn btn-secondary">Learn About Buddhism</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <img class="footer-wheel" src="../assets/images/favicon.svg" alt="Gungru Khangtsen">
+            <h3 class="footer-name" data-i18n="footer.name">Gaden Shartse Gungru Khangtsen Monastery</h3>
+            <div class="footer-address" data-i18n="footer.address">
+                P.O. Tibetan Colony, Mundgod<br>
+                N. Kanara, Karnataka 581411, India<br>
+                gadengungru@gmail.com
+            </div>
+            <div class="footer-social">
+                <a href="https://www.facebook.com/profile.php?id=100094601593205" target="_blank" rel="noopener" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                </a>
+                <a href="https://www.instagram.com/gadengungru" target="_blank" rel="noopener" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                </a>
+            </div>
+            <div class="footer-subscribe">
+                <p class="footer-subscribe__text">Stay connected with the monastery</p>
+                <form class="footer-subscribe__form" id="subscribeForm">
+                    <input type="email" id="subscribeEmail" placeholder="Your email address" required>
+                    <button type="submit" class="footer-subscribe__btn" id="subscribeBtn">Subscribe</button>
+                </form>
+                <p class="footer-subscribe__note" id="subscribeNote"></p>
+            </div>
+            <div class="footer-links">
+                <a href="index.html" data-i18n="nav.home">Home</a>
+                <a href="general-understanding.html" data-i18n="nav.general_understanding">General Understanding</a>
+                <a href="../mandala-game/index.html">Sacred Sands</a>
+                <a href="../dharma-cards/index.html">Dharma Guardians</a>
+                <a href="donate.html" data-i18n="nav.donate">Donate</a>
+                <a href="privacy-policy.html">Privacy Policy</a>
+                <a href="terms-and-conditions.html">Terms &amp; Conditions</a>
+            </div>
+            <div class="footer-badges">
+                <div class="footer-badge">
+                    <span>&#128421;</span>
+                    <span>Built with AlpacApps Infrastructure</span>
+                </div>
+                <div class="footer-badge">
+                    <span>&#10024;</span>
+                    <span>Powered by Claude</span>
+                </div>
+            </div>
+            <div class="footer-version">v260214.2 12:31a</div>
+        </div>
+    </footer>
+
+    <!-- Particle Container -->
+    <div class="lamp-particles" id="lampParticles"></div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // Navbar scroll
+        const nav = document.getElementById('siteNav');
+        window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 20); });
+
+        // Scroll reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/version.js"></script>
+    <script src="../assets/js/i18n.js"></script>
+    <script src="../assets/js/subscribe.js"></script>
+    <script src="../assets/js/tracker.js"></script>
+
+    <script>
+        // Supabase client
+        const SUPABASE_URL = 'https://axnongwefdafwflekysk.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_pFwy1o_CK9ps98dK-yDyTQ_zXaCU2_y';
+        const sb = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
+
+        let lampLit = false;
+        let lampCount = 0;
+
+        // Load lamp count on page load
+        async function loadLampCount() {
+            try {
+                if (!sb) return;
+                const { data, error } = await sb
+                    .from('settings')
+                    .select('value')
+                    .eq('key', 'butter_lamps_count')
+                    .single();
+
+                if (data && !error) {
+                    lampCount = parseInt(data.value) || 0;
+                    document.getElementById('lampCount').textContent = lampCount.toLocaleString();
+                }
+            } catch (e) {
+                console.error('Failed to load lamp count:', e);
+            }
+        }
+
+        // Light the lamp animation
+        function lightTheLamp() {
+            if (lampLit) return;
+            lampLit = true;
+
+            const lamp = document.getElementById('butterLamp');
+            const prompt = document.getElementById('lampPrompt');
+            const lightBtn = document.getElementById('lightBtn');
+            const form = document.getElementById('dedicationForm');
+
+            // Hide prompt and button
+            prompt.classList.add('lamp-prompt--hidden');
+            lightBtn.classList.add('light-btn--hidden');
+
+            // Animate lamp lighting
+            lamp.classList.add('lamp--lighting');
+            lamp.style.cursor = 'default';
+
+            // Create particles
+            createParticles();
+
+            // After lighting animation, add glow and show form
+            setTimeout(() => {
+                lamp.classList.remove('lamp--lighting');
+                lamp.classList.add('lamp--lit');
+            }, 1200);
+
+            // Show dedication form
+            setTimeout(() => {
+                form.classList.add('dedication-form--visible');
+                form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 1500);
+        }
+
+        // Create particle burst effect
+        function createParticles() {
+            const container = document.getElementById('lampParticles');
+            const lamp = document.getElementById('butterLamp');
+            const rect = lamp.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height * 0.3;
+
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                const angle = (Math.random() * Math.PI * 2);
+                const distance = 30 + Math.random() * 80;
+                const x = centerX + Math.cos(angle) * distance;
+                const size = 3 + Math.random() * 5;
+
+                particle.style.left = x + 'px';
+                particle.style.top = centerY + 'px';
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.animationDelay = (Math.random() * 0.5) + 's';
+                particle.style.animationDuration = (1.5 + Math.random() * 1) + 's';
+
+                const colors = ['#FFB74D', '#FFA726', '#FF9800', '#FFD54F', '#FFECB3'];
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+
+                container.appendChild(particle);
+
+                // Remove after animation
+                setTimeout(() => particle.remove(), 3000);
+            }
+        }
+
+        // Submit dedication
+        async function submitDedication() {
+            const name = document.getElementById('offeringName').value.trim();
+            const email = document.getElementById('offeringEmail').value.trim();
+            const dedication = document.getElementById('offeringDedication').value.trim();
+            const btn = document.getElementById('dedicateBtn');
+
+            btn.disabled = true;
+            btn.textContent = 'Offering...';
+
+            try {
+                if (!sb) throw new Error('Connection unavailable');
+
+                // Save to contacts table
+                const contactData = {
+                    full_name: name || 'Anonymous Offering',
+                    email: email || null,
+                    contact_type: 'lamp_offering',
+                    status: 'active',
+                    notes: dedication ? 'Butter lamp dedication: ' + dedication : 'Butter lamp offering',
+                    metadata: {
+                        type: 'butter_lamp',
+                        dedication: dedication || '',
+                        offered_at: new Date().toISOString()
+                    }
+                };
+
+                const { error: contactError } = await sb
+                    .from('contacts')
+                    .insert(contactData);
+
+                if (contactError) {
+                    console.warn('Contact save note:', contactError.message);
+                    // Continue anyway - we still want to count the lamp
+                }
+
+                // Increment the lamp count
+                const newCount = lampCount + 1;
+                const { error: countError } = await sb
+                    .from('settings')
+                    .update({ value: String(newCount) })
+                    .eq('key', 'butter_lamps_count');
+
+                if (!countError) {
+                    lampCount = newCount;
+                    document.getElementById('lampCount').textContent = lampCount.toLocaleString();
+                }
+
+                // Show confirmation
+                showConfirmation(name, dedication);
+
+            } catch (e) {
+                console.error('Submission error:', e);
+                showToast('Your lamp has been lit. Thank you for your offering.');
+                showConfirmation(name, dedication);
+            }
+        }
+
+        // Show confirmation card
+        function showConfirmation(name, dedication) {
+            const form = document.getElementById('dedicationForm');
+            const confirmation = document.getElementById('confirmationCard');
+            const detail = document.getElementById('confirmationDetail');
+
+            // Customize confirmation message
+            if (name) {
+                detail.innerHTML = 'Dear <strong>' + escapeHtml(name) + '</strong>, the monks of Gungru Khangtsen will light a butter lamp in the prayer hall with your dedication. May this offering bring benefit to all beings.';
+            }
+
+            // Hide form, show confirmation
+            form.classList.remove('dedication-form--visible');
+
+            setTimeout(() => {
+                confirmation.classList.add('confirmation--visible');
+                confirmation.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 400);
+
+            // Create more particles for celebration
+            createParticles();
+        }
+
+        // Reset to light another lamp
+        function resetLamp() {
+            const lamp = document.getElementById('butterLamp');
+            const prompt = document.getElementById('lampPrompt');
+            const lightBtn = document.getElementById('lightBtn');
+            const form = document.getElementById('dedicationForm');
+            const confirmation = document.getElementById('confirmationCard');
+            const dedicateBtn = document.getElementById('dedicateBtn');
+
+            // Reset states
+            lampLit = false;
+            lamp.classList.remove('lamp--lit', 'lamp--lighting');
+            lamp.style.cursor = 'pointer';
+            prompt.classList.remove('lamp-prompt--hidden');
+            lightBtn.classList.remove('light-btn--hidden');
+            confirmation.classList.remove('confirmation--visible');
+
+            // Clear form
+            document.getElementById('offeringName').value = '';
+            document.getElementById('offeringEmail').value = '';
+            document.getElementById('offeringDedication').value = '';
+            dedicateBtn.disabled = false;
+            dedicateBtn.innerHTML = '&#128591; Dedicate &amp; Offer';
+
+            // Scroll back to lamp
+            lamp.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // Toast notification
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('toast--visible');
+            setTimeout(() => toast.classList.remove('toast--visible'), 4000);
+        }
+
+        // HTML escape
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Keyboard support for lamp
+        document.addEventListener('DOMContentLoaded', () => {
+            const lamp = document.getElementById('butterLamp');
+            lamp.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    lightTheLamp();
+                }
+            });
+            loadLampCount();
+        });
+    </script>
+
+</body>
+</html>

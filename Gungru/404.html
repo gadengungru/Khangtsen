@@ -24,74 +24,73 @@
             padding: 40px 20px;
             line-height: 1.6;
         }
-        .error-icon { font-size: 64px; margin-bottom: 16px; }
+        .error-logo { width: 64px; height: 64px; margin-bottom: 20px; }
         .error-card {
-            max-width: 520px;
+            max-width: 560px;
             background: #fff;
             border: 1px solid #ECDCCA;
             border-radius: 28px;
             padding: 48px 36px;
             box-shadow: 0 12px 40px rgba(28,20,16,0.08);
         }
+        .error-code {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 4rem; font-weight: 700; color: #D4782A;
+            line-height: 1; margin-bottom: 4px; opacity: 0.4;
+        }
         .error-title {
             font-family: 'Cormorant Garamond', Georgia, serif;
-            font-size: 2rem;
-            font-weight: 600;
-            color: inherit;
+            font-size: 1.8rem; font-weight: 600; color: #2A1F1A;
             margin-bottom: 8px;
         }
-        .error-subtitle {
-            font-size: 14px;
-            color: #8A7668;
-            margin-bottom: 20px;
-        }
         .error-text {
-            font-size: 15px;
-            color: #5C4A3E;
-            margin-bottom: 28px;
+            font-size: 15px; color: #5C4A3E; margin-bottom: 28px; line-height: 1.7;
         }
         .error-links {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
+            display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
+            margin-bottom: 20px;
         }
         .error-links a {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 10px 20px;
-            border-radius: 100px;
-            font-size: 14px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.25s ease;
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 10px 20px; border-radius: 100px;
+            font-size: 14px; font-weight: 600; text-decoration: none; transition: all 0.25s ease;
         }
-        .btn-home {
-            background: #7B1A2C;
-            color: #fff;
+        .btn-home { background: #7B1A2C; color: #fff; }
+        .btn-home:hover { background: #5A0F1E; color: #fff; transform: translateY(-1px); }
+        .btn-other { background: rgba(123,26,44,0.06); color: #7B1A2C; border: 1px solid rgba(123,26,44,0.15); }
+        .btn-other:hover { background: rgba(123,26,44,0.1); color: #7B1A2C; }
+        .error-more {
+            display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+            padding-top: 20px; border-top: 1px solid #ECDCCA;
         }
-        .btn-home:hover { background: #5A0F1E; }
-        .btn-other {
-            background: rgba(123,26,44,0.06);
-            color: #7B1A2C;
-            border: 1px solid rgba(123,26,44,0.15);
+        .error-more a {
+            font-size: 13px; color: #8A7668; text-decoration: none;
+            padding: 6px 14px; border-radius: 100px;
+            transition: all 0.2s ease;
         }
-        .btn-other:hover { background: rgba(123,26,44,0.1); }
-        .error-wheel {
-            margin-top: 32px;
-            font-size: 24px;
-            opacity: 0.3;
+        .error-more a:hover { color: #D4782A; background: rgba(212,120,42,0.06); }
+        .error-divider {
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            margin-top: 32px; color: #D4782A; opacity: 0.3;
+        }
+        .error-divider::before, .error-divider::after {
+            content: ''; height: 1px; width: 40px;
+            background: linear-gradient(90deg, transparent, #D4782A, transparent);
+        }
+        @media (max-width: 480px) {
+            .error-card { padding: 32px 20px; }
+            .error-code { font-size: 3rem; }
+            .error-title { font-size: 1.5rem; }
         }
     </style>
 </head>
 <body>
+    <img src="assets/images/favicon.svg" alt="Gungru Khangtsen" class="error-logo">
     <div class="error-card">
-        <div class="error-icon">&#9784;</div>
+        <div class="error-code">404</div>
         <h1 class="error-title">Page Not Found</h1>
-        <p class="error-subtitle">Error 404</p>
         <p class="error-text">
-            Like a sand mandala swept away, the page you're looking for no longer exists. But the path forward remains clear.
+            Like a sand mandala swept away by the wind, the page you seek has dissolved. But the path forward remains &mdash; the journey continues.
         </p>
         <div class="error-links">
             <a href="en/index.html" class="btn-home">
@@ -104,7 +103,17 @@
                 <span>&#128218;</span> Learn More
             </a>
         </div>
+        <div class="error-more">
+            <a href="en/events.html">Events</a>
+            <a href="en/blog.html">Blog</a>
+            <a href="en/our-monks.html">Our Monks</a>
+            <a href="en/butter-lamp.html">Light a Lamp</a>
+            <a href="en/request-puja.html">Request Puja</a>
+            <a href="en/dharma-games.html">Dharma Games</a>
+        </div>
     </div>
-    <div class="error-wheel">&#10043; &#10043; &#10043;</div>
+    <div class="error-divider">
+        <span>&#10043;</span> <span>&#10043;</span> <span>&#10043;</span>
+    </div>
 </body>
 </html>
