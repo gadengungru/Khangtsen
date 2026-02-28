@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../assets/images/favicon.png">
+    <link rel="apple-touch-icon" href="../assets/images/favicon.png">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#7B1A2C">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog — Gaden Shartse Gungru Khangtsen Monastery</title>
+    <meta name="description" content="News, teachings, and updates from Gaden Shartse Gungru Khangtsen Monastery in Mundgod, India.">
+    <link rel="canonical" href="https://gadengungru.github.io/Khangtsen/Gungru/en/blog.html">
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Blog — Gaden Shartse Gungru Khangtsen Monastery">
+    <meta property="og:description" content="News, teachings, and updates from Gaden Shartse Gungru Khangtsen Monastery in Mundgod, India.">
+    <meta property="og:url" content="https://gadengungru.github.io/Khangtsen/Gungru/en/blog.html">
+    <meta property="og:image" content="https://gadengungru.github.io/Khangtsen/Gungru/assets/images/monastery-main.jpg">
+    <meta property="og:site_name" content="Gungru Khangtsen Monastery">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Blog — Gungru Khangtsen Monastery">
+    <meta name="twitter:description" content="News, teachings, and updates from Gaden Shartse Gungru Khangtsen Monastery.">
+    <meta name="twitter:image" content="https://gadengungru.github.io/Khangtsen/Gungru/assets/images/monastery-main.jpg">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        .blog-section { padding: 40px 20px 60px; }
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .blog-card {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            transition: all var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+        .blog-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--saffron);
+        }
+        .blog-card__image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: var(--saffron-pale);
+        }
+        .blog-card__placeholder {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, var(--saffron-pale) 0%, var(--maroon-pale, #f3e8eb) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--saffron-deep, #c9973f);
+        }
+        .blog-card__body {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .blog-card__category {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--saffron-deep, #c9973f);
+            background: var(--saffron-pale, #fdf6e3);
+            padding: 3px 10px;
+            border-radius: 20px;
+            margin-bottom: 10px;
+            width: fit-content;
+        }
+        .blog-card__title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+        .blog-card__excerpt {
+            font-size: 14px;
+            color: var(--text-soft);
+            line-height: 1.6;
+            margin-bottom: 16px;
+            flex: 1;
+        }
+        .blog-card__meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 13px;
+            color: var(--text-soft);
+            border-top: 1px solid var(--border);
+            padding-top: 12px;
+            margin-top: auto;
+        }
+        .blog-card__date {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .blog-card__read-more {
+            color: var(--saffron-deep, #c9973f);
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.2s;
+        }
+        .blog-card__read-more:hover {
+            color: var(--maroon, #7B1A2C);
+        }
+        .blog-empty {
+            text-align: center;
+            padding: 60px 20px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .blog-empty__icon {
+            font-size: 3rem;
+            margin-bottom: 16px;
+        }
+        .blog-empty__title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+        .blog-empty__text {
+            font-size: 15px;
+            color: var(--text-soft);
+            line-height: 1.6;
+        }
+        /* Post detail modal/overlay */
+        .blog-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: rgba(0,0,0,0.5);
+            overflow-y: auto;
+            padding: 40px 20px;
+        }
+        .blog-overlay.active { display: flex; justify-content: center; align-items: flex-start; }
+        .blog-detail {
+            background: var(--surface, #fff);
+            border-radius: var(--radius-lg);
+            max-width: 720px;
+            width: 100%;
+            margin: 40px auto;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+        }
+        .blog-detail__close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: rgba(0,0,0,0.5);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            transition: background 0.2s;
+        }
+        .blog-detail__close:hover { background: rgba(0,0,0,0.7); }
+        .blog-detail__cover {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+        }
+        .blog-detail__cover-placeholder {
+            width: 100%;
+            height: 280px;
+            background: linear-gradient(135deg, var(--saffron-pale) 0%, var(--maroon-pale, #f3e8eb) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--saffron-deep, #c9973f);
+        }
+        .blog-detail__content {
+            padding: 32px;
+        }
+        .blog-detail__category {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--saffron-deep, #c9973f);
+            background: var(--saffron-pale, #fdf6e3);
+            padding: 3px 10px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+        }
+        .blog-detail__title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 8px;
+            line-height: 1.2;
+        }
+        .blog-detail__meta {
+            font-size: 14px;
+            color: var(--text-soft);
+            margin-bottom: 24px;
+        }
+        .blog-detail__body {
+            font-size: 15px;
+            line-height: 1.8;
+            color: var(--text);
+            white-space: pre-line;
+        }
+        .blog-detail__body strong { color: var(--dark); }
+
+        @media (max-width: 600px) {
+            .blog-grid { grid-template-columns: 1fr; gap: 16px; }
+            .blog-detail__content { padding: 20px; }
+            .blog-detail__title { font-size: 1.5rem; }
+            .blog-detail__cover, .blog-detail__cover-placeholder { height: 200px; }
+            .blog-overlay { padding: 20px 12px; }
+            .blog-detail { margin: 20px auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="site-nav" id="siteNav">
+        <div class="site-nav__inner">
+            <a href="index.html" class="site-nav__brand">
+                <img src="../assets/images/logo.png" alt="Gungru Khangtsen">
+                <span data-i18n="nav.brand">Gungru Khangtsen</span>
+            </a>
+            <button class="nav-toggle" onclick="document.querySelector('.site-nav__links').classList.toggle('open')" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="site-nav__links">
+                <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+                <li><a href="general-understanding.html" data-i18n="nav.general_understanding">General Understanding</a></li>
+                <li class="nav-dropdown">
+                    <a href="dharma-games.html" class="nav-dropdown__toggle">Dharma Games</a><button class="nav-dropdown__arrow" onclick="this.parentElement.classList.toggle('open');event.preventDefault();event.stopPropagation();" aria-label="Toggle games menu"><span class="nav-arrow">&#9662;</span></button>
+                    <div class="nav-dropdown__menu">
+                        <a href="../mandala-game/index.html">Sacred Sands</a>
+                        <a href="../dharma-cards/index.html">Dharma Guardians</a>
+                    </div>
+                </li>
+                <li><a href="donate.html" class="site-nav__cta">
+                    <span>&#9825;</span>
+                    <span data-i18n="nav.donate">Donate</span>
+                </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero hero--small">
+        <div class="hero__orb hero__orb--1"></div>
+        <div class="hero__orb hero__orb--2"></div>
+        <div class="hero__content">
+            <h1 class="hero__title">Monastery News &amp; Teachings</h1>
+            <p class="hero__tagline">
+                Stories, updates, and reflections from the monks of Gaden Shartse Gungru Khangtsen.
+            </p>
+        </div>
+    </section>
+
+    <!-- Divider -->
+    <div class="section-divider">
+        <span class="divider-symbol">&#10043;</span>
+        <span class="divider-symbol">&#10043;</span>
+        <span class="divider-symbol">&#10043;</span>
+    </div>
+
+    <!-- Blog Posts -->
+    <section class="blog-section">
+        <div id="blogGrid" class="blog-grid">
+            <!-- Posts loaded dynamically -->
+        </div>
+        <div id="blogEmpty" class="blog-empty" style="display:none;">
+            <div class="blog-empty__icon">&#128220;</div>
+            <h3 class="blog-empty__title">No Posts Yet</h3>
+            <p class="blog-empty__text">
+                We are preparing new content for you. Please check back soon for news, teachings, and updates from the monastery.
+            </p>
+        </div>
+    </section>
+
+    <!-- Post Detail Overlay -->
+    <div class="blog-overlay" id="blogOverlay">
+        <div class="blog-detail" id="blogDetail">
+            <button class="blog-detail__close" id="blogClose" aria-label="Close">&times;</button>
+            <div id="blogDetailCover"></div>
+            <div class="blog-detail__content">
+                <div class="blog-detail__category" id="blogDetailCategory"></div>
+                <h1 class="blog-detail__title" id="blogDetailTitle"></h1>
+                <div class="blog-detail__meta" id="blogDetailMeta"></div>
+                <div class="blog-detail__body" id="blogDetailBody"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <img class="footer-wheel" src="../assets/images/favicon.svg" alt="Gungru Khangtsen">
+            <h3 class="footer-name" data-i18n="footer.name">Gaden Shartse Gungru Khangtsen Monastery</h3>
+            <div class="footer-address" data-i18n="footer.address">
+                P.O. Tibetan Colony, Mundgod<br>
+                N. Kanara, Karnataka 581411, India<br>
+                gadengungru@gmail.com
+            </div>
+            <div class="footer-social">
+                <a href="https://www.facebook.com/profile.php?id=100094601593205" target="_blank" rel="noopener" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                </a>
+                <a href="https://www.instagram.com/gadengungru" target="_blank" rel="noopener" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                </a>
+            </div>
+            <div class="footer-subscribe">
+                <p class="footer-subscribe__text">Stay connected with the monastery</p>
+                <form class="footer-subscribe__form" id="subscribeForm">
+                    <input type="email" id="subscribeEmail" placeholder="Your email address" required>
+                    <button type="submit" class="footer-subscribe__btn" id="subscribeBtn">Subscribe</button>
+                </form>
+                <p class="footer-subscribe__note" id="subscribeNote"></p>
+            </div>
+            <div class="footer-links">
+                <a href="index.html" data-i18n="nav.home">Home</a>
+                <a href="general-understanding.html" data-i18n="nav.general_understanding">General Understanding</a>
+                <a href="blog.html">Blog</a>
+                <a href="../mandala-game/index.html">Sacred Sands</a>
+                <a href="../dharma-cards/index.html">Dharma Guardians</a>
+                <a href="donate.html" data-i18n="nav.donate">Donate</a>
+                <a href="privacy-policy.html">Privacy Policy</a>
+                <a href="terms-and-conditions.html">Terms &amp; Conditions</a>
+            </div>
+            <div class="footer-badges">
+                <div class="footer-badge">
+                    <span>&#128421;</span>
+                    <span>Built with AlpacApps Infrastructure</span>
+                </div>
+                <div class="footer-badge">
+                    <span>&#10024;</span>
+                    <span>Powered by Claude</span>
+                </div>
+            </div>
+            <div class="footer-version"></div>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll
+        const nav = document.getElementById('siteNav');
+        window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 20); });
+    </script>
+
+    <script>
+        // Blog loading
+        const SUPABASE_URL = 'https://axnongwefdafwflekysk.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_pFwy1o_CK9ps98dK-yDyTQ_zXaCU2_y';
+
+        let allPosts = [];
+
+        async function loadBlogPosts() {
+            const grid = document.getElementById('blogGrid');
+            const empty = document.getElementById('blogEmpty');
+
+            try {
+                const res = await fetch(
+                    `${SUPABASE_URL}/rest/v1/blog_posts?status=eq.published&order=published_at.desc&select=*`,
+                    {
+                        headers: {
+                            'apikey': SUPABASE_KEY,
+                            'Authorization': `Bearer ${SUPABASE_KEY}`
+                        }
+                    }
+                );
+
+                if (!res.ok) throw new Error('Failed to fetch posts');
+                allPosts = await res.json();
+
+                if (!allPosts.length) {
+                    grid.style.display = 'none';
+                    empty.style.display = 'block';
+                    return;
+                }
+
+                grid.innerHTML = allPosts.map((post, idx) => renderCard(post, idx)).join('');
+            } catch (err) {
+                console.error('Blog load error:', err);
+                grid.style.display = 'none';
+                empty.style.display = 'block';
+            }
+        }
+
+        function renderCard(post, idx) {
+            const date = post.published_at ? formatDate(post.published_at) : '';
+            const categoryLabel = formatCategory(post.category);
+            const imageHtml = post.cover_image_url
+                ? `<img class="blog-card__image" src="${escapeHtml(post.cover_image_url)}" alt="${escapeHtml(post.title)}" loading="lazy">`
+                : `<div class="blog-card__placeholder">&#9753;</div>`;
+
+            return `
+                <article class="blog-card" onclick="openPost(${idx})">
+                    ${imageHtml}
+                    <div class="blog-card__body">
+                        <span class="blog-card__category">${categoryLabel}</span>
+                        <h3 class="blog-card__title">${escapeHtml(post.title)}</h3>
+                        <p class="blog-card__excerpt">${escapeHtml(post.excerpt || '')}</p>
+                        <div class="blog-card__meta">
+                            <span class="blog-card__date">&#128197; ${date}</span>
+                            <span class="blog-card__read-more">Read more &rarr;</span>
+                        </div>
+                    </div>
+                </article>
+            `;
+        }
+
+        function openPost(idx) {
+            const post = allPosts[idx];
+            if (!post) return;
+
+            const overlay = document.getElementById('blogOverlay');
+            const coverEl = document.getElementById('blogDetailCover');
+            const categoryEl = document.getElementById('blogDetailCategory');
+            const titleEl = document.getElementById('blogDetailTitle');
+            const metaEl = document.getElementById('blogDetailMeta');
+            const bodyEl = document.getElementById('blogDetailBody');
+
+            if (post.cover_image_url) {
+                coverEl.innerHTML = `<img class="blog-detail__cover" src="${escapeHtml(post.cover_image_url)}" alt="${escapeHtml(post.title)}">`;
+            } else {
+                coverEl.innerHTML = `<div class="blog-detail__cover-placeholder">&#9753;</div>`;
+            }
+
+            categoryEl.textContent = formatCategory(post.category);
+            titleEl.textContent = post.title;
+
+            const date = post.published_at ? formatDate(post.published_at) : '';
+            const author = post.author || 'Gungru Khangtsen';
+            metaEl.textContent = `${date} \u2022 by ${author}`;
+
+            bodyEl.textContent = post.body || '';
+
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePost() {
+            document.getElementById('blogOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.getElementById('blogClose').addEventListener('click', closePost);
+        document.getElementById('blogOverlay').addEventListener('click', function(e) {
+            if (e.target === this) closePost();
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closePost();
+        });
+
+        function formatDate(dateStr) {
+            const d = new Date(dateStr);
+            return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        }
+
+        function formatCategory(cat) {
+            if (!cat) return 'News';
+            return cat.charAt(0).toUpperCase() + cat.slice(1).replace(/_/g, ' ');
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        loadBlogPosts();
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/version.js"></script>
+    <script src="../assets/js/i18n.js"></script>
+    <script src="../assets/js/subscribe.js"></script>
+    <script src="../assets/js/tracker.js"></script>
+</body>
+</html>
