@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="Gungru/assets/images/favicon.png">
+    <link rel="apple-touch-icon" href="Gungru/assets/images/favicon.png">
+    <title>Page Not Found — Gungru Khangtsen Monastery</title>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #FDF5ED;
+            color: #2A1F1A;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+        .error-logo { width: 64px; height: 64px; margin-bottom: 20px; }
+        .error-card {
+            max-width: 560px;
+            background: #fff;
+            border: 1px solid #ECDCCA;
+            border-radius: 28px;
+            padding: 48px 36px;
+            box-shadow: 0 12px 40px rgba(28,20,16,0.08);
+        }
+        .error-code {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 4rem; font-weight: 700; color: #D4782A;
+            line-height: 1; margin-bottom: 4px; opacity: 0.4;
+        }
+        .error-title {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.8rem; font-weight: 600; color: #2A1F1A;
+            margin-bottom: 8px;
+        }
+        .error-text {
+            font-size: 15px; color: #5C4A3E; margin-bottom: 28px; line-height: 1.7;
+        }
+        .error-links {
+            display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
+            margin-bottom: 20px;
+        }
+        .error-links a {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 10px 20px; border-radius: 100px;
+            font-size: 14px; font-weight: 600; text-decoration: none; transition: all 0.25s ease;
+        }
+        .btn-home { background: #7B1A2C; color: #fff; }
+        .btn-home:hover { background: #5A0F1E; color: #fff; transform: translateY(-1px); }
+        .btn-other { background: rgba(123,26,44,0.06); color: #7B1A2C; border: 1px solid rgba(123,26,44,0.15); }
+        .btn-other:hover { background: rgba(123,26,44,0.1); color: #7B1A2C; }
+        .error-more {
+            display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+            padding-top: 20px; border-top: 1px solid #ECDCCA;
+        }
+        .error-more a {
+            font-size: 13px; color: #8A7668; text-decoration: none;
+            padding: 6px 14px; border-radius: 100px;
+            transition: all 0.2s ease;
+        }
+        .error-more a:hover { color: #D4782A; background: rgba(212,120,42,0.06); }
+        .error-divider {
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            margin-top: 32px; color: #D4782A; opacity: 0.3;
+        }
+        .error-divider::before, .error-divider::after {
+            content: ''; height: 1px; width: 40px;
+            background: linear-gradient(90deg, transparent, #D4782A, transparent);
+        }
+        @media (max-width: 480px) {
+            .error-card { padding: 32px 20px; }
+            .error-code { font-size: 3rem; }
+            .error-title { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <img src="Gungru/assets/images/favicon.svg" alt="Gungru Khangtsen" class="error-logo">
+    <div class="error-card">
+        <div class="error-code">404</div>
+        <h1 class="error-title">Page Not Found</h1>
+        <p class="error-text">
+            Like a sand mandala swept away by the wind, the page you seek has dissolved. But the path forward remains &mdash; the journey continues.
+        </p>
+        <div class="error-links">
+            <a href="Gungru/en/index.html" class="btn-home">
+                <span>&#127968;</span> Go Home
+            </a>
+            <a href="Gungru/en/donate.html" class="btn-other">
+                <span>&#9825;</span> Donate
+            </a>
+            <a href="Gungru/en/general-understanding.html" class="btn-other">
+                <span>&#128218;</span> Learn More
+            </a>
+        </div>
+        <div class="error-more">
+            <a href="Gungru/en/events.html">Events</a>
+            <a href="Gungru/en/blog.html">Blog</a>
+            <a href="Gungru/en/our-monks.html">Our Monks</a>
+            <a href="Gungru/en/butter-lamp.html">Light a Lamp</a>
+            <a href="Gungru/en/request-puja.html">Request Puja</a>
+            <a href="Gungru/en/dharma-games.html">Dharma Games</a>
+        </div>
+    </div>
+    <div class="error-divider">
+        <span>&#10043;</span> <span>&#10043;</span> <span>&#10043;</span>
+    </div>
+</body>
+</html>

@@ -1473,7 +1473,7 @@ section { position: relative; }
 
 /* ======================================== Back to Top Button ======================================== */
 .back-to-top {
-    position: fixed; bottom: 24px; right: 24px; z-index: 999;
+    position: fixed; bottom: 20px; right: 20px; z-index: 999;
     width: 44px; height: 44px; border-radius: 50%;
     background: var(--maroon); color: #fff; border: none; cursor: pointer;
     display: flex; align-items: center; justify-content: center;
@@ -1483,8 +1483,8 @@ section { position: relative; }
 }
 .back-to-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
 .back-to-top:hover { background: var(--maroon-deep); transform: translateY(-2px); }
-@media (max-width: 768px) {
-    .back-to-top { bottom: 16px; right: 16px; width: 40px; height: 40px; }
+@media (max-width: 600px) {
+    .back-to-top { bottom: 12px; right: 12px; width: 40px; height: 40px; }
 }
 
 /* ======================================== Breadcrumbs ======================================== */
@@ -1534,7 +1534,7 @@ section { position: relative; }
 
 /* ======================================== Dark Mode ======================================== */
 .dark-mode-toggle {
-    position: fixed; bottom: 24px; left: 24px; z-index: 999;
+    position: fixed; bottom: 24px; left: 24px; z-index: 1000;
     width: 40px; height: 40px; border-radius: 50%;
     background: var(--surface); border: 1px solid var(--border);
     cursor: pointer; display: flex; align-items: center; justify-content: center;
@@ -1570,8 +1570,13 @@ html.dark .site-nav__links a:hover { color: var(--saffron-light); }
 html.dark .site-nav__links a.active { color: var(--saffron-light); }
 html.dark .site-footer { background: #0e0c0a; }
 html.dark .dark-mode-toggle { background: var(--surface); border-color: var(--border); }
+html.dark .section-header__title,
+html.dark .about__title,
+html.dark .monks-section__title,
+html.dark .events-section__title { color: #F5DCC8; }
+html.dark .about__badge { color: #F5DCC8; border-color: rgba(245,220,200,0.3); }
 html.dark .gallery-card, html.dark .feature-card, html.dark .sponsor-card,
-html.dark .testimonial-card, html.dark .faq-item { background: var(--surface); border-color: var(--border); }
+html.dark .testimonial-card, html.dark .faq-item { background: #2E2420; border-color: rgba(255,255,255,0.1); }
 html.dark .about__card { background: var(--surface); }
 html.dark .cta-card { background: var(--surface); }
 html.dark .donate-card { background: var(--surface); }

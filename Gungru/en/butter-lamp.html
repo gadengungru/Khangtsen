@@ -262,9 +262,9 @@
             padding: 0.8rem 1rem;
             font-family: 'DM Sans', sans-serif;
             font-size: 0.95rem;
-            color: var(--text-primary, #eee);
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: var(--text, #2A1F1A);
+            background: rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(0, 0, 0, 0.12);
             border-radius: 12px;
             outline: none;
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
@@ -279,7 +279,7 @@
 
         .dedication-field input::placeholder,
         .dedication-field textarea::placeholder {
-            color: rgba(255, 255, 255, 0.3);
+            color: rgba(0, 0, 0, 0.35);
         }
 
         .dedication-field textarea {
@@ -290,7 +290,7 @@
         .donation-note {
             font-family: 'DM Sans', sans-serif;
             font-size: 0.88rem;
-            color: var(--text-muted, #888);
+            color: var(--text-soft, #5C4A3E);
             margin: 1rem 0 1.5rem;
             padding: 0.8rem 1rem;
             background: rgba(212, 160, 23, 0.06);
@@ -342,14 +342,17 @@
             border-radius: 20px;
             opacity: 0;
             transform: translateY(20px) scale(0.95);
-            transition: opacity 0.8s ease, transform 0.8s ease;
+            transition: opacity 0.8s ease, transform 0.8s ease, max-height 0.8s ease;
             pointer-events: none;
+            max-height: 0;
+            overflow: hidden;
         }
 
         .confirmation--visible {
             opacity: 1;
             transform: translateY(0) scale(1);
             pointer-events: all;
+            max-height: 800px;
         }
 
         .confirmation__icon {
@@ -371,7 +374,7 @@
             font-family: 'Cormorant Garamond', serif;
             font-size: 1.15rem;
             font-style: italic;
-            color: var(--text-secondary, #aaa);
+            color: var(--text-soft, #5C4A3E);
             line-height: 1.7;
             margin-bottom: 1.5rem;
         }
@@ -379,7 +382,7 @@
         .confirmation__detail {
             font-family: 'DM Sans', sans-serif;
             font-size: 0.9rem;
-            color: var(--text-muted, #888);
+            color: var(--text-soft, #5C4A3E);
         }
 
         .confirmation__another {
