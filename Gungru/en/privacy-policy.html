@@ -14,6 +14,7 @@
     <meta name="description" content="Privacy Policy for the Gaden Shartse Gungru Khangtsen Monastery website.">
     <link rel="canonical" href="https://gadengungru.github.io/Khangtsen/Gungru/en/privacy-policy.html">
     <link rel="stylesheet" href="../assets/css/style.css">
+    <script src="../assets/js/darkmode.js"></script>
     <style>
         .policy-section { max-width: 800px; margin: 0 auto; padding: 0 20px 60px; }
         .policy-card {
@@ -58,6 +59,16 @@
             <ul class="site-nav__links">
                 <li><a href="index.html" data-i18n="nav.home">Home</a></li>
                 <li><a href="general-understanding.html" data-i18n="nav.general_understanding">General Understanding</a></li>
+                <li class="nav-dropdown">
+                    <a href="our-monks.html" class="nav-dropdown__toggle">Explore</a><button class="nav-dropdown__arrow" onclick="this.parentElement.classList.toggle('open');event.preventDefault();event.stopPropagation();" aria-label="Toggle explore menu"><span class="nav-arrow">&#9662;</span></button>
+                    <div class="nav-dropdown__menu">
+                        <a href="our-monks.html">Our Monks</a>
+                        <a href="events.html">Events</a>
+                        <a href="blog.html">Blog</a>
+                        <a href="butter-lamp.html">Light a Lamp</a>
+                        <a href="request-puja.html">Request Puja</a>
+                    </div>
+                </li>
                 <li class="nav-dropdown">
                     <a href="dharma-games.html" class="nav-dropdown__toggle">Dharma Games</a><button class="nav-dropdown__arrow" onclick="this.parentElement.classList.toggle('open');event.preventDefault();event.stopPropagation();" aria-label="Toggle games menu"><span class="nav-arrow">&#9662;</span></button>
                     <div class="nav-dropdown__menu">
@@ -242,7 +253,6 @@
     </section>
 
     <button class="back-to-top" id="backToTop" aria-label="Back to top">&#8593;</button>
-    <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">&#9790;</button>
 
     <!-- Footer -->
     <footer class="site-footer">
@@ -304,18 +314,17 @@
             nav.classList.toggle('scrolled', window.scrollY > 20);
             if (backToTopBtn) backToTopBtn.classList.toggle('visible', window.scrollY > 400);
         });
-        if (backToTopBtn) backToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-        const darkToggle = document.getElementById('darkModeToggle');
-        if (darkToggle) {
-            if (localStorage.getItem('darkMode') === 'true') document.documentElement.classList.add('dark');
-            darkToggle.textContent = document.documentElement.classList.contains('dark') ? '\u2600' : '\u263E';
-            darkToggle.addEventListener('click', () => {
-                document.documentElement.classList.toggle('dark');
-                const isDark = document.documentElement.classList.contains('dark');
-                localStorage.setItem('darkMode', isDark);
-                darkToggle.textContent = isDark ? '\u2600' : '\u263E';
+        // Active nav state
+        (function() {
+            var currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            document.querySelectorAll('.site-nav__links a').forEach(function(link) {
+                var href = link.getAttribute('href');
+                if (href && href.split('/').pop() === currentPage) {
+                    link.classList.add('active');
+                }
             });
-        }
+        })();
+        if (backToTopBtn) backToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
         // Scroll reveal
         const observer = new IntersectionObserver((entries) => {

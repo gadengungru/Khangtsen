@@ -26,6 +26,7 @@
     <meta name="twitter:description" content="Supporting the preservation of Tibetan Buddhist wisdom through education, sacred arts, and compassionate action.">
     <meta name="twitter:image" content="https://gadengungru.github.io/Khangtsen/Gungru/assets/images/monastery-main.jpg">
     <link rel="stylesheet" href="../assets/css/style.css">
+    <script src="../assets/js/darkmode.js"></script>
     <!-- Structured Data -->
     <script type="application/ld+json">
     {
@@ -77,6 +78,16 @@
             <ul class="site-nav__links">
                 <li><a href="index.html" class="active" data-i18n="nav.home">Home</a></li>
                 <li><a href="general-understanding.html" data-i18n="nav.general_understanding">General Understanding</a></li>
+                <li class="nav-dropdown">
+                    <a href="our-monks.html" class="nav-dropdown__toggle">Explore</a><button class="nav-dropdown__arrow" onclick="this.parentElement.classList.toggle('open');event.preventDefault();event.stopPropagation();" aria-label="Toggle explore menu"><span class="nav-arrow">&#9662;</span></button>
+                    <div class="nav-dropdown__menu">
+                        <a href="our-monks.html">Our Monks</a>
+                        <a href="events.html">Events</a>
+                        <a href="blog.html">Blog</a>
+                        <a href="butter-lamp.html">Light a Lamp</a>
+                        <a href="request-puja.html">Request Puja</a>
+                    </div>
+                </li>
                 <li class="nav-dropdown">
                     <a href="dharma-games.html" class="nav-dropdown__toggle">Dharma Games</a><button class="nav-dropdown__arrow" onclick="this.parentElement.classList.toggle('open');event.preventDefault();event.stopPropagation();" aria-label="Toggle games menu"><span class="nav-arrow">&#9662;</span></button>
                     <div class="nav-dropdown__menu">
@@ -349,30 +360,30 @@
             <div class="testimonial-card reveal">
                 <p class="testimonial-card__text">Visiting Gungru Khangtsen was a life-changing experience. The monks' dedication to preserving Tibetan Buddhist wisdom is truly inspiring. I felt a deep sense of peace and connection.</p>
                 <div class="testimonial-card__author">
-                    <div class="testimonial-card__avatar">S</div>
+                    <div class="testimonial-card__avatar">A</div>
                     <div>
-                        <div class="testimonial-card__name">Sarah M.</div>
-                        <div class="testimonial-card__role">Visitor from Australia</div>
+                        <div class="testimonial-card__name">A Visitor from Australia</div>
+                        <div class="testimonial-card__role">After attending a teaching</div>
                     </div>
                 </div>
             </div>
             <div class="testimonial-card reveal">
                 <p class="testimonial-card__text">Sponsoring a monk's education has been one of the most meaningful things I've done. Knowing that my support helps preserve these ancient teachings gives me great joy.</p>
                 <div class="testimonial-card__author">
-                    <div class="testimonial-card__avatar">R</div>
+                    <div class="testimonial-card__avatar">A</div>
                     <div>
-                        <div class="testimonial-card__name">Rajesh K.</div>
-                        <div class="testimonial-card__role">Monthly Donor, India</div>
+                        <div class="testimonial-card__name">A Monthly Supporter</div>
+                        <div class="testimonial-card__role">From New Delhi, India</div>
                     </div>
                 </div>
             </div>
             <div class="testimonial-card reveal">
                 <p class="testimonial-card__text">The sand mandala created by the Gungru monks at our university was breathtaking. Watching them work with such patience and skill was a meditation in itself.</p>
                 <div class="testimonial-card__author">
-                    <div class="testimonial-card__avatar">L</div>
+                    <div class="testimonial-card__avatar">A</div>
                     <div>
-                        <div class="testimonial-card__name">Dr. Lisa Chen</div>
-                        <div class="testimonial-card__role">University Event Organizer</div>
+                        <div class="testimonial-card__name">A University Partner</div>
+                        <div class="testimonial-card__role">Hosted a sand mandala event</div>
                     </div>
                 </div>
             </div>
@@ -427,16 +438,13 @@
                     <span>&#9825;</span>
                     <span data-i18n="home.cta_donate">Make a Donation</span>
                 </a>
-                <a href="general-understanding.html" class="btn btn-secondary" data-i18n="home.cta_learn_buddhism">Learn About Buddhism</a>
+                <a href="general-understanding.html" class="btn btn-secondary" data-i18n="home.cta_learn_buddhism">Read Our Story</a>
             </div>
         </div>
     </section>
 
     <!-- Back to Top -->
     <button class="back-to-top" id="backToTop" aria-label="Back to top">&#8593;</button>
-
-    <!-- Dark Mode Toggle -->
-    <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">&#9790;</button>
 
     <!-- Footer -->
     <footer class="site-footer">
@@ -457,7 +465,7 @@
                 </a>
             </div>
             <div class="footer-subscribe">
-                <p class="footer-subscribe__text">Stay connected with the monastery</p>
+                <p class="footer-subscribe__text">Receive updates, teachings, and blessings</p>
                 <form class="footer-subscribe__form" id="subscribeForm">
                     <input type="email" id="subscribeEmail" placeholder="Your email address" required>
                     <button type="submit" class="footer-subscribe__btn" id="subscribeBtn">Subscribe</button>
@@ -498,20 +506,17 @@
             nav.classList.toggle('scrolled', window.scrollY > 20);
             if (backToTopBtn) backToTopBtn.classList.toggle('visible', window.scrollY > 400);
         });
-        if (backToTopBtn) backToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
-        // Dark mode toggle
-        const darkToggle = document.getElementById('darkModeToggle');
-        if (darkToggle) {
-            if (localStorage.getItem('darkMode') === 'true') document.documentElement.classList.add('dark');
-            darkToggle.textContent = document.documentElement.classList.contains('dark') ? '\u2600' : '\u263E';
-            darkToggle.addEventListener('click', () => {
-                document.documentElement.classList.toggle('dark');
-                const isDark = document.documentElement.classList.contains('dark');
-                localStorage.setItem('darkMode', isDark);
-                darkToggle.textContent = isDark ? '\u2600' : '\u263E';
+        // Active nav state
+        (function() {
+            var currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            document.querySelectorAll('.site-nav__links a').forEach(function(link) {
+                var href = link.getAttribute('href');
+                if (href && href.split('/').pop() === currentPage) {
+                    link.classList.add('active');
+                }
             });
-        }
+        })();
+        if (backToTopBtn) backToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
         // Scroll reveal
         const observer = new IntersectionObserver((entries) => {
