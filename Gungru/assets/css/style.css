@@ -1533,22 +1533,6 @@ section { position: relative; }
 }
 
 /* ======================================== Dark Mode ======================================== */
-/* Nav-based dark mode toggle (injected by darkmode.js) */
-.nav-dark-toggle { display: flex; align-items: center; }
-.dark-mode-nav-btn {
-    background: transparent; border: 1px solid var(--border);
-    border-radius: 50%; width: 32px; height: 32px;
-    cursor: pointer; display: flex; align-items: center; justify-content: center;
-    font-size: 16px; transition: all 0.3s ease; color: var(--text-soft);
-}
-.dark-mode-nav-btn:hover { background: var(--saffron-wash); border-color: var(--saffron); color: var(--saffron-deep); }
-@media (max-width: 900px) {
-    .nav-dark-toggle { padding: 6px 0; }
-    .dark-mode-nav-btn { width: 36px; height: 36px; font-size: 18px; }
-}
-/* Legacy fixed toggle (keep for backward compat) */
-.dark-mode-toggle { display: none; }
-
 html.dark {
     --cream: #1a1512;
     --cream-warm: #221c17;
@@ -1573,8 +1557,6 @@ html.dark .site-nav__links a { color: var(--text-soft); }
 html.dark .site-nav__links a:hover { color: var(--saffron-light); }
 html.dark .site-nav__links a.active { color: var(--saffron-light); }
 html.dark .site-footer { background: #0e0c0a; }
-html.dark .dark-mode-nav-btn { color: var(--text-soft); border-color: var(--border); }
-html.dark .dark-mode-nav-btn:hover { background: var(--surface-warm); border-color: var(--saffron); color: var(--saffron-light); }
 html.dark .section-header__title,
 html.dark .about__title,
 html.dark .monks-section__title,
