@@ -655,20 +655,69 @@ section { position: relative; }
     font-weight: 300; line-height: 1.55; margin-bottom: 20px;
     max-width: 540px; margin-left: auto; margin-right: auto;
 }
-.hero__actions { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; }
-.hero__actions .btn-primary {
+.hero__actions { display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; }
+.hero__actions .btn-hero-primary {
+    background: #fff; color: var(--saffron-dark);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.18);
+    padding: 16px 38px; font-size: 17px; font-weight: 700;
+    letter-spacing: 0.01em;
+}
+.hero__actions .btn-hero-primary:hover {
+    background: var(--saffron-wash); color: var(--saffron-deep);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.25);
+    transform: translateY(-2px);
+}
+.hero__actions .btn-hero-secondary {
+    color: #fff; border: 1.5px solid rgba(255,255,255,0.6);
+    padding: 14px 30px; font-size: 15px;
+    background: rgba(255,255,255,0.08); backdrop-filter: blur(4px);
+}
+.hero__actions .btn-hero-secondary:hover {
+    background: rgba(255,255,255,0.2); color: #fff;
+    border-color: rgba(255,255,255,0.8);
+    transform: translateY(-1px);
+}
+/* Fallback for non-hero-specific overrides */
+.hero__actions .btn-primary:not(.btn-hero-primary) {
     background: #fff; color: var(--saffron-dark);
     box-shadow: 0 4px 16px rgba(0,0,0,0.15);
 }
-.hero__actions .btn-primary:hover {
+.hero__actions .btn-primary:not(.btn-hero-primary):hover {
     background: var(--saffron-wash); color: var(--saffron-deep);
     box-shadow: 0 8px 24px rgba(0,0,0,0.2);
 }
-.hero__actions .btn-secondary {
+.hero__actions .btn-secondary:not(.btn-hero-secondary) {
     color: #fff; border-color: rgba(255,255,255,0.5);
 }
-.hero__actions .btn-secondary:hover {
+.hero__actions .btn-secondary:not(.btn-hero-secondary):hover {
     background: rgba(255,255,255,0.15); color: #fff;
+}
+
+/* ======================================== Sticky Mobile CTA ======================================== */
+.sticky-cta {
+    display: none; /* shown only on mobile via media query */
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 999;
+    padding: 10px 16px; padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+    background: rgba(255,255,255,0.97); backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(0,0,0,0.08);
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+}
+.sticky-cta__inner {
+    display: flex; gap: 10px; max-width: 480px; margin: 0 auto;
+}
+.sticky-cta .btn {
+    flex: 1; text-align: center; padding: 14px 12px; font-size: 14px; min-height: 48px;
+}
+.sticky-cta .btn-primary {
+    background: var(--maroon); color: #fff;
+    box-shadow: 0 4px 12px rgba(123,26,44,0.3);
+}
+.sticky-cta .btn-primary:hover {
+    background: var(--maroon-deep);
+}
+.sticky-cta .btn-secondary {
+    background: transparent; color: var(--maroon);
+    border: 1.5px solid var(--maroon);
 }
 
 /* ======================================== Section Headers ======================================== */
@@ -1328,8 +1377,14 @@ section { position: relative; }
 
     .hero__actions { gap: 10px; }
     .hero__actions .btn { width: 100%; }
+    .hero__actions .btn-hero-primary { padding: 14px 24px; font-size: 16px; }
+    .hero__actions .btn-hero-secondary { padding: 12px 20px; font-size: 14px; }
     .cta-card__actions { flex-direction: column; gap: 8px; }
     .cta-card__actions .btn { width: 100%; }
+
+    /* Show sticky CTA bar on mobile */
+    .sticky-cta { display: block; }
+    body { padding-bottom: 72px; } /* space for sticky bar */
 
     .gallery-grid { grid-template-columns: 1fr; }
     .instagram-feed { grid-template-columns: repeat(2, 1fr); }
@@ -1569,6 +1624,9 @@ html.dark .cta-card { background: var(--surface); }
 html.dark .donate-card { background: var(--surface); }
 html.dark .donor-form { background: var(--surface); }
 html.dark img { filter: brightness(0.9); }
+html.dark .sticky-cta { background: rgba(26,21,18,0.97); border-top-color: #3a302a; }
+html.dark .sticky-cta .btn-primary { background: var(--maroon); color: #fff; }
+html.dark .sticky-cta .btn-secondary { color: var(--saffron-light); border-color: var(--saffron-light); }
 
 /* ======================================== Monks Grid ======================================== */
 .monks-stats {
