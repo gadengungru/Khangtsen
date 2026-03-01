@@ -116,6 +116,27 @@
         </div>
     </section>
 
+    <!-- Event Context Banner (shown when ?event= param present) -->
+    <div class="event-context-banner" id="eventContextBanner" style="display:none;">
+        <div class="event-context-banner__inner">
+            <span class="event-context-banner__icon">&#128591;</span>
+            <div>
+                <strong class="event-context-banner__label">Supporting:</strong>
+                <span class="event-context-banner__title" id="eventContextTitle"></span>
+            </div>
+        </div>
+    </div>
+    <style>
+        .event-context-banner { background: linear-gradient(135deg, #FFF8F0 0%, #FFF3E0 100%); border-bottom: 2px solid var(--saffron-pale); padding: 14px 20px; text-align: center; }
+        .event-context-banner__inner { display: inline-flex; align-items: center; gap: 10px; font-size: 0.95rem; }
+        .event-context-banner__icon { font-size: 1.3rem; }
+        .event-context-banner__label { color: var(--saffron-dark); font-weight: 600; }
+        .event-context-banner__title { color: var(--maroon-deep); font-weight: 600; font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; }
+        @media (prefers-color-scheme: dark) {
+            .event-context-banner { background: linear-gradient(135deg, rgba(232,160,56,0.08) 0%, rgba(232,160,56,0.04) 100%); border-color: rgba(232,160,56,0.2); }
+        }
+    </style>
+
     <!-- Donation Section -->
     <section class="donate-section" id="donate">
         <div class="container-narrow">
@@ -779,6 +800,35 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
     <script src="../assets/js/auth.js"></script>
+    <!-- Event context from URL param -->
+    <script>
+    (function() {
+        var params = new URLSearchParams(window.location.search);
+        var eventId = params.get('event');
+        if (!eventId) return;
+
+        var SUPABASE_URL = 'https://axnongwefdafwflekysk.supabase.co';
+        var SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF4bm9uZ3dlZmRhZndmbGVreXNrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk1MTE5NTIsImV4cCI6MjA1NTA4Nzk1Mn0.sb_publishable_pFwy1o_CK9ps98dK-yDyTQ_zXaCU2_y';
+
+        fetch(SUPABASE_URL + '/rest/v1/events?id=eq.' + encodeURIComponent(eventId) + '&select=title,suggested_offering', {
+            headers: { 'apikey': SUPABASE_ANON, 'Authorization': 'Bearer ' + SUPABASE_ANON }
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            if (!data || !data.length) return;
+            var evt = data[0];
+            document.getElementById('eventContextTitle').textContent = evt.title;
+            document.getElementById('eventContextBanner').style.display = '';
+
+            // Pre-fill dedication with event reference
+            var dedSelect = document.getElementById('dedicationType');
+            var dedName = document.getElementById('dedicationName');
+            if (dedSelect) { dedSelect.value = 'honor'; dedSelect.dispatchEvent(new Event('change')); }
+            if (dedName) { dedName.value = evt.title; }
+        })
+        .catch(function() { /* silently ignore */ });
+    })();
+    </script>
     <script src="../assets/js/version.js"></script>
     <script src="../assets/js/i18n.js"></script>
     <script src="../assets/js/subscribe.js"></script>

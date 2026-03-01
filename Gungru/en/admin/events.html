@@ -77,11 +77,12 @@
                             <th>Start Date</th>
                             <th>End Date</th>
                             <th>Status</th>
+                            <th>RSVPs</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody id="eventsBody">
-                        <tr><td colspan="7" class="admin-empty"><div class="admin-empty__icon">&#128197;</div><div class="admin-empty__text">Loading events…</div></td></tr>
+                        <tr><td colspan="8" class="admin-empty"><div class="admin-empty__icon">&#128197;</div><div class="admin-empty__text">Loading events…</div></td></tr>
                     </tbody>
                 </table>
             </div>
@@ -139,6 +140,10 @@
                     <label for="eventDesc">Description</label>
                     <textarea id="eventDesc" rows="3" placeholder="Optional description…"></textarea>
                 </div>
+                <div class="admin-modal__field">
+                    <label for="eventOffering">Suggested Offering</label>
+                    <input type="text" id="eventOffering" placeholder="e.g. $10 / ₹500">
+                </div>
                 <div class="admin-modal__actions">
                     <button type="button" class="btn-cancel" id="eventCancel">Cancel</button>
                     <button type="submit" class="btn-sm btn-primary" id="eventSaveBtn">Save</button>
@@ -169,7 +174,10 @@
     <script>
         requireAuth(function(user) {
             var sb = window.adminSupabase;
+            var SUPABASE_URL = 'https://axnongwefdafwflekysk.supabase.co';
+            var SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF4bm9uZ3dlZmRhZndmbGVreXNrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk1MTE5NTIsImV4cCI6MjA1NTA4Nzk1Mn0.sb_publishable_pFwy1o_CK9ps98dK-yDyTQ_zXaCU2_y';
             var allEvents = [];
+            var rsvpCounts = {};
             var currentFilter = 'all';
 
             function showToast(msg, type) {
@@ -200,17 +208,29 @@
                 return dt.toISOString().slice(0, 16);
             }
 
-            // Convert datetime-local value (local time) to ISO string (UTC) for Supabase
             function localInputToISO(val) {
                 if (!val) return null;
                 return new Date(val).toISOString();
+            }
+
+            // Load RSVP counts for all events
+            function loadRsvpCounts() {
+                sb.from('event_rsvps').select('event_id').eq('status', 'confirmed').then(function(result) {
+                    rsvpCounts = {};
+                    if (!result.error && result.data) {
+                        result.data.forEach(function(r) {
+                            rsvpCounts[r.event_id] = (rsvpCounts[r.event_id] || 0) + 1;
+                        });
+                    }
+                    renderEvents();
+                });
             }
 
             function loadEvents() {
                 sb.from('events').select('*').order('start_date', { ascending: false }).then(function(result) {
                     if (result.error) { showToast('Failed to load events', 'error'); return; }
                     allEvents = result.data || [];
-                    renderEvents();
+                    loadRsvpCounts();
                 });
             }
 
@@ -224,7 +244,7 @@
 
                 var tbody = document.getElementById('eventsBody');
                 if (!filtered.length) {
-                    tbody.innerHTML = '<tr><td colspan="7" class="admin-empty"><div class="admin-empty__icon">&#128197;</div><div class="admin-empty__text">No events found</div></td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="8" class="admin-empty"><div class="admin-empty__icon">&#128197;</div><div class="admin-empty__text">No events found</div></td></tr>';
                     return;
                 }
 
@@ -232,15 +252,24 @@
                     var badgeClass = e.status === 'upcoming' ? 'admin-badge--active' :
                                      e.status === 'completed' ? 'admin-badge--inactive' :
                                      e.status === 'cancelled' ? 'admin-badge--expense' : 'admin-badge--pending';
+                    var count = rsvpCounts[e.id] || 0;
+                    var isUpcoming = e.status === 'upcoming' || e.status === 'ongoing';
+                    var reminderBtn = isUpcoming && count > 0
+                        ? '<button onclick="sendReminders(\'' + e.id + '\')" title="Send reminder emails to RSVPs" style="color:#1976D2;">&#9993; Remind</button>'
+                        : '';
                     return '<tr>' +
-                        '<td><strong>' + escapeHtml(e.title || '') + '</strong></td>' +
+                        '<td><strong>' + escapeHtml(e.title || '') + '</strong>' +
+                            (e.suggested_offering ? '<br><small style="color:#888;">Offering: ' + escapeHtml(e.suggested_offering) + '</small>' : '') +
+                        '</td>' +
                         '<td>' + escapeHtml(e.event_type || '—') + '</td>' +
                         '<td>' + escapeHtml(e.location || '—') + '</td>' +
                         '<td>' + formatDate(e.start_date) + '</td>' +
                         '<td>' + formatDate(e.end_date) + '</td>' +
                         '<td><span class="admin-badge ' + badgeClass + '">' + escapeHtml(e.status || 'upcoming') + '</span></td>' +
+                        '<td style="text-align:center;font-weight:600;">' + count + '</td>' +
                         '<td><div class="admin-table__actions">' +
                             '<button onclick="editEvent(\'' + e.id + '\')">Edit</button>' +
+                            reminderBtn +
                         '</div></td>' +
                     '</tr>';
                 }).join('');
@@ -264,6 +293,7 @@
                 modal.classList.remove('admin-modal--open');
                 document.getElementById('eventForm').reset();
                 document.getElementById('eventId').value = '';
+                document.getElementById('eventOffering').value = '';
             }
 
             document.getElementById('eventModalBackdrop').addEventListener('click', closeModal);
@@ -284,7 +314,71 @@
                 document.getElementById('eventStart').value = toLocalInput(e.start_date);
                 document.getElementById('eventEnd').value = toLocalInput(e.end_date);
                 document.getElementById('eventDesc').value = e.description || '';
+                document.getElementById('eventOffering').value = e.suggested_offering || '';
                 openModal('Edit Event');
+            };
+
+            // Send reminder emails to RSVPed attendees
+            window.sendReminders = function(eventId) {
+                var evt = allEvents.find(function(x) { return x.id === eventId; });
+                if (!evt) return;
+                if (!confirm('Send reminder emails to all RSVPed attendees for "' + evt.title + '"?')) return;
+
+                sb.from('event_rsvps').select('*').eq('event_id', eventId).eq('status', 'confirmed').eq('reminder_sent', false).then(function(result) {
+                    if (result.error) { showToast('Failed to load RSVPs', 'error'); return; }
+                    var rsvps = result.data || [];
+                    if (!rsvps.length) { showToast('No new reminders to send (all already sent)', 'success'); return; }
+
+                    var sent = 0;
+                    var total = rsvps.length;
+                    showToast('Sending reminders to ' + total + ' attendee(s)…', 'success');
+
+                    var evtDate = evt.start_date ? new Date(evt.start_date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) : 'TBD';
+
+                    rsvps.forEach(function(rsvp) {
+                        // Send individual email
+                        fetch(SUPABASE_URL + '/functions/v1/send-email', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + SUPABASE_ANON },
+                            body: JSON.stringify({
+                                to: rsvp.email,
+                                subject: 'Reminder: ' + evt.title,
+                                html: '<div style="font-family:sans-serif;max-width:540px;margin:0 auto;padding:20px;">' +
+                                    '<h2 style="color:#7B1A2C;">Event Reminder</h2>' +
+                                    '<p>Tashi Delek, ' + escapeHtml(rsvp.full_name) + '!</p>' +
+                                    '<p>This is a friendly reminder about the upcoming event:</p>' +
+                                    '<div style="background:#FFF8F0;border-left:4px solid #E8A038;padding:16px;border-radius:8px;margin:16px 0;">' +
+                                        '<h3 style="margin:0 0 8px;color:#7B1A2C;">' + escapeHtml(evt.title) + '</h3>' +
+                                        '<p style="margin:4px 0;"><strong>Date:</strong> ' + evtDate + '</p>' +
+                                        (evt.location ? '<p style="margin:4px 0;"><strong>Location:</strong> ' + escapeHtml(evt.location) + '</p>' : '') +
+                                    '</div>' +
+                                    '<p>We look forward to seeing you!</p>' +
+                                    '<p style="color:#888;font-size:13px;">— The Monks of Gungru Khangtsen</p>' +
+                                '</div>'
+                            })
+                        }).then(function() {
+                            // Mark as sent
+                            sb.from('event_rsvps').update({ reminder_sent: true }).eq('id', rsvp.id).then(function() {
+                                sent++;
+                                if (sent === total) {
+                                    showToast('Reminders sent to ' + total + ' attendee(s)!', 'success');
+                                    // Log in messages table
+                                    sb.from('messages').insert({
+                                        channel: 'email',
+                                        direction: 'outbound',
+                                        from_address: 'noreply@gadengungru.org',
+                                        subject: 'Reminder: ' + evt.title,
+                                        body: 'Event reminder sent to ' + total + ' RSVPed attendees.',
+                                        status: 'sent'
+                                    });
+                                }
+                            });
+                        }).catch(function() {
+                            sent++;
+                            if (sent === total) showToast('Reminders sent (some may have failed)', 'success');
+                        });
+                    });
+                });
             };
 
             document.getElementById('eventForm').addEventListener('submit', function(ev) {
@@ -297,7 +391,8 @@
                     location: document.getElementById('eventLocation').value.trim() || null,
                     start_date: localInputToISO(document.getElementById('eventStart').value),
                     end_date: localInputToISO(document.getElementById('eventEnd').value),
-                    description: document.getElementById('eventDesc').value.trim() || null
+                    description: document.getElementById('eventDesc').value.trim() || null,
+                    suggested_offering: document.getElementById('eventOffering').value.trim() || null
                 };
 
                 var saveBtn = document.getElementById('eventSaveBtn');
