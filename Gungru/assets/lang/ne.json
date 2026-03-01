@@ -41,7 +41,22 @@
     "confirm_detail": "The monks of Gungru Khangtsen will light a butter lamp in the prayer hall with your dedication.",
     "confirm_another": "Light Another Lamp",
     "cta_title": "Support Our Monastery",
-    "cta_text": "Your generosity directly supports the monks' education, healthcare, daily sustenance, and the preservation of Tibetan Buddhist wisdom for future generations."
+    "cta_text": "Your generosity directly supports the monks' education, healthcare, daily sustenance, and the preservation of Tibetan Buddhist wisdom for future generations.",
+    "wall_label": "हालसालै बालिएको"
+  },
+  "quote": {
+    "section_label": "Daily Teaching",
+    "section_title": "Today's Dharma Quote",
+    "section_subtitle": "A daily teaching from the great Buddhist masters to inspire your practice.",
+    "share_label": "Share this wisdom"
+  },
+  "prayer_wheel": {
+    "section_label": "Sacred Practice",
+    "section_title": "Virtual Prayer Wheel",
+    "section_subtitle": "Spin the prayer wheel to recite Om Mani Padme Hum. Each rotation generates merit and sends compassion into the world.",
+    "prompt": "Drag up or down to spin the wheel",
+    "counter_label": "Mantras Recited",
+    "sound_label": "Sound"
   },
   "home": {
     "location": "मुण्डगोड, कर्नाटक, भारत",

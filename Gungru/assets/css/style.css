@@ -1587,6 +1587,162 @@ section { position: relative; }
     .testimonial-card { padding: 20px; }
 }
 
+/* ======================================== Daily Dharma Quote ======================================== */
+.dharma-quote-section { padding: 28px 20px; background: var(--cream); }
+.dharma-quote__card {
+    max-width: 600px; margin: 0 auto; background: var(--surface);
+    border: 1px solid var(--border); border-radius: var(--radius-xl);
+    padding: 32px 28px; text-align: center; position: relative;
+    transition: all var(--transition);
+}
+.dharma-quote__card::before {
+    content: '\201C'; position: absolute; top: 16px; left: 24px;
+    font-family: 'Cormorant Garamond', serif; font-size: 64px;
+    color: var(--saffron); opacity: 0.2; line-height: 1;
+}
+.dharma-quote__card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--saffron); }
+.dharma-quote__icon { font-size: 28px; margin-bottom: 12px; color: var(--gold); }
+.dharma-quote__text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem; font-style: italic; font-weight: 500;
+    color: var(--text-soft); line-height: 1.8; margin-bottom: 12px;
+    padding: 0 12px;
+}
+.dharma-quote__author {
+    font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+    font-weight: 600; color: var(--maroon-deep); margin-bottom: 4px;
+}
+.dharma-quote__source {
+    font-family: 'DM Sans', sans-serif; font-size: 0.8rem;
+    color: var(--text-dim); font-style: italic;
+}
+.dharma-quote__share {
+    margin-top: 20px; padding-top: 16px;
+    border-top: 1px solid var(--border-light);
+}
+.dharma-quote__share-label {
+    font-size: 0.75rem; font-weight: 500; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--text-muted); display: block; margin-bottom: 10px;
+}
+.dharma-quote__share-btns { display: flex; justify-content: center; gap: 10px; }
+.dharma-quote__share-btn {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: rgba(123,26,44,0.04); border: 1px solid var(--border);
+    cursor: pointer; font-size: 16px; color: var(--text-soft);
+    display: flex; align-items: center; justify-content: center;
+    transition: all var(--transition); font-family: 'DM Sans', sans-serif;
+    min-width: 44px; min-height: 44px;
+}
+.dharma-quote__share-btn:hover {
+    background: rgba(212,168,67,0.1); border-color: var(--gold); color: var(--maroon);
+    transform: translateY(-2px);
+}
+@media (max-width: 768px) {
+    .dharma-quote__card { padding: 24px 18px; }
+    .dharma-quote__text { font-size: 1.1rem; padding: 0; }
+    .dharma-quote__card::before { font-size: 48px; top: 12px; left: 16px; }
+}
+
+/* ======================================== Virtual Prayer Wheel ======================================== */
+.prayer-wheel-section { padding: 28px 20px; background: var(--cream); }
+.prayer-wheel__container { max-width: 400px; margin: 0 auto; text-align: center; }
+.prayer-wheel__stage {
+    position: relative; width: 200px; height: 300px; margin: 0 auto 20px;
+    perspective: 600px; cursor: grab; user-select: none; -webkit-user-select: none;
+}
+.prayer-wheel__stage:active { cursor: grabbing; }
+.prayer-wheel__wheel {
+    position: absolute; top: 20px; left: 50%;
+    width: 120px; height: 160px;
+    transform-style: preserve-3d;
+    transform: translateX(-50%) rotateX(0deg);
+}
+.prayer-wheel__panel {
+    position: absolute; width: 120px; height: 160px;
+    background: linear-gradient(180deg, #D4A843, #B8923A, #C69C3F);
+    border: 2px solid #A07828;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; color: var(--maroon-deep); letter-spacing: 1px;
+    backface-visibility: hidden; border-radius: 4px;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.12);
+}
+.prayer-wheel__panel:nth-child(1) { transform: rotateX(0deg) translateZ(76px); }
+.prayer-wheel__panel:nth-child(2) { transform: rotateX(45deg) translateZ(76px); }
+.prayer-wheel__panel:nth-child(3) { transform: rotateX(90deg) translateZ(76px); }
+.prayer-wheel__panel:nth-child(4) { transform: rotateX(135deg) translateZ(76px); }
+.prayer-wheel__panel:nth-child(5) { transform: rotateX(180deg) translateZ(76px); }
+.prayer-wheel__panel:nth-child(6) { transform: rotateX(225deg) translateZ(76px); }
+.prayer-wheel__panel:nth-child(7) { transform: rotateX(270deg) translateZ(76px); }
+.prayer-wheel__panel:nth-child(8) { transform: rotateX(315deg) translateZ(76px); }
+
+.prayer-wheel__handle {
+    position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 8px; height: 100px;
+    background: linear-gradient(90deg, #8B6914, #D4A843, #8B6914);
+    border-radius: 4px; box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+}
+.prayer-wheel__base {
+    position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%);
+    width: 60px; height: 12px;
+    background: linear-gradient(135deg, #8B6914, #B8923A);
+    border-radius: 6px; box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+}
+.prayer-wheel__top-ornament {
+    position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
+    width: 20px; height: 20px;
+    background: radial-gradient(circle, #FFD54F, #D4A843);
+    border-radius: 50%; border: 2px solid #A07828;
+    box-shadow: 0 0 10px rgba(212,168,67,0.4);
+    z-index: 2;
+}
+.prayer-wheel__prompt {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem; font-style: italic;
+    color: var(--text-soft); margin-bottom: 16px;
+}
+.prayer-wheel__counter {
+    display: inline-block; padding: 16px 28px;
+    background: linear-gradient(135deg, rgba(212,160,23,0.08), rgba(255,183,77,0.05));
+    border: 1px solid rgba(212,160,23,0.2); border-radius: 16px;
+    margin-bottom: 12px;
+}
+.prayer-wheel__counter-label {
+    font-size: 0.8rem; font-weight: 500; text-transform: uppercase;
+    letter-spacing: 0.12em; color: var(--text-soft); margin-bottom: 4px;
+}
+.prayer-wheel__counter-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem; font-weight: 700; color: #C28A00;
+}
+.prayer-wheel__counter-mantra {
+    font-size: 0.85rem; color: var(--text-dim); margin-top: 4px;
+    letter-spacing: 0.5px;
+}
+.prayer-wheel__sound-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 16px; background: rgba(0,0,0,0.03);
+    border: 1px solid var(--border); border-radius: 100px;
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+    font-size: 13px; color: var(--text-soft); transition: all var(--transition);
+    min-height: 44px;
+}
+.prayer-wheel__sound-btn:hover { border-color: var(--gold); color: var(--maroon); }
+.prayer-wheel__sound-btn--active { background: rgba(212,168,67,0.1); border-color: var(--gold); color: var(--maroon); }
+@media (max-width: 768px) {
+    .prayer-wheel__stage { width: 160px; height: 260px; }
+    .prayer-wheel__wheel { width: 100px; height: 130px; }
+    .prayer-wheel__panel { width: 100px; height: 130px; font-size: 13px; }
+    .prayer-wheel__panel:nth-child(1) { transform: rotateX(0deg) translateZ(62px); }
+    .prayer-wheel__panel:nth-child(2) { transform: rotateX(45deg) translateZ(62px); }
+    .prayer-wheel__panel:nth-child(3) { transform: rotateX(90deg) translateZ(62px); }
+    .prayer-wheel__panel:nth-child(4) { transform: rotateX(135deg) translateZ(62px); }
+    .prayer-wheel__panel:nth-child(5) { transform: rotateX(180deg) translateZ(62px); }
+    .prayer-wheel__panel:nth-child(6) { transform: rotateX(225deg) translateZ(62px); }
+    .prayer-wheel__panel:nth-child(7) { transform: rotateX(270deg) translateZ(62px); }
+    .prayer-wheel__panel:nth-child(8) { transform: rotateX(315deg) translateZ(62px); }
+    .prayer-wheel__handle { height: 80px; }
+}
+
 /* ======================================== Dark Mode ======================================== */
 html.dark {
     --cream: #1a1512;
@@ -1627,6 +1783,10 @@ html.dark img { filter: brightness(0.9); }
 html.dark .sticky-cta { background: rgba(26,21,18,0.97); border-top-color: #3a302a; }
 html.dark .sticky-cta .btn-primary { background: var(--maroon); color: #fff; }
 html.dark .sticky-cta .btn-secondary { color: var(--saffron-light); border-color: var(--saffron-light); }
+html.dark .dharma-quote__card { background: var(--surface); border-color: rgba(255,255,255,0.1); }
+html.dark .dharma-quote__share-btn { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.15); }
+html.dark .prayer-wheel__counter { background: rgba(212,160,23,0.06); border-color: rgba(212,160,23,0.15); }
+html.dark .prayer-wheel__sound-btn { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.15); }
 
 /* ======================================== Monks Grid ======================================== */
 .monks-stats {

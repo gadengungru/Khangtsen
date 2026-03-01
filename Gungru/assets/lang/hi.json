@@ -41,7 +41,22 @@
     "confirm_detail": "The monks of Gungru Khangtsen will light a butter lamp in the prayer hall with your dedication.",
     "confirm_another": "Light Another Lamp",
     "cta_title": "Support Our Monastery",
-    "cta_text": "Your generosity directly supports the monks' education, healthcare, daily sustenance, and the preservation of Tibetan Buddhist wisdom for future generations."
+    "cta_text": "Your generosity directly supports the monks' education, healthcare, daily sustenance, and the preservation of Tibetan Buddhist wisdom for future generations.",
+    "wall_label": "हाल ही में जलाया"
+  },
+  "quote": {
+    "section_label": "दैनिक शिक्षा",
+    "section_title": "आज का धर्म उद्धरण",
+    "section_subtitle": "आपकी साधना को प्रेरित करने के लिए महान बौद्ध गुरुओं की दैनिक शिक्षा।",
+    "share_label": "यह ज्ञान साझा करें"
+  },
+  "prayer_wheel": {
+    "section_label": "पवित्र साधना",
+    "section_title": "आभासी प्रार्थना चक्र",
+    "section_subtitle": "ॐ मणि पद्मे हूँ का जाप करने के लिए प्रार्थना चक्र घुमाएँ। प्रत्येक चक्कर पुण्य उत्पन्न करता है और दुनिया में करुणा भेजता है।",
+    "prompt": "चक्र घुमाने के लिए ऊपर या नीचे खींचें",
+    "counter_label": "जपे गए मंत्र",
+    "sound_label": "ध्वनि"
   },
   "home": {
     "location": "मुंडगोड, कर्नाटक, भारत",

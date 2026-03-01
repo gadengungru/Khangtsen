@@ -403,6 +403,131 @@
             border-color: rgba(212, 160, 23, 0.5);
         }
 
+        /* === Candle Visualization === */
+        .candle-viz {
+            display: flex; flex-direction: column; align-items: center;
+            margin-bottom: 20px; position: relative;
+        }
+        .candle-viz__candle {
+            position: relative; width: 80px; height: 160px;
+        }
+        .candle-viz__svg { display: block; }
+        .candle-flame {
+            position: absolute; top: 18px; left: 50%;
+            transform: translateX(-50%); width: 30px; height: 50px;
+        }
+        .candle-flame__outer {
+            position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+            width: 20px; height: 36px;
+            background: radial-gradient(ellipse at bottom, #FFA726 0%, #FF6D00 45%, transparent 75%);
+            border-radius: 50% 50% 35% 35%;
+            animation: flame-flicker 0.8s ease-in-out infinite alternate;
+            filter: blur(0.5px);
+        }
+        .candle-flame__inner {
+            position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%);
+            width: 10px; height: 24px;
+            background: radial-gradient(ellipse at bottom, #FFF9C4 0%, #FFE082 35%, #FFA726 75%, transparent 100%);
+            border-radius: 50% 50% 35% 35%;
+            animation: flame-flicker-inner 0.6s ease-in-out infinite alternate;
+        }
+        .candle-flame__glow {
+            position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%);
+            width: 70px; height: 70px;
+            background: radial-gradient(circle, rgba(255,183,77,0.35) 0%, rgba(255,152,0,0.08) 45%, transparent 70%);
+            border-radius: 50%;
+            animation: candle-glow-pulse 2.5s ease-in-out infinite;
+        }
+        @keyframes flame-flicker {
+            0% { height: 34px; width: 18px; opacity: 0.9; }
+            25% { height: 38px; width: 22px; opacity: 1; transform: translateX(-50%) skewX(2deg); }
+            50% { height: 32px; width: 20px; opacity: 0.95; }
+            75% { height: 40px; width: 19px; opacity: 1; transform: translateX(-50%) skewX(-3deg); }
+            100% { height: 36px; width: 21px; opacity: 0.92; }
+        }
+        @keyframes flame-flicker-inner {
+            0% { height: 22px; width: 9px; }
+            33% { height: 26px; width: 11px; transform: translateX(-50%) skewX(1deg); }
+            66% { height: 20px; width: 10px; transform: translateX(-50%) skewX(-2deg); }
+            100% { height: 24px; width: 12px; }
+        }
+        @keyframes candle-glow-pulse {
+            0%, 100% { opacity: 0.6; transform: translateX(-50%) scale(1); }
+            50% { opacity: 0.9; transform: translateX(-50%) scale(1.1); }
+        }
+        .candle-viz__name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem; font-weight: 600; font-style: italic;
+            color: #D4A017; margin-top: 8px;
+            animation: name-fade-in 1s ease-out forwards;
+            opacity: 0;
+        }
+        .candle-viz__dedication {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem; color: var(--text-dim, #8A7668);
+            font-style: italic; max-width: 300px; margin-top: 4px;
+            text-align: center; line-height: 1.5;
+            animation: name-fade-in 1.2s ease-out forwards;
+            opacity: 0;
+        }
+        @keyframes name-fade-in {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Flame sparks */
+        .flame-spark {
+            position: absolute; border-radius: 50%;
+            animation: spark-rise 1.5s ease-out forwards;
+            pointer-events: none;
+        }
+        @keyframes spark-rise {
+            0% { opacity: 1; transform: translateY(0) scale(1); }
+            50% { opacity: 0.7; }
+            100% { opacity: 0; transform: translateY(-100px) translateX(var(--drift, 0px)) scale(0); }
+        }
+
+        /* Wall of Candles */
+        .candle-wall {
+            margin-top: 20px; padding-top: 16px;
+            border-top: 1px solid rgba(212,160,23,0.15);
+        }
+        .candle-wall__label {
+            font-size: 0.75rem; font-weight: 500; text-transform: uppercase;
+            letter-spacing: 0.1em; color: var(--text-muted, #B0A090); margin-bottom: 12px;
+        }
+        .candle-wall__grid {
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 16px;
+        }
+        .candle-wall__item {
+            display: flex; flex-direction: column; align-items: center;
+            animation: mini-candle-appear 0.5s ease-out forwards;
+            opacity: 0;
+        }
+        .candle-wall__mini-flame {
+            width: 6px; height: 12px;
+            background: radial-gradient(ellipse at bottom, #FFA726, #FF6D00, transparent);
+            border-radius: 50% 50% 35% 35%;
+            animation: flame-flicker 1.2s ease-in-out infinite alternate;
+            margin-bottom: 1px;
+        }
+        .candle-wall__mini-candle {
+            width: 5px; height: 18px;
+            background: linear-gradient(90deg, #F0D4B8, #FFF8F0, #F0D4B8);
+            border-radius: 1px;
+        }
+        .candle-wall__name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.65rem; color: var(--text-dim, #8A7668);
+            font-style: italic; margin-top: 3px;
+            max-width: 55px; text-align: center;
+            overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+        }
+        @keyframes mini-candle-appear {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         /* Particles */
         .lamp-particles {
             position: fixed;
@@ -617,16 +742,45 @@
                 </button>
             </div>
 
-            <!-- Confirmation (after submission) -->
+            <!-- Confirmation with Candle Visualization -->
             <div class="confirmation" id="confirmationCard">
-                <div class="confirmation__icon">&#128367;</div>
+                <!-- Animated Candle -->
+                <div class="candle-viz" id="candleViz">
+                    <div class="candle-viz__candle">
+                        <svg class="candle-viz__svg" viewBox="0 0 100 200" width="80" height="160">
+                            <defs>
+                                <linearGradient id="candleGrad" x1="0" y1="0" x2="1" y2="0">
+                                    <stop offset="0%" stop-color="#F0D4B8"/>
+                                    <stop offset="50%" stop-color="#FFF8F0"/>
+                                    <stop offset="100%" stop-color="#F0D4B8"/>
+                                </linearGradient>
+                            </defs>
+                            <rect x="34" y="80" width="32" height="90" rx="3" fill="url(#candleGrad)" stroke="#E0C8A8" stroke-width="0.5"/>
+                            <rect x="36" y="80" width="4" height="90" rx="2" fill="rgba(255,255,255,0.2)"/>
+                            <ellipse cx="50" cy="80" rx="16" ry="4" fill="#FFF8F0" stroke="#E0C8A8" stroke-width="0.5"/>
+                            <line x1="50" y1="80" x2="50" y2="62" stroke="#444" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                        <div class="candle-flame" id="candleFlame">
+                            <div class="candle-flame__outer"></div>
+                            <div class="candle-flame__inner"></div>
+                            <div class="candle-flame__glow"></div>
+                        </div>
+                    </div>
+                    <p class="candle-viz__name" id="candleName"></p>
+                    <p class="candle-viz__dedication" id="candleDedication"></p>
+                </div>
+
                 <h3 class="confirmation__title" data-i18n="butter_lamp.confirm_title">Your Lamp Has Been Offered</h3>
                 <p class="confirmation__blessing" data-i18n="butter_lamp.confirm_blessing">
                     &ldquo;May the light of this offering dispel the darkness of ignorance in all realms. May all beings find peace, happiness, and the causes of lasting joy.&rdquo;
                 </p>
-                <p class="confirmation__detail" id="confirmationDetail" data-i18n="butter_lamp.confirm_detail">
-                    The monks of Gungru Khangtsen will light a butter lamp in the prayer hall with your dedication.
-                </p>
+
+                <!-- Wall of Candles -->
+                <div class="candle-wall" id="candleWall">
+                    <p class="candle-wall__label" data-i18n="butter_lamp.wall_label">Recently lit by</p>
+                    <div class="candle-wall__grid" id="candleWallGrid"></div>
+                </div>
+
                 <button class="confirmation__another" onclick="resetLamp()" data-i18n="butter_lamp.confirm_another">Light Another Lamp</button>
             </div>
 
@@ -894,11 +1048,16 @@
         function showConfirmation(name, dedication) {
             const form = document.getElementById('dedicationForm');
             const confirmation = document.getElementById('confirmationCard');
-            const detail = document.getElementById('confirmationDetail');
+            const candleName = document.getElementById('candleName');
+            const candleDedication = document.getElementById('candleDedication');
 
-            // Customize confirmation message
-            if (name) {
-                detail.innerHTML = 'Dear <strong>' + escapeHtml(name) + '</strong>, the monks of Gungru Khangtsen will light a butter lamp in the prayer hall with your dedication. May this offering bring benefit to all beings.';
+            // Set candle name and dedication
+            candleName.textContent = name || 'A Kind Soul';
+            if (dedication) {
+                candleDedication.textContent = dedication;
+                candleDedication.style.display = '';
+            } else {
+                candleDedication.style.display = 'none';
             }
 
             // Hide form, show confirmation
@@ -907,10 +1066,66 @@
             setTimeout(() => {
                 confirmation.classList.add('confirmation--visible');
                 confirmation.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                // Start flame spark particles
+                startFlameParticles();
+                // Load wall of candles
+                loadCandleWall();
             }, 400);
 
-            // Create more particles for celebration
+            // Create celebration particles
             createParticles();
+        }
+
+        // Continuous flame spark particles
+        var flameSparkInterval = null;
+        function startFlameParticles() {
+            if (flameSparkInterval) clearInterval(flameSparkInterval);
+            var candleEl = document.querySelector('.candle-viz__candle');
+            if (!candleEl) return;
+
+            flameSparkInterval = setInterval(function() {
+                if (!document.querySelector('.confirmation--visible')) {
+                    clearInterval(flameSparkInterval);
+                    flameSparkInterval = null;
+                    return;
+                }
+                var spark = document.createElement('div');
+                spark.className = 'flame-spark';
+                var x = 32 + Math.random() * 16;
+                spark.style.left = x + 'px';
+                spark.style.top = '25px';
+                spark.style.setProperty('--drift', (Math.random() * 24 - 12) + 'px');
+                var colors = ['#FFB74D', '#FFA726', '#FFD54F', '#FF8A65'];
+                spark.style.background = colors[Math.floor(Math.random() * colors.length)];
+                var size = (2 + Math.random() * 2) + 'px';
+                spark.style.width = size;
+                spark.style.height = size;
+                candleEl.appendChild(spark);
+                setTimeout(function() { if (spark.parentNode) spark.remove(); }, 1500);
+            }, 250);
+        }
+
+        // Load wall of candles (recent offerings)
+        async function loadCandleWall() {
+            var grid = document.getElementById('candleWallGrid');
+            if (!grid || !sb) return;
+            try {
+                var { data, error } = await sb.rpc('get_recent_lamp_names', { limit_count: 12 });
+                if (error || !data || data.length === 0) return;
+                grid.innerHTML = '';
+                data.forEach(function(item, i) {
+                    var el = document.createElement('div');
+                    el.className = 'candle-wall__item';
+                    el.style.animationDelay = (i * 0.1) + 's';
+                    el.innerHTML =
+                        '<div class="candle-wall__mini-flame"></div>' +
+                        '<div class="candle-wall__mini-candle"></div>' +
+                        '<div class="candle-wall__name">' + escapeHtml(item.display_name) + '</div>';
+                    grid.appendChild(el);
+                });
+            } catch (e) {
+                // Graceful fallback — wall stays empty
+            }
         }
 
         // Reset to light another lamp
