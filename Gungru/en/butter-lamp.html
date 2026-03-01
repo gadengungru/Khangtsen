@@ -518,8 +518,8 @@
         <div class="hero__orb hero__orb--1"></div>
         <div class="hero__orb hero__orb--2"></div>
         <div class="hero__content">
-            <h1 class="hero__title">Light a Butter Lamp</h1>
-            <p class="hero__tagline">
+            <h1 class="hero__title" data-i18n="butter_lamp.hero_title">Light a Butter Lamp</h1>
+            <p class="hero__tagline" data-i18n="butter_lamp.hero_tagline">
                 An ancient offering of light &mdash; dispelling darkness, cultivating wisdom, and generating merit for all sentient beings.
             </p>
         </div>
@@ -536,20 +536,20 @@
     <section class="about">
         <div class="about__card reveal">
             <span class="about__icon">&#128367;</span>
-            <h2 class="about__title">The Tradition of Butter Lamp Offerings</h2>
-            <p class="about__text">
+            <h2 class="about__title" data-i18n="butter_lamp.about_title">The Tradition of Butter Lamp Offerings</h2>
+            <p class="about__text" data-i18n="butter_lamp.about_text_1">
                 In Tibetan Buddhism, lighting a butter lamp is one of the most sacred and widely practiced offerings. The flame of a butter lamp symbolizes the <strong>dispelling of the darkness of ignorance</strong>, just as the light of wisdom illuminates the path to enlightenment. Each lamp offered is a prayer made visible &mdash; a luminous expression of devotion and compassion.
             </p>
-            <p class="about__text" style="margin-top: 1rem;">
+            <p class="about__text" style="margin-top: 1rem;" data-i18n="butter_lamp.about_text_2">
                 The act of offering light is considered to generate <strong>great merit</strong>, benefiting not only the one who offers but all sentient beings. Traditionally, butter lamps are lit before sacred images and texts as a way to honor the Buddha's teachings, dedicate prayers for loved ones, and cultivate the inner light of awareness.
             </p>
-            <p class="about__text" style="margin-top: 1rem;">
+            <p class="about__text" style="margin-top: 1rem;" data-i18n="butter_lamp.about_text_3">
                 When you light a lamp here, our monks at <strong>Gaden Shartse Gungru Khangtsen Monastery</strong> will light a physical butter lamp on your behalf in the prayer hall, accompanying it with prayers and dedications according to your intention.
             </p>
             <div class="about__badges">
-                <div class="about__badge">&#128367; Symbol of Wisdom</div>
-                <div class="about__badge">&#9784; Ancient Tradition</div>
-                <div class="about__badge">&#128591; Merit for All Beings</div>
+                <div class="about__badge">&#128367; <span data-i18n="butter_lamp.badge_wisdom">Symbol of Wisdom</span></div>
+                <div class="about__badge">&#9784; <span data-i18n="butter_lamp.badge_tradition">Ancient Tradition</span></div>
+                <div class="about__badge">&#128591; <span data-i18n="butter_lamp.badge_merit">Merit for All Beings</span></div>
             </div>
         </div>
     </section>
@@ -572,47 +572,47 @@
             </div>
 
             <!-- Prompt (before lighting) -->
-            <p class="lamp-prompt" id="lampPrompt">Touch the lamp to light it</p>
+            <p class="lamp-prompt" id="lampPrompt" data-i18n="butter_lamp.prompt">Touch the lamp to light it</p>
 
             <!-- Light Button (before lighting) -->
             <div>
-                <button class="light-btn" id="lightBtn" onclick="lightTheLamp()">
+                <button class="light-btn" id="lightBtn" onclick="lightTheLamp()" data-i18n="butter_lamp.light_btn">
                     &#10024; Light a Lamp
                 </button>
             </div>
 
             <!-- Lamp Counter -->
             <div class="lamp-counter">
-                <div class="lamp-counter__label">Lamps Lit Worldwide</div>
+                <div class="lamp-counter__label" data-i18n="butter_lamp.counter_label">Lamps Lit Worldwide</div>
                 <div class="lamp-counter__number" id="lampCount">...</div>
-                <div class="lamp-counter__suffix">butter lamps offered</div>
+                <div class="lamp-counter__suffix" data-i18n="butter_lamp.counter_suffix">butter lamps offered</div>
             </div>
 
             <!-- Dedication Form (appears after lighting) -->
             <div class="dedication-form" id="dedicationForm">
-                <h3 class="dedication-form__title">Dedicate Your Offering</h3>
-                <p class="dedication-form__subtitle">Share your name and intention for this lamp offering</p>
+                <h3 class="dedication-form__title" data-i18n="butter_lamp.form_title">Dedicate Your Offering</h3>
+                <p class="dedication-form__subtitle" data-i18n="butter_lamp.form_subtitle">Share your name and intention for this lamp offering</p>
 
                 <div class="dedication-field">
-                    <label for="offeringName">Your Name</label>
+                    <label for="offeringName" data-i18n="butter_lamp.label_name">Your Name</label>
                     <input type="text" id="offeringName" placeholder="Enter your name (optional)">
                 </div>
 
                 <div class="dedication-field">
-                    <label for="offeringEmail">Email Address</label>
+                    <label for="offeringEmail" data-i18n="butter_lamp.label_email">Email Address</label>
                     <input type="email" id="offeringEmail" placeholder="For confirmation (optional)">
                 </div>
 
                 <div class="dedication-field">
-                    <label for="offeringDedication">Dedication / Prayer Intention</label>
+                    <label for="offeringDedication" data-i18n="butter_lamp.label_dedication">Dedication / Prayer Intention</label>
                     <textarea id="offeringDedication" placeholder="e.g., For the health and happiness of my family&#10;For the swift enlightenment of all beings&#10;In memory of a loved one..." rows="3"></textarea>
                 </div>
 
-                <div class="donation-note">
+                <div class="donation-note" data-i18n="butter_lamp.donation_note">
                     &#128367; <strong>Suggested offering:</strong> $5 USD / &#8377;200 INR per lamp. The monks will light a physical butter lamp at the monastery on your behalf. Offerings help sustain the monastery and its monks.
                 </div>
 
-                <button class="dedicate-btn" id="dedicateBtn" onclick="submitDedication()">
+                <button class="dedicate-btn" id="dedicateBtn" onclick="submitDedication()" data-i18n="butter_lamp.dedicate_btn">
                     &#128591; Dedicate &amp; Offer
                 </button>
             </div>
@@ -620,14 +620,14 @@
             <!-- Confirmation (after submission) -->
             <div class="confirmation" id="confirmationCard">
                 <div class="confirmation__icon">&#128367;</div>
-                <h3 class="confirmation__title">Your Lamp Has Been Offered</h3>
-                <p class="confirmation__blessing">
+                <h3 class="confirmation__title" data-i18n="butter_lamp.confirm_title">Your Lamp Has Been Offered</h3>
+                <p class="confirmation__blessing" data-i18n="butter_lamp.confirm_blessing">
                     &ldquo;May the light of this offering dispel the darkness of ignorance in all realms. May all beings find peace, happiness, and the causes of lasting joy.&rdquo;
                 </p>
-                <p class="confirmation__detail" id="confirmationDetail">
+                <p class="confirmation__detail" id="confirmationDetail" data-i18n="butter_lamp.confirm_detail">
                     The monks of Gungru Khangtsen will light a butter lamp in the prayer hall with your dedication.
                 </p>
-                <button class="confirmation__another" onclick="resetLamp()">Light Another Lamp</button>
+                <button class="confirmation__another" onclick="resetLamp()" data-i18n="butter_lamp.confirm_another">Light Another Lamp</button>
             </div>
 
         </div>
@@ -636,8 +636,8 @@
     <!-- CTA -->
     <section class="cta-section">
         <div class="cta-card reveal">
-            <h2 class="cta-card__title">Support Our Monastery</h2>
-            <p class="cta-card__text">
+            <h2 class="cta-card__title" data-i18n="butter_lamp.cta_title">Support Our Monastery</h2>
+            <p class="cta-card__text" data-i18n="butter_lamp.cta_text">
                 Your generosity directly supports the monks' education, healthcare, daily sustenance, and the preservation of Tibetan Buddhist wisdom for future generations.
             </p>
             <div class="cta-card__actions">
