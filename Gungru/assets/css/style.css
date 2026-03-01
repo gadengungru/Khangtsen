@@ -250,7 +250,9 @@ section { position: relative; }
 @media (max-width: 900px) {
     .lang-picker { position: relative; margin-left: auto; order: 8; }
     .lang-picker__toggle { padding: 4px 10px; font-size: 12px; min-height: 36px; gap: 4px; }
+    .lang-picker__toggle-label { display: none; }
     .lang-picker__toggle-arrow { display: none; }
+    .lang-picker__toggle::before { content: '\1F310'; font-size: 16px; line-height: 1; }
     .lang-picker__menu { right: 0; min-width: 160px; }
 }
 
