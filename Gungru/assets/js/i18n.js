@@ -76,7 +76,6 @@
         var lang = LANGS[currentLang] || LANGS[DEFAULT_LANG];
         var labelText = (dictCache[currentLang] && dictCache[currentLang].nav && dictCache[currentLang].nav.language_label) || 'Language';
         toggle.innerHTML = '<span class="lang-picker__toggle-code">' + lang.code + '</span>' +
-            '<span class="lang-picker__toggle-label">' + labelText + '</span>' +
             '<span class="lang-picker__toggle-arrow">&#9662;</span>';
         toggle.setAttribute('title', labelText + ': ' + lang.name);
     }
