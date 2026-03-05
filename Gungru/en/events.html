@@ -704,7 +704,7 @@
                     '<span class="event-card__date-year">' + date.year + '</span>' +
                 '</div>' +
                 '<div class="event-card__dot"></div>' +
-                '<div class="event-card__body" data-event-id="' + event.id + '">' +
+                '<div class="event-card__body" data-event-id="' + event.id + '" tabindex="0" role="button" aria-label="' + esc(evtTitle) + '">' +
                     '<div class="event-card__top">' +
                         '<span class="event-card__icon">' + icon + '</span>' +
                         '<span class="event-card__title">' + esc(evtTitle) + '</span>' +
@@ -840,6 +840,18 @@
             if (card) {
                 var id = card.getAttribute('data-event-id');
                 if (eventsById[id]) openEventModal(eventsById[id]);
+            }
+        });
+
+        // Keyboard accessibility for event cards
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                var card = e.target.closest('.event-card__body[data-event-id]');
+                if (card) {
+                    e.preventDefault();
+                    var id = card.getAttribute('data-event-id');
+                    if (eventsById[id]) openEventModal(eventsById[id]);
+                }
             }
         });
 

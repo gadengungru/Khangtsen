@@ -536,6 +536,17 @@
         }
 
         loadBlogPosts();
+
+        // Keyboard accessibility for blog cards
+        document.getElementById('blogGrid').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                var card = e.target.closest('.blog-card');
+                if (card) {
+                    e.preventDefault();
+                    card.click();
+                }
+            }
+        });
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
