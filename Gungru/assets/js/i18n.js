@@ -1,21 +1,21 @@
 // i18n — Language switcher for Gungru Khangtsen static site
 (function() {
     var LANGS = {
-        en: { name: 'English' },
-        bo: { name: '\u0F56\u0F7C\u0F51\u0F0B\u0F66\u0F90\u0F51\u0F0D' },
-        hi: { name: '\u0939\u093F\u0928\u094D\u0926\u0940' },
-        'zh-TW': { name: '\u4E2D\u6587' },
-        kn: { name: '\u0C95\u0CA8\u0CCD\u0CA8\u0CA1' },
-        fr: { name: 'Fran\u00E7ais' },
-        es: { name: 'Espa\u00F1ol' },
-        dz: { name: '\u0F62\u0FAB\u0F7C\u0F44\u0F0B\u0F41' },
-        ja: { name: '\u65E5\u672C\u8A9E' },
-        mr: { name: '\u092E\u0930\u093E\u0920\u0940' },
-        ne: { name: '\u0928\u0947\u092A\u093E\u0932\u0940' },
-        ta: { name: '\u0BA4\u0BAE\u0BBF\u0BB4\u0BCD' },
-        te: { name: '\u0C24\u0C46\u0C32\u0C41\u0C17\u0C41' },
-        vi: { name: 'Ti\u1EBFng Vi\u1EC7t' },
-        'zh-CN': { name: '\u7B80\u4F53\u4E2D\u6587' }
+        en: { name: 'English', code: 'EN' },
+        bo: { name: '\u0F56\u0F7C\u0F51\u0F0B\u0F66\u0F90\u0F51\u0F0D', code: 'BO' },
+        hi: { name: '\u0939\u093F\u0928\u094D\u0926\u0940', code: 'HI' },
+        'zh-TW': { name: '\u4E2D\u6587', code: 'ZH' },
+        kn: { name: '\u0C95\u0CA8\u0CCD\u0CA8\u0CA1', code: 'KN' },
+        fr: { name: 'Fran\u00E7ais', code: 'FR' },
+        es: { name: 'Espa\u00F1ol', code: 'ES' },
+        dz: { name: '\u0F62\u0FAB\u0F7C\u0F44\u0F0B\u0F41', code: 'DZ' },
+        ja: { name: '\u65E5\u672C\u8A9E', code: 'JA' },
+        mr: { name: '\u092E\u0930\u093E\u0920\u0940', code: 'MR' },
+        ne: { name: '\u0928\u0947\u092A\u093E\u0932\u0940', code: 'NE' },
+        ta: { name: '\u0BA4\u0BAE\u0BBF\u0BB4\u0BCD', code: 'TA' },
+        te: { name: '\u0C24\u0C46\u0C32\u0C41\u0C17\u0C41', code: 'TE' },
+        vi: { name: 'Ti\u1EBFng Vi\u1EC7t', code: 'VI' },
+        'zh-CN': { name: '\u7B80\u4F53\u4E2D\u6587', code: 'ZH' }
     };
 
     var DEFAULT_LANG = 'en';
@@ -75,7 +75,8 @@
     function updateToggle(toggle) {
         var lang = LANGS[currentLang] || LANGS[DEFAULT_LANG];
         var labelText = (dictCache[currentLang] && dictCache[currentLang].nav && dictCache[currentLang].nav.language_label) || 'Language';
-        toggle.innerHTML = '<span class="lang-picker__toggle-label">' + labelText + '</span>' +
+        toggle.innerHTML = '<span class="lang-picker__toggle-code">' + lang.code + '</span>' +
+            '<span class="lang-picker__toggle-label">' + labelText + '</span>' +
             '<span class="lang-picker__toggle-arrow">&#9662;</span>';
         toggle.setAttribute('title', labelText + ': ' + lang.name);
     }
