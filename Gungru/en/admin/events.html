@@ -269,6 +269,7 @@
                         '<td style="text-align:center;font-weight:600;">' + count + '</td>' +
                         '<td><div class="admin-table__actions">' +
                             '<button onclick="editEvent(\'' + e.id + '\')">Edit</button>' +
+                            '<button onclick="duplicateEvent(\'' + e.id + '\')" title="Duplicate as new event" style="color:#D4A843;">&#128203; Copy</button>' +
                             reminderBtn +
                         '</div></td>' +
                     '</tr>';
@@ -316,6 +317,22 @@
                 document.getElementById('eventDesc').value = e.description || '';
                 document.getElementById('eventOffering').value = e.suggested_offering || '';
                 openModal('Edit Event');
+            };
+
+            // Duplicate an event as a new one (template/copy)
+            window.duplicateEvent = function(id) {
+                var e = allEvents.find(function(x) { return x.id === id; });
+                if (!e) return;
+                document.getElementById('eventId').value = ''; // No ID = new event
+                document.getElementById('eventTitle').value = (e.title || '') + ' (Copy)';
+                document.getElementById('eventType').value = e.event_type || 'ceremony';
+                document.getElementById('eventStatus').value = 'upcoming'; // Always set to upcoming
+                document.getElementById('eventLocation').value = e.location || '';
+                document.getElementById('eventStart').value = ''; // Clear dates so admin sets new ones
+                document.getElementById('eventEnd').value = '';
+                document.getElementById('eventDesc').value = e.description || '';
+                document.getElementById('eventOffering').value = e.suggested_offering || '';
+                openModal('New Event (from template)');
             };
 
             // Send reminder emails to RSVPed attendees
