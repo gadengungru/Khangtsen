@@ -248,7 +248,10 @@
         }
     </style>
 </head>
-<body>
+<body class="has-sticky-cta">
+
+    <!-- Skip to Content (Accessibility) -->
+    <a href="#blogSection" class="skip-to-content">Skip to main content</a>
 
     <!-- Navigation -->
     <nav class="site-nav" id="siteNav">
@@ -308,7 +311,7 @@
     </div>
 
     <!-- Blog Posts -->
-    <section class="blog-section">
+    <section class="blog-section" id="blogSection">
         <div id="blogGrid" class="blog-grid">
             <!-- Posts loaded dynamically -->
         </div>
@@ -334,6 +337,9 @@
             </div>
         </div>
     </div>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">&#8593;</button>
 
     <!-- Footer -->
     <footer class="site-footer">
@@ -388,9 +394,13 @@
     </footer>
 
     <script>
-        // Navbar scroll
+        // Navbar scroll + Back to top visibility
         const nav = document.getElementById('siteNav');
-        window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 20); });
+        const backToTopBtn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 20);
+            if (backToTopBtn) backToTopBtn.classList.toggle('visible', window.scrollY > 400);
+        });
         // Active nav state
         (function() {
             var currentPage = window.location.pathname.split('/').pop() || 'index.html';
@@ -450,7 +460,7 @@
                 : `<div class="blog-card__placeholder">&#9753;</div>`;
 
             return `
-                <article class="blog-card" onclick="openPost(${idx})">
+                <article class="blog-card" onclick="openPost(${idx})" tabindex="0" role="button" aria-label="${escapeHtml(post.title)}">
                     ${imageHtml}
                     <div class="blog-card__body">
                         <span class="blog-card__category">${categoryLabel}</span>
@@ -532,7 +542,38 @@
     <script src="../assets/js/auth.js"></script>
     <script src="../assets/js/version.js"></script>
     <script src="../assets/js/i18n.js"></script>
+    <script src="../assets/js/darkmode.js"></script>
     <script src="../assets/js/subscribe.js"></script>
     <script src="../assets/js/tracker.js"></script>
+
+    <!-- Sticky Mobile CTA Bar -->
+    <div class="sticky-cta" id="stickyCta">
+        <div class="sticky-cta__inner">
+            <a href="donate.html" class="btn btn-primary">
+                <span>&#9825;</span>
+                <span data-i18n="home.cta_donate">Make a Donation</span>
+            </a>
+            <a href="request-puja.html" class="btn btn-secondary" data-i18n="home.cta_puja">&#128591; Request a Puja</a>
+        </div>
+    </div>
+    <script>
+    // Hide sticky CTA when hero is visible or near footer
+    (function() {
+        var stickyCta = document.getElementById('stickyCta');
+        if (!stickyCta) return;
+        var hero = document.querySelector('.hero');
+        var footer = document.querySelector('.site-footer');
+        function updateSticky() {
+            var heroRect = hero ? hero.getBoundingClientRect() : null;
+            var footerRect = footer ? footer.getBoundingClientRect() : null;
+            var heroVisible = heroRect && heroRect.bottom > 80;
+            var footerVisible = footerRect && footerRect.top < window.innerHeight;
+            stickyCta.style.transform = (heroVisible || footerVisible) ? 'translateY(100%)' : 'translateY(0)';
+        }
+        stickyCta.style.transition = 'transform 0.3s ease';
+        window.addEventListener('scroll', updateSticky, { passive: true });
+        updateSticky();
+    })();
+    </script>
 </body>
 </html>

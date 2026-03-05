@@ -75,8 +75,8 @@ body {
     font-size: 16px;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
-    padding-bottom: 72px;
 }
+body.has-sticky-cta { padding-bottom: 72px; }
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-weight: 500;
@@ -190,8 +190,8 @@ section { position: relative; }
     .site-nav__brand { flex: 1; min-width: 0; }
     .site-nav__brand span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .nav-dropdown { flex-wrap: wrap; }
-    .nav-dropdown__toggle { font-size: 15px; min-height: 44px; display: flex; align-items: center; }
-    .nav-dropdown__arrow { min-height: 44px; min-width: 44px; justify-content: center; }
+    .nav-dropdown__toggle { font-size: 15px; min-height: 44px; display: flex; align-items: center; pointer-events: none; color: var(--maroon); font-weight: 600; }
+    .nav-dropdown__arrow { display: none; }
     .nav-dropdown__menu {
         position: static; transform: none; opacity: 1; pointer-events: auto;
         box-shadow: none; border: none; border-radius: 0; padding: 0 0 0 16px;
@@ -939,16 +939,16 @@ section { position: relative; }
     font-family: 'Cormorant Garamond', serif; font-size: 1.25rem;
     font-weight: 500; color: rgba(255,255,255,0.85); margin-bottom: 6px;
 }
-.footer-address { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.6; margin-bottom: 16px; }
+.footer-address { font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.6; margin-bottom: 16px; }
 .footer-links { display: flex; justify-content: center; gap: 20px; margin-bottom: 16px; flex-wrap: wrap; }
-.footer-links a { font-size: 13px; color: rgba(255,255,255,0.45); transition: color var(--transition); min-height: 44px; display: inline-flex; align-items: center; }
+.footer-links a { font-size: 13px; color: rgba(255,255,255,0.65); transition: color var(--transition); min-height: 44px; display: inline-flex; align-items: center; }
 .footer-links a:hover { color: var(--saffron-light); }
 .footer-badges { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
 .footer-badge {
     display: inline-flex; align-items: center; gap: 5px; padding: 5px 12px;
     background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
     border-radius: 100px; font-size: 11px; font-weight: 600;
-    color: rgba(255,255,255,0.4); letter-spacing: 0.03em;
+    color: rgba(255,255,255,0.65); letter-spacing: 0.03em;
 }
 .footer-social { display: flex; justify-content: center; gap: 12px; margin-bottom: 16px; }
 .footer-social a {
@@ -959,7 +959,7 @@ section { position: relative; }
 }
 .footer-social a:hover { background: rgba(212,168,67,0.15); border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
 .footer-social svg { width: 18px; height: 18px; fill: currentColor; }
-.footer-version { font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 8px; }
+.footer-version { font-size: 11px; color: rgba(255,255,255,0.65); margin-top: 8px; }
 
 /* Footer Subscribe Form */
 .footer-subscribe { margin: 20px 0; }
@@ -1788,6 +1788,42 @@ html.dark .dharma-quote__card { background: var(--surface); border-color: rgba(2
 html.dark .dharma-quote__share-btn { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.15); }
 html.dark .prayer-wheel__counter { background: rgba(212,160,23,0.06); border-color: rgba(212,160,23,0.15); }
 html.dark .prayer-wheel__sound-btn { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.15); }
+
+.dark-mode-toggle {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(123,26,44,0.04); border: 1px solid var(--border);
+    cursor: pointer; font-size: 16px; color: var(--text-soft);
+    transition: all 0.2s ease; margin-left: 4px; order: 9;
+    min-width: 36px; min-height: 36px;
+}
+.dark-mode-toggle:hover { border-color: var(--gold); color: var(--maroon); background: rgba(212,168,67,0.06); }
+html.dark .dark-mode-toggle { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.15); color: var(--saffron-light); }
+
+/* Dark mode — extended coverage */
+html.dark .event-card { background: #2E2420; border-color: rgba(255,255,255,0.1); }
+html.dark .events-calendar { background: var(--surface); border-color: rgba(255,255,255,0.1); }
+html.dark .monk-card { background: #2E2420; border-color: rgba(255,255,255,0.1); }
+html.dark .monks-stats { background: var(--surface); }
+html.dark .monks-stat__value { color: var(--saffron-light); }
+html.dark .blog-card { background: #2E2420; border-color: rgba(255,255,255,0.1); }
+html.dark .blog-overlay { background: rgba(26,21,18,0.95); }
+html.dark .blog-detail { background: var(--surface); color: var(--text); }
+html.dark .game-card { background: #2E2420; border-color: rgba(255,255,255,0.1); }
+html.dark .games-stats { background: var(--surface); }
+html.dark .payment-cat { background: var(--surface); border-color: rgba(255,255,255,0.1); }
+html.dark .bank-details { background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.1); }
+html.dark input, html.dark select, html.dark textarea { background: #2a231c; color: var(--text); border-color: rgba(255,255,255,0.15); }
+html.dark input::placeholder, html.dark textarea::placeholder { color: var(--text-muted); }
+html.dark .currency-grid .amount-btn { background: var(--surface); color: var(--text); border-color: rgba(255,255,255,0.15); }
+html.dark .currency-grid .amount-btn.selected { background: var(--maroon); color: #fff; }
+html.dark .instagram-card { background: #2E2420; }
+html.dark .map-section { background: var(--surface); }
+html.dark .hero { background-color: #1a1512; }
+html.dark .butter-lamp-card { background: var(--surface); border-color: rgba(255,255,255,0.1); }
+html.dark .puja-card { background: #2E2420; border-color: rgba(255,255,255,0.1); }
+html.dark .modal-overlay { background: rgba(0,0,0,0.8); }
+html.dark .modal-content, html.dark .event-modal { background: var(--surface); color: var(--text); }
 
 /* ======================================== Monks Grid ======================================== */
 .monks-stats {

@@ -30,6 +30,9 @@
 </head>
 <body>
 
+    <!-- Skip to Content (Accessibility) -->
+    <a href="#request-form" class="skip-to-content">Skip to main content</a>
+
     <!-- Navigation -->
     <nav class="site-nav" id="siteNav">
         <div class="site-nav__inner">
@@ -271,6 +274,9 @@
         </div>
     </section>
 
+    <!-- Back to Top -->
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">&#8593;</button>
+
     <!-- Footer -->
     <footer class="site-footer">
         <div class="footer-inner">
@@ -320,9 +326,13 @@
     <script>
         // ── Puja Request Form Handler ──
 
-        // Navbar scroll
+        // Navbar scroll + Back to top visibility
         var nav = document.getElementById('siteNav');
-        window.addEventListener('scroll', function() { nav.classList.toggle('scrolled', window.scrollY > 20); });
+        var backToTopBtn = document.getElementById('backToTop');
+        window.addEventListener('scroll', function() {
+            nav.classList.toggle('scrolled', window.scrollY > 20);
+            if (backToTopBtn) backToTopBtn.classList.toggle('visible', window.scrollY > 400);
+        });
         // Active nav state
         (function() {
             var currentPage = window.location.pathname.split('/').pop() || 'index.html';
@@ -442,6 +452,7 @@
     <script src="../assets/js/auth.js"></script>
     <script src="../assets/js/version.js"></script>
     <script src="../assets/js/i18n.js"></script>
+    <script src="../assets/js/darkmode.js"></script>
     <script src="../assets/js/subscribe.js"></script>
     <script src="../assets/js/tracker.js"></script>
 </body>

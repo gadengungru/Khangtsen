@@ -751,12 +751,12 @@
                     e.target.reset();
                     initCurrency();
                 } else {
-                    showToast('Thank you, ' + (donorName || 'Friend') + '! Your donation is appreciated.', 'success');
+                    showToast('Something went wrong. Please try again or contact us.', 'error');
                 }
             }).catch(function() {
                 btn.disabled = false;
                 btn.textContent = originalText;
-                showToast('Thank you, ' + (donorName || 'Friend') + '! Your donation is appreciated.', 'success');
+                showToast('Network error. Please check your connection and try again.', 'error');
             });
         }
 
@@ -821,7 +821,7 @@
             document.getElementById('eventContextBanner').style.display = '';
 
             // Pre-fill dedication with event reference
-            var dedSelect = document.getElementById('dedicationType');
+            var dedSelect = document.getElementById('donorDedication');
             var dedName = document.getElementById('dedicationName');
             if (dedSelect) { dedSelect.value = 'honor'; dedSelect.dispatchEvent(new Event('change')); }
             if (dedName) { dedName.value = evt.title; }
@@ -831,6 +831,7 @@
     </script>
     <script src="../assets/js/version.js"></script>
     <script src="../assets/js/i18n.js"></script>
+    <script src="../assets/js/darkmode.js"></script>
     <script src="../assets/js/subscribe.js"></script>
     <script src="../assets/js/tracker.js"></script>
 </body>

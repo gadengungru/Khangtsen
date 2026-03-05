@@ -27,7 +27,7 @@
     <meta name="twitter:image" content="https://gadengungru.github.io/Khangtsen/Gungru/assets/images/monastery-main.jpg">
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
-<body>
+<body class="has-sticky-cta">
     <a href="#faq" class="skip-to-content">Skip to main content</a>
 
     <!-- Navigation -->
@@ -659,6 +659,18 @@
             if (!wasOpen) item.classList.add('open');
         }
 
+        // Make FAQ items keyboard accessible
+        document.querySelectorAll('.faq-item__q').forEach(function(q) {
+            q.setAttribute('tabindex', '0');
+            q.setAttribute('role', 'button');
+            q.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggleFaq(this);
+                }
+            });
+        });
+
         // Scroll reveal
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
@@ -674,6 +686,7 @@
     <script src="../assets/js/auth.js"></script>
     <script src="../assets/js/version.js"></script>
     <script src="../assets/js/i18n.js"></script>
+    <script src="../assets/js/darkmode.js"></script>
     <script src="../assets/js/subscribe.js"></script>
     <script src="../assets/js/tracker.js"></script>
 
@@ -718,5 +731,35 @@
             </div>
         </div>
     </div>
+
+    <!-- Sticky Mobile CTA Bar -->
+    <div class="sticky-cta" id="stickyCta">
+        <div class="sticky-cta__inner">
+            <a href="donate.html" class="btn btn-primary">
+                <span>&#9825;</span>
+                <span data-i18n="home.cta_donate">Make a Donation</span>
+            </a>
+            <a href="request-puja.html" class="btn btn-secondary" data-i18n="home.cta_puja">&#128591; Request a Puja</a>
+        </div>
+    </div>
+    <script>
+    // Hide sticky CTA when hero is visible or near footer
+    (function() {
+        var stickyCta = document.getElementById('stickyCta');
+        if (!stickyCta) return;
+        var hero = document.querySelector('.hero');
+        var footer = document.querySelector('.site-footer');
+        function updateSticky() {
+            var heroRect = hero ? hero.getBoundingClientRect() : null;
+            var footerRect = footer ? footer.getBoundingClientRect() : null;
+            var heroVisible = heroRect && heroRect.bottom > 80;
+            var footerVisible = footerRect && footerRect.top < window.innerHeight;
+            stickyCta.style.transform = (heroVisible || footerVisible) ? 'translateY(100%)' : 'translateY(0)';
+        }
+        stickyCta.style.transition = 'transform 0.3s ease';
+        window.addEventListener('scroll', updateSticky, { passive: true });
+        updateSticky();
+    })();
+    </script>
 </body>
 </html>
