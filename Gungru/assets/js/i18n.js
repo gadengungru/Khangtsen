@@ -2,20 +2,20 @@
 (function() {
     var LANGS = {
         en: { name: 'English', code: 'EN' },
-        bo: { name: '\u0F56\u0F7C\u0F51\u0F0B\u0F66\u0F90\u0F51\u0F0D', code: 'BO' },
-        hi: { name: '\u0939\u093F\u0928\u094D\u0926\u0940', code: 'HI' },
-        'zh-TW': { name: '\u4E2D\u6587', code: 'ZH' },
-        kn: { name: '\u0C95\u0CA8\u0CCD\u0CA8\u0CA1', code: 'KN' },
+        bo: { name: '\u0F56\u0F7C\u0F51\u0F0B\u0F66\u0F90\u0F51\u0F0D', code: '\u0F56\u0F7C\u0F51\u0F0D' },
+        hi: { name: '\u0939\u093F\u0928\u094D\u0926\u0940', code: '\u0939\u093F\u0902' },
+        'zh-TW': { name: '\u4E2D\u6587', code: '\u4E2D\u6587' },
+        kn: { name: '\u0C95\u0CA8\u0CCD\u0CA8\u0CA1', code: '\u0C95\u0CA8\u0CCD' },
         fr: { name: 'Fran\u00E7ais', code: 'FR' },
         es: { name: 'Espa\u00F1ol', code: 'ES' },
-        dz: { name: '\u0F62\u0FAB\u0F7C\u0F44\u0F0B\u0F41', code: 'DZ' },
-        ja: { name: '\u65E5\u672C\u8A9E', code: 'JA' },
-        mr: { name: '\u092E\u0930\u093E\u0920\u0940', code: 'MR' },
-        ne: { name: '\u0928\u0947\u092A\u093E\u0932\u0940', code: 'NE' },
-        ta: { name: '\u0BA4\u0BAE\u0BBF\u0BB4\u0BCD', code: 'TA' },
-        te: { name: '\u0C24\u0C46\u0C32\u0C41\u0C17\u0C41', code: 'TE' },
+        dz: { name: '\u0F62\u0FAB\u0F7C\u0F44\u0F0B\u0F41', code: '\u0F62\u0FAB\u0F7C\u0F44' },
+        ja: { name: '\u65E5\u672C\u8A9E', code: '\u65E5\u672C' },
+        mr: { name: '\u092E\u0930\u093E\u0920\u0940', code: '\u092E\u0930\u093E' },
+        ne: { name: '\u0928\u0947\u092A\u093E\u0932\u0940', code: '\u0928\u0947\u092A\u093E' },
+        ta: { name: '\u0BA4\u0BAE\u0BBF\u0BB4\u0BCD', code: '\u0BA4\u0BAE\u0BBF' },
+        te: { name: '\u0C24\u0C46\u0C32\u0C41\u0C17\u0C41', code: '\u0C24\u0C46\u0C32\u0C41' },
         vi: { name: 'Ti\u1EBFng Vi\u1EC7t', code: 'VI' },
-        'zh-CN': { name: '\u7B80\u4F53\u4E2D\u6587', code: 'ZH' }
+        'zh-CN': { name: '\u7B80\u4F53\u4E2D\u6587', code: '\u7B80\u4E2D' }
     };
 
     var DEFAULT_LANG = 'en';
