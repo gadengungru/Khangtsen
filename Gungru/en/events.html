@@ -590,6 +590,48 @@
         const SUPABASE_URL = 'https://axnongwefdafwflekysk.supabase.co';
         const SUPABASE_KEY = 'sb_publishable_pFwy1o_CK9ps98dK-yDyTQ_zXaCU2_y';
 
+        // === i18n helpers for dynamic content ===
+        function getLang() { return localStorage.getItem('gungru-lang') || 'en'; }
+        var LOCALE_MAP = {
+            en:'en-US', bo:'en-US', hi:'hi-IN', 'zh-TW':'zh-TW', kn:'kn-IN',
+            fr:'fr-FR', es:'es-ES', dz:'en-US', ja:'ja-JP', mr:'mr-IN',
+            ne:'ne-NP', ta:'ta-IN', te:'te-IN', vi:'vi-VN', 'zh-CN':'zh-CN'
+        };
+        function getLocale() { return LOCALE_MAP[getLang()] || 'en-US'; }
+
+        // Cache for i18n dict (loaded by i18n.js)
+        var _evtDict = null;
+        function getEvtDict() {
+            if (_evtDict) return _evtDict;
+            try {
+                var lang = getLang();
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', '../assets/lang/' + lang + '.json?v=260305', false);
+                xhr.send();
+                if (xhr.status === 200) _evtDict = JSON.parse(xhr.responseText);
+            } catch(e) {}
+            return _evtDict || {};
+        }
+        function t(key) {
+            var dict = getEvtDict();
+            var parts = key.split('.');
+            var val = dict;
+            for (var i = 0; i < parts.length; i++) {
+                if (!val) return null;
+                val = val[parts[i]];
+            }
+            return val || null;
+        }
+
+        // Get translated event field (from metadata.translations)
+        function getEventField(event, field) {
+            var lang = getLang();
+            if (lang !== 'en' && event.metadata && event.metadata.translations && event.metadata.translations[lang] && event.metadata.translations[lang][field]) {
+                return event.metadata.translations[lang][field];
+            }
+            return event[field] || '';
+        }
+
         const EVENT_ICONS = {
             'puja': '\uD83D\uDD6F\uFE0F', 'teaching': '\uD83D\uDCDA',
             'ceremony': '\u2728', 'meeting': '\uD83E\uDD1D',
@@ -607,22 +649,24 @@
         // === Utility functions ===
         function formatEventDate(dateStr) {
             var d = new Date(dateStr);
+            var loc = getLocale();
             return {
-                month: d.toLocaleString('en-US', { month: 'short' }).toUpperCase(),
+                month: d.toLocaleString(loc, { month: 'short' }).toUpperCase(),
                 day: d.getDate(), year: d.getFullYear(),
-                time: d.toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }),
-                full: d.toLocaleString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })
+                time: d.toLocaleString(loc, { hour: 'numeric', minute: '2-digit', hour12: true }),
+                full: d.toLocaleString(loc, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })
             };
         }
         function formatDateRange(start, end) {
+            var loc = getLocale();
             var s = new Date(start);
-            var time = s.toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+            var time = s.toLocaleString(loc, { hour: 'numeric', minute: '2-digit', hour12: true });
             if (!end) return time;
             var e = new Date(end);
             if (s.toDateString() === e.toDateString()) {
-                return time + ' \u2013 ' + e.toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+                return time + ' \u2013 ' + e.toLocaleString(loc, { hour: 'numeric', minute: '2-digit', hour12: true });
             }
-            return time + ' \u2013 ' + e.toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true });
+            return time + ' \u2013 ' + e.toLocaleString(loc, { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true });
         }
         function truncate(text, maxLen) { return !text ? '' : text.length > maxLen ? text.substring(0, maxLen).trim() + '\u2026' : text; }
         function esc(str) { if (!str) return ''; var d = document.createElement('div'); d.textContent = str; return d.innerHTML; }
@@ -634,11 +678,14 @@
             var statusClass = event.status === 'ongoing' ? 'ongoing' : 'upcoming';
             var pastClass = isPast ? ' event-card--past' : '';
             var ongoingClass = event.status === 'ongoing' ? ' event-card--ongoing' : '';
-            var badgeLabel = isPast ? 'Completed' : (event.status === 'ongoing' ? 'Ongoing' : 'Upcoming');
+            var badgeLabel = isPast ? (t('events.badge_completed') || 'Completed') : (event.status === 'ongoing' ? (t('events.badge_ongoing') || 'Ongoing') : (t('events.badge_upcoming') || 'Upcoming'));
             var badgeClass = isPast ? 'upcoming' : statusClass;
             var timeRange = formatDateRange(event.start_date, event.end_date);
+            var evtTitle = getEventField(event, 'title');
+            var evtDesc = getEventField(event, 'description');
+            var evtLocation = getEventField(event, 'location');
             var metaHtml = '<span class="event-card__meta-item"><span class="event-card__meta-icon">\uD83D\uDD52</span> ' + esc(timeRange) + '</span>';
-            if (event.location) metaHtml += '<span class="event-card__meta-item"><span class="event-card__meta-icon">\uD83D\uDCCD</span> ' + esc(event.location) + '</span>';
+            if (evtLocation) metaHtml += '<span class="event-card__meta-item"><span class="event-card__meta-icon">\uD83D\uDCCD</span> ' + esc(evtLocation) + '</span>';
 
             return '<div class="event-card' + pastClass + ongoingClass + '">' +
                 '<div class="event-card__date">' +
@@ -650,11 +697,11 @@
                 '<div class="event-card__body" data-event-id="' + event.id + '">' +
                     '<div class="event-card__top">' +
                         '<span class="event-card__icon">' + icon + '</span>' +
-                        '<span class="event-card__title">' + esc(event.title) + '</span>' +
+                        '<span class="event-card__title">' + esc(evtTitle) + '</span>' +
                         '<span class="event-card__badge event-card__badge--' + badgeClass + '">' + badgeLabel + '</span>' +
                     '</div>' +
                     '<div class="event-card__meta">' + metaHtml + '</div>' +
-                    (event.description ? '<p class="event-card__description">' + esc(truncate(event.description, 200)) + '</p>' : '') +
+                    (evtDesc ? '<p class="event-card__description">' + esc(truncate(evtDesc, 200)) + '</p>' : '') +
                 '</div>' +
             '</div>';
         }
@@ -665,11 +712,20 @@
             var text = document.getElementById('pastToggleText');
             var isOpen = toggle.classList.toggle('open');
             container.classList.toggle('open', isOpen);
-            text.textContent = isOpen ? 'Hide Past Events' : 'Show Past Events';
+            text.textContent = isOpen ? (t('events.past_toggle_hide') || 'Hide Past Events') : (t('events.past_toggle_show') || 'Show Past Events');
         }
 
         // === Calendar ===
-        var MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+        function getMonthNames() {
+            var str = t('events.cal_months');
+            if (str) return str.split(',');
+            return ['January','February','March','April','May','June','July','August','September','October','November','December'];
+        }
+        function getWeekdayNames() {
+            var str = t('events.cal_weekdays_short');
+            if (str) return str.split(',');
+            return ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+        }
 
         function initCalendar() {
             var now = new Date();
@@ -702,7 +758,12 @@
         }
 
         function renderCalendar() {
-            document.getElementById('calMonthLabel').textContent = MONTH_NAMES[calMonth] + ' ' + calYear;
+            var monthNames = getMonthNames();
+            var weekdayNames = getWeekdayNames();
+            document.getElementById('calMonthLabel').textContent = monthNames[calMonth] + ' ' + calYear;
+            // Update weekday headers
+            var weekdayEl = document.querySelector('.cal-weekdays');
+            if (weekdayEl) weekdayEl.innerHTML = weekdayNames.map(function(d) { return '<span>' + d + '</span>'; }).join('');
             var firstDay = new Date(calYear, calMonth, 1).getDay();
             var daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
             var daysInPrev = new Date(calYear, calMonth, 0).getDate();
@@ -779,22 +840,25 @@
             var icon = EVENT_ICONS[event.event_type] || EVENT_ICONS['general'];
             var date = formatEventDate(event.start_date);
             var isPast = event.status === 'completed' || event.status === 'cancelled';
-            var badgeLabel = isPast ? 'Completed' : (event.status === 'ongoing' ? 'Ongoing' : 'Upcoming');
+            var badgeLabel = isPast ? (t('events.badge_completed') || 'Completed') : (event.status === 'ongoing' ? (t('events.badge_ongoing') || 'Ongoing') : (t('events.badge_upcoming') || 'Upcoming'));
+            var evtTitle = getEventField(event, 'title');
+            var evtDesc = getEventField(event, 'description');
+            var evtLocation = getEventField(event, 'location');
 
             document.getElementById('modalEventIcon').textContent = icon;
-            document.getElementById('modalEventTitle').textContent = event.title;
+            document.getElementById('modalEventTitle').textContent = evtTitle;
             document.getElementById('modalEventBadge').textContent = badgeLabel;
 
             var metaHtml = '<div class="event-modal__meta-item">&#128197; ' + esc(date.full) + '</div>' +
                 '<div class="event-modal__meta-item">&#128336; ' + esc(formatDateRange(event.start_date, event.end_date)) + '</div>';
-            if (event.location) metaHtml += '<div class="event-modal__meta-item">&#128205; ' + esc(event.location) + '</div>';
+            if (evtLocation) metaHtml += '<div class="event-modal__meta-item">&#128205; ' + esc(evtLocation) + '</div>';
             document.getElementById('modalEventMeta').innerHTML = metaHtml;
-            document.getElementById('modalEventDesc').textContent = event.description || 'No additional details available.';
+            document.getElementById('modalEventDesc').textContent = evtDesc || (t('events.no_details') || 'No additional details available.');
 
             // Suggested offering
             var offeringEl = document.getElementById('modalOffering');
             if (event.suggested_offering) {
-                document.getElementById('modalOfferingText').textContent = 'Suggested Offering: ' + event.suggested_offering;
+                document.getElementById('modalOfferingText').textContent = (t('events.offering_prefix') || 'Suggested Offering:') + ' ' + event.suggested_offering;
                 document.getElementById('modalDonateLink').href = 'donate.html?event=' + encodeURIComponent(event.title);
                 offeringEl.style.display = '';
             } else {
@@ -811,7 +875,7 @@
                 document.getElementById('rsvpSuccess').style.display = 'none';
                 document.getElementById('rsvpForm').reset();
                 document.getElementById('rsvpSubmitBtn').disabled = false;
-                document.getElementById('rsvpSubmitBtn').textContent = 'Confirm RSVP';
+                document.getElementById('rsvpSubmitBtn').textContent = t('events.rsvp_submit') || 'Confirm RSVP';
                 fetchRsvpCount(event.id);
             }
 
@@ -836,9 +900,9 @@
                 var range = r.headers.get('content-range');
                 var total = range ? range.split('/')[1] : '0';
                 var countEl = document.getElementById('modalRsvpCount');
-                if (total === '0') countEl.textContent = 'Be the first to RSVP!';
-                else if (total === '1') countEl.textContent = '1 person attending';
-                else countEl.textContent = total + ' people attending';
+                if (total === '0') countEl.textContent = t('events.rsvp_first') || 'Be the first to RSVP!';
+                else if (total === '1') countEl.textContent = t('events.rsvp_count_one') || '1 person attending';
+                else countEl.textContent = (t('events.rsvp_count_many') || '{count} people attending').replace('{count}', total);
             }).catch(function() {});
         }
 
@@ -851,7 +915,7 @@
             var phone = document.getElementById('rsvpPhone').value.trim();
             var btn = document.getElementById('rsvpSubmitBtn');
             btn.disabled = true;
-            btn.textContent = 'Submitting...';
+            btn.textContent = t('events.rsvp_submitting') || 'Submitting...';
 
             fetch(SUPABASE_URL + '/rest/v1/event_rsvps', {
                 method: 'POST',
@@ -869,22 +933,22 @@
                 })
             }).then(function(r) {
                 btn.disabled = false;
-                btn.textContent = 'Confirm RSVP';
+                btn.textContent = t('events.rsvp_submit') || 'Confirm RSVP';
                 if (r.ok) {
                     document.getElementById('rsvpForm').style.display = 'none';
                     document.getElementById('rsvpSuccess').style.display = 'block';
-                    showToast('RSVP confirmed! Check your email.', 'success');
+                    showToast(t('events.rsvp_confirmed_toast') || 'RSVP confirmed! Check your email.', 'success');
                     sendRsvpConfirmation(email, fullName, currentModalEvent);
                     fetchRsvpCount(currentModalEventId);
                 } else if (r.status === 409) {
-                    showToast('You have already RSVPed for this event.', 'error');
+                    showToast(t('events.rsvp_already_toast') || 'You have already RSVPed for this event.', 'error');
                 } else {
-                    showToast('Something went wrong. Please try again.', 'error');
+                    showToast(t('events.rsvp_error_toast') || 'Something went wrong. Please try again.', 'error');
                 }
             }).catch(function() {
                 btn.disabled = false;
-                btn.textContent = 'Confirm RSVP';
-                showToast('Network error. Please try again.', 'error');
+                btn.textContent = t('events.rsvp_submit') || 'Confirm RSVP';
+                showToast(t('events.rsvp_network_toast') || 'Network error. Please try again.', 'error');
             });
         });
 

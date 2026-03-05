@@ -275,7 +275,19 @@
     "rsvp_count_one": "1 person attending",
     "rsvp_count_many": "{count} people attending",
     "badge_upcoming": "Upcoming",
-    "badge_ongoing": "Ongoing"
+    "badge_ongoing": "Ongoing",
+    "badge_completed": "Completed",
+    "past_toggle_hide": "Hide Past Events",
+    "rsvp_first": "Be the first to RSVP!",
+    "rsvp_submitting": "Submitting...",
+    "rsvp_confirmed_toast": "RSVP confirmed! Check your email.",
+    "rsvp_already_toast": "You have already RSVPed for this event.",
+    "rsvp_error_toast": "Something went wrong. Please try again.",
+    "rsvp_network_toast": "Network error. Please try again.",
+    "offering_prefix": "Suggested Offering:",
+    "no_details": "No additional details available.",
+    "cal_months": "January,February,March,April,May,June,July,August,September,October,November,December",
+    "cal_weekdays_short": "Sun,Mon,Tue,Wed,Thu,Fri,Sat"
   },
   "footer": {
     "name": "ಗಾದೆನ್ ಶರ್ತ್ಸೆ ಗುಂಗ್ರು ಖಾಂಗ್ತ್ಸೇನ್ ಮಠ",
