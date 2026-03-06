@@ -82,7 +82,25 @@
             <a href="transactions.html">Transactions</a>
             <a href="analytics.html" class="active">Analytics</a>
             <a href="contacts.html">Contacts</a>
+            <a href="blog.html">Blog</a>
+            <a href="rsvps.html">RSVPs</a>
+            <a href="activity.html">Activity</a>
+            <a href="settings.html">Settings</a>
         </nav>
+        <div class="admin-topbar__right">
+            <div class="admin-global-search" style="position:relative;">
+                <input type="text" id="globalSearchInput" placeholder="Search... (Ctrl+K)" style="width:180px;padding:5px 12px;border:1px solid rgba(255,255,255,0.15);border-radius:100px;background:rgba(255,255,255,0.08);color:#fff;font-size:12px;font-family:DM Sans,sans-serif;outline:none;height:28px;">
+                <div id="globalSearchResults" style="display:none;position:absolute;top:34px;right:0;width:380px;max-height:400px;overflow-y:auto;background:#fff;border:1px solid #e5e7eb;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.15);z-index:10002;"></div>
+            </div>
+            <div id="notifBell" style="position:relative;cursor:pointer;">
+                <span style="font-size:18px;opacity:0.7;">&#128276;</span>
+                <span id="notifBadge" style="display:none;position:absolute;top:-4px;right:-6px;background:#dc2626;color:#fff;font-size:10px;font-weight:700;min-width:16px;height:16px;border-radius:50%;align-items:center;justify-content:center;line-height:1;">0</span>
+            </div>
+            <div id="notifDropdown" style="display:none;position:absolute;top:36px;right:0;width:320px;max-height:400px;overflow-y:auto;background:#fff;border:1px solid #e5e7eb;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.15);z-index:10001;padding:8px 0;">
+                <div style="padding:12px 16px;font-size:13px;font-weight:700;color:#374151;border-bottom:1px solid #f3f4f6;">Notifications</div>
+                <div id="notifList"></div>
+            </div>
+        </div>
     </div>
 
     <!-- Admin Content -->
@@ -248,6 +266,8 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../../assets/js/auth.js"></script>
+    <script src="../../assets/js/admin-notifications.js"></script>
+    <script src="../../assets/js/admin-search.js"></script>
     <script>
         requireAuth(function(user) {
             var sb = window.adminSupabase;

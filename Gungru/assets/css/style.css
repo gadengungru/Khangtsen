@@ -392,18 +392,19 @@ section { position: relative; }
     position: fixed; top: 56px; left: 0; right: 0; z-index: 999;
     background: linear-gradient(135deg, #1a1a2e, #16213e);
     color: rgba(255,255,255,0.9); display: flex; align-items: center;
-    justify-content: space-between; padding: 0 20px; height: 40px;
+    justify-content: space-between; padding: 0 20px; min-height: 40px;
     font-size: 12px; font-weight: 600; letter-spacing: 0.05em;
 }
 .admin-topbar__label { opacity: 0.6; }
 .admin-topbar__nav { display: flex; gap: 4px; }
 .admin-topbar__nav a {
-    padding: 6px 14px; border-radius: 100px; font-size: 12px; font-weight: 600;
+    padding: 6px 10px; border-radius: 100px; font-size: 12px; font-weight: 600;
     color: rgba(255,255,255,0.55); text-decoration: none; transition: all var(--transition);
     min-height: 36px; display: inline-flex; align-items: center;
 }
 .admin-topbar__nav a:hover { color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.08); }
 .admin-topbar__nav a.active { color: #fff; background: rgba(255,255,255,0.12); }
+.admin-topbar__right { display: flex; align-items: center; gap: 8px; margin-left: 8px; position: relative; }
 
 .admin-container { max-width: 1200px; margin: 0 auto; padding: 24px 20px; }
 .admin-page-header { margin-bottom: 24px; }

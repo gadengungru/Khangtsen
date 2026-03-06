@@ -42,7 +42,25 @@
             <a href="transactions.html">Transactions</a>
             <a href="analytics.html">Analytics</a>
             <a href="contacts.html">Contacts</a>
+            <a href="blog.html">Blog</a>
+            <a href="rsvps.html">RSVPs</a>
+            <a href="activity.html">Activity</a>
+            <a href="settings.html">Settings</a>
         </nav>
+        <div class="admin-topbar__right">
+            <div class="admin-global-search" style="position:relative;">
+                <input type="text" id="globalSearchInput" placeholder="Search... (Ctrl+K)" style="width:180px;padding:5px 12px;border:1px solid rgba(255,255,255,0.15);border-radius:100px;background:rgba(255,255,255,0.08);color:#fff;font-size:12px;font-family:DM Sans,sans-serif;outline:none;height:28px;">
+                <div id="globalSearchResults" style="display:none;position:absolute;top:34px;right:0;width:380px;max-height:400px;overflow-y:auto;background:#fff;border:1px solid #e5e7eb;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.15);z-index:10002;"></div>
+            </div>
+            <div id="notifBell" style="position:relative;cursor:pointer;">
+                <span style="font-size:18px;opacity:0.7;">&#128276;</span>
+                <span id="notifBadge" style="display:none;position:absolute;top:-4px;right:-6px;background:#dc2626;color:#fff;font-size:10px;font-weight:700;min-width:16px;height:16px;border-radius:50%;align-items:center;justify-content:center;line-height:1;">0</span>
+            </div>
+            <div id="notifDropdown" style="display:none;position:absolute;top:36px;right:0;width:320px;max-height:400px;overflow-y:auto;background:#fff;border:1px solid #e5e7eb;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.15);z-index:10001;padding:8px 0;">
+                <div style="padding:12px 16px;font-size:13px;font-weight:700;color:#374151;border-bottom:1px solid #f3f4f6;">Notifications</div>
+                <div id="notifList"></div>
+            </div>
+        </div>
     </div>
 
     <!-- Admin Content -->
@@ -74,6 +92,16 @@
                     <div class="admin-stat__icon">&#128587;</div>
                     <div class="admin-stat__value" id="statContacts">—</div>
                     <div class="admin-stat__label">Contacts</div>
+                </div>
+                <div class="admin-stat">
+                    <div class="admin-stat__icon">&#128221;</div>
+                    <div class="admin-stat__value" id="statPosts">—</div>
+                    <div class="admin-stat__label">Blog Posts</div>
+                </div>
+                <div class="admin-stat">
+                    <div class="admin-stat__icon">&#128203;</div>
+                    <div class="admin-stat__value" id="statRsvps">—</div>
+                    <div class="admin-stat__label">RSVPs</div>
                 </div>
             </div>
 
@@ -118,18 +146,32 @@
                         <div class="admin-card__desc">Manage donors, subscribers, partners, and send emails.</div>
                     </div>
                 </a>
-                <a href="documents.html" class="admin-card" style="opacity: 0.5; pointer-events: none;">
-                    <div class="admin-card__icon">&#128196;</div>
+                <a href="blog.html" class="admin-card">
+                    <div class="admin-card__icon">&#128221;</div>
                     <div>
-                        <div class="admin-card__title">Documents</div>
-                        <div class="admin-card__desc">Agreements, forms, and records. Coming soon.</div>
+                        <div class="admin-card__title">Blog</div>
+                        <div class="admin-card__desc">Create and manage blog posts, news, and announcements.</div>
                     </div>
                 </a>
-                <a href="messages.html" class="admin-card" style="opacity: 0.5; pointer-events: none;">
-                    <div class="admin-card__icon">&#128172;</div>
+                <a href="rsvps.html" class="admin-card">
+                    <div class="admin-card__icon">&#128203;</div>
                     <div>
-                        <div class="admin-card__title">Messages</div>
-                        <div class="admin-card__desc">SMS and email logs. Coming soon.</div>
+                        <div class="admin-card__title">RSVPs</div>
+                        <div class="admin-card__desc">View and manage event registrations and attendees.</div>
+                    </div>
+                </a>
+                <a href="activity.html" class="admin-card">
+                    <div class="admin-card__icon">&#128339;</div>
+                    <div>
+                        <div class="admin-card__title">Activity Log</div>
+                        <div class="admin-card__desc">Track all admin actions and changes.</div>
+                    </div>
+                </a>
+                <a href="settings.html" class="admin-card">
+                    <div class="admin-card__icon">&#9881;</div>
+                    <div>
+                        <div class="admin-card__title">Settings</div>
+                        <div class="admin-card__desc">Manage site configuration and feature toggles.</div>
                     </div>
                 </a>
             </div>
@@ -162,6 +204,8 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
     <script src="../../assets/js/auth.js"></script>
+    <script src="../../assets/js/admin-notifications.js"></script>
+    <script src="../../assets/js/admin-search.js"></script>
     <script>
         // Require auth, then load dashboard data
         requireAuth(function(user, sb) {
@@ -172,12 +216,16 @@
                 supabase.from('members').select('id', { count: 'exact', head: true }),
                 supabase.from('events').select('id', { count: 'exact', head: true }),
                 supabase.from('transactions').select('id', { count: 'exact', head: true }),
-                supabase.from('contacts').select('id', { count: 'exact', head: true })
+                supabase.from('contacts').select('id', { count: 'exact', head: true }),
+                supabase.from('blog_posts').select('id', { count: 'exact', head: true }),
+                supabase.from('event_rsvps').select('id', { count: 'exact', head: true })
             ]).then(function(results) {
                 document.getElementById('statMembers').textContent = (results[0].count != null) ? results[0].count : '0';
                 document.getElementById('statEvents').textContent = (results[1].count != null) ? results[1].count : '0';
                 document.getElementById('statTransactions').textContent = (results[2].count != null) ? results[2].count : '0';
                 document.getElementById('statContacts').textContent = (results[3].count != null) ? results[3].count : '0';
+                document.getElementById('statPosts').textContent = (results[4].count != null) ? results[4].count : '0';
+                document.getElementById('statRsvps').textContent = (results[5].count != null) ? results[5].count : '0';
             }).catch(function() {
                 // Counts unavailable
             });

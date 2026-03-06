@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="../../assets/images/favicon.png">
+    <link rel="apple-touch-icon" href="../../assets/images/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings — Admin — Gungru Khangtsen</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="site-nav" id="siteNav">
+        <div class="site-nav__inner">
+            <a href="../index.html" class="site-nav__brand">
+                <img src="../../assets/images/logo.png" alt="Gungru Khangtsen">
+                <span data-i18n="nav.brand">Gungru Khangtsen</span>
+            </a>
+            <button class="nav-toggle" onclick="document.querySelector('.site-nav__links').classList.toggle('open')" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="site-nav__links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../general-understanding.html">General Understanding</a></li>
+                <li><a href="../donate.html" class="site-nav__cta"><span>&#9825;</span><span>Donate</span></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Admin Topbar -->
+    <div class="admin-topbar">
+        <span class="admin-topbar__label">&#128274; Admin Panel</span>
+        <nav class="admin-topbar__nav">
+            <a href="index.html">Dashboard</a>
+            <a href="members.html">Members</a>
+            <a href="events.html">Events</a>
+            <a href="transactions.html">Transactions</a>
+            <a href="analytics.html">Analytics</a>
+            <a href="contacts.html">Contacts</a>
+            <a href="blog.html">Blog</a>
+            <a href="rsvps.html">RSVPs</a>
+            <a href="activity.html">Activity</a>
+            <a href="settings.html" class="active">Settings</a>
+        </nav>
+        <div class="admin-topbar__right">
+            <div class="admin-global-search" style="position:relative;">
+                <input type="text" id="globalSearchInput" placeholder="Search... (Ctrl+K)" style="width:180px;padding:5px 12px;border:1px solid rgba(255,255,255,0.15);border-radius:100px;background:rgba(255,255,255,0.08);color:#fff;font-size:12px;font-family:DM Sans,sans-serif;outline:none;height:28px;">
+                <div id="globalSearchResults" style="display:none;position:absolute;top:34px;right:0;width:380px;max-height:400px;overflow-y:auto;background:#fff;border:1px solid #e5e7eb;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.15);z-index:10002;"></div>
+            </div>
+            <div id="notifBell" style="position:relative;cursor:pointer;">
+                <span style="font-size:18px;opacity:0.7;">&#128276;</span>
+                <span id="notifBadge" style="display:none;position:absolute;top:-4px;right:-6px;background:#dc2626;color:#fff;font-size:10px;font-weight:700;min-width:16px;height:16px;border-radius:50%;align-items:center;justify-content:center;line-height:1;">0</span>
+            </div>
+            <div id="notifDropdown" style="display:none;position:absolute;top:36px;right:0;width:320px;max-height:400px;overflow-y:auto;background:#fff;border:1px solid #e5e7eb;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.15);z-index:10001;padding:8px 0;">
+                <div style="padding:12px 16px;font-size:13px;font-weight:700;color:#374151;border-bottom:1px solid #f3f4f6;">Notifications</div>
+                <div id="notifList"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Content -->
+    <div class="admin-layout">
+        <div class="admin-container">
+            <div class="admin-page-header">
+                <h1>Settings</h1>
+                <p>Manage site configuration</p>
+            </div>
+
+            <div class="admin-toolbar">
+                <div></div>
+                <div class="admin-toolbar__actions">
+                    <button class="btn-sm btn-primary" id="addSettingBtn">+ Add Setting</button>
+                </div>
+            </div>
+
+            <div class="admin-table-wrap">
+                <table class="admin-table" id="settingsTable">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Value</th>
+                            <th>Description</th>
+                            <th>Updated</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="settingsBody">
+                        <tr><td colspan="5" class="admin-empty"><div class="admin-empty__icon">&#9881;</div><div class="admin-empty__text">Loading settings...</div></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Setting Modal -->
+    <div class="admin-modal" id="settingModal">
+        <div class="admin-modal__backdrop" id="settingModalBackdrop"></div>
+        <div class="admin-modal__card">
+            <h2 class="admin-modal__title" id="settingModalTitle">Add Setting</h2>
+            <form class="admin-modal__form" id="settingForm">
+                <input type="hidden" id="settingId">
+                <div class="admin-modal__field">
+                    <label for="settingKey">Key</label>
+                    <input type="text" id="settingKey" required placeholder="setting_key">
+                </div>
+                <div class="admin-modal__field">
+                    <label for="settingValue">Value <small style="color:#9ca3af;font-weight:400;">(must be valid JSON)</small></label>
+                    <textarea id="settingValue" rows="6" required placeholder='{"example": "value"}'></textarea>
+                </div>
+                <div class="admin-modal__field">
+                    <label for="settingDescription">Description</label>
+                    <textarea id="settingDescription" rows="2" placeholder="What this setting controls..."></textarea>
+                </div>
+                <div id="settingJsonError" style="color:#dc2626;font-size:13px;margin-bottom:8px;display:none;"></div>
+                <div class="admin-modal__actions">
+                    <button type="button" class="btn-cancel" id="settingCancel">Cancel</button>
+                    <button type="submit" class="btn-sm btn-primary" id="settingSaveBtn">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <img class="footer-wheel" src="../../assets/images/favicon.svg" alt="Gungru Khangtsen">
+            <h3 class="footer-name">Gaden Shartse Gungru Khangtsen Monastery</h3>
+            <div class="footer-badges">
+                <div class="footer-badge"><span>&#128421;</span><span>Built with AlpacApps Infrastructure</span></div>
+                <div class="footer-badge"><span>&#10024;</span><span>Powered by Claude</span></div>
+            </div>
+            <div class="footer-version">Admin</div>
+        </div>
+    </footer>
+
+    <script>const nav=document.getElementById('siteNav');window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>20);});</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script src="../../assets/js/admin-notifications.js"></script>
+    <script src="../../assets/js/admin-search.js"></script>
+    <script>
+        requireAuth(function(user) {
+            var sb = window.adminSupabase;
+            var allSettings = [];
+
+            // Toast
+            function showToast(msg, type) {
+                var existing = document.querySelector('.toast-notification');
+                if (existing) existing.remove();
+                var t = document.createElement('div');
+                t.className = 'toast-notification';
+                t.style.cssText = 'position:fixed;top:80px;left:50%;transform:translateX(-50%) translateY(-10px);z-index:10000;padding:14px 24px;border-radius:12px;font-size:14px;font-weight:500;font-family:DM Sans,sans-serif;max-width:90vw;text-align:center;opacity:0;transition:all 0.3s ease;box-shadow:0 8px 32px rgba(0,0,0,0.12);';
+                if (type === 'success') { t.style.background = '#f0fdf4'; t.style.color = '#166534'; t.style.border = '1px solid #bbf7d0'; }
+                else { t.style.background = '#fef2f2'; t.style.color = '#991b1b'; t.style.border = '1px solid #fecaca'; }
+                t.textContent = msg; document.body.appendChild(t);
+                requestAnimationFrame(function() { t.style.opacity = '1'; t.style.transform = 'translateX(-50%) translateY(0)'; });
+                setTimeout(function() { t.style.opacity = '0'; setTimeout(function() { t.remove(); }, 300); }, 4000);
+            }
+
+            function escapeHtml(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+            function formatDate(d) {
+                if (!d) return '\u2014';
+                return new Date(d).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+            }
+
+            function logActivity(action, entityType, entityId, details) {
+                sb.from('activity_log').insert({
+                    action: action,
+                    entity_type: entityType,
+                    entity_id: entityId,
+                    details: details || null,
+                    user_email: user.email
+                }).then(function() {});
+            }
+
+            // Load settings
+            function loadSettings() {
+                sb.from('settings').select('*').order('key').then(function(result) {
+                    if (result.error) { showToast('Failed to load settings', 'error'); return; }
+                    allSettings = result.data || [];
+                    renderSettings();
+                });
+            }
+
+            function renderSettings() {
+                var tbody = document.getElementById('settingsBody');
+                if (!allSettings.length) {
+                    tbody.innerHTML = '<tr><td colspan="5" class="admin-empty"><div class="admin-empty__icon">&#9881;</div><div class="admin-empty__text">No settings found</div></td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = allSettings.map(function(s) {
+                    var valStr = '';
+                    try { valStr = typeof s.value === 'string' ? s.value : JSON.stringify(s.value); } catch(e) { valStr = String(s.value); }
+                    var truncVal = valStr.length > 60 ? valStr.substring(0, 60) + '\u2026' : valStr;
+                    return '<tr>' +
+                        '<td><strong>' + escapeHtml(s.key || '') + '</strong></td>' +
+                        '<td><code style="font-size:12px;background:#f3f4f6;padding:2px 6px;border-radius:4px;word-break:break-all;">' + escapeHtml(truncVal) + '</code></td>' +
+                        '<td>' + escapeHtml(s.description || '\u2014') + '</td>' +
+                        '<td>' + formatDate(s.updated_at) + '</td>' +
+                        '<td><div class="admin-table__actions">' +
+                            '<button onclick="editSetting(\'' + s.id + '\')">Edit</button>' +
+                        '</div></td>' +
+                    '</tr>';
+                }).join('');
+            }
+
+            // Modal
+            var modal = document.getElementById('settingModal');
+            function openModal(title) {
+                document.getElementById('settingModalTitle').textContent = title;
+                document.getElementById('settingJsonError').style.display = 'none';
+                modal.classList.add('admin-modal--open');
+            }
+            function closeModal() {
+                modal.classList.remove('admin-modal--open');
+                document.getElementById('settingForm').reset();
+                document.getElementById('settingId').value = '';
+                document.getElementById('settingKey').readOnly = false;
+                document.getElementById('settingJsonError').style.display = 'none';
+            }
+
+            document.getElementById('settingModalBackdrop').addEventListener('click', closeModal);
+            document.getElementById('settingCancel').addEventListener('click', closeModal);
+
+            // Add
+            document.getElementById('addSettingBtn').addEventListener('click', function() {
+                openModal('Add Setting');
+            });
+
+            // Edit
+            window.editSetting = function(id) {
+                var s = allSettings.find(function(x) { return x.id === id; });
+                if (!s) return;
+                document.getElementById('settingId').value = s.id;
+                document.getElementById('settingKey').value = s.key || '';
+                document.getElementById('settingKey').readOnly = true;
+                var valStr = '';
+                try { valStr = typeof s.value === 'string' ? s.value : JSON.stringify(s.value, null, 2); } catch(e) { valStr = String(s.value); }
+                document.getElementById('settingValue').value = valStr;
+                document.getElementById('settingDescription').value = s.description || '';
+                openModal('Edit Setting');
+            };
+
+            // Save
+            document.getElementById('settingForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                var errorEl = document.getElementById('settingJsonError');
+                errorEl.style.display = 'none';
+
+                var id = document.getElementById('settingId').value;
+                var key = document.getElementById('settingKey').value.trim();
+                var valueRaw = document.getElementById('settingValue').value.trim();
+                var description = document.getElementById('settingDescription').value.trim() || null;
+
+                // Validate JSON
+                var parsedValue;
+                try {
+                    parsedValue = JSON.parse(valueRaw);
+                } catch(err) {
+                    errorEl.textContent = 'Invalid JSON: ' + err.message;
+                    errorEl.style.display = 'block';
+                    return;
+                }
+
+                var data = {
+                    key: key,
+                    value: parsedValue,
+                    description: description
+                };
+
+                var saveBtn = document.getElementById('settingSaveBtn');
+                saveBtn.disabled = true; saveBtn.textContent = 'Saving...';
+
+                var query = id
+                    ? sb.from('settings').update(data).eq('id', id)
+                    : sb.from('settings').insert(data);
+
+                query.then(function(result) {
+                    saveBtn.disabled = false; saveBtn.textContent = 'Save';
+                    if (result.error) { showToast(result.error.message || 'Save failed', 'error'); return; }
+                    closeModal();
+                    showToast(id ? 'Setting updated' : 'Setting added', 'success');
+                    logActivity('update', 'setting', id || null, { key: key });
+                    loadSettings();
+                });
+            });
+
+            loadSettings();
+        });
+    </script>
+    <script src="../../assets/js/version.js"></script>
+</body>
+</html>
