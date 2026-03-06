@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="../../assets/images/favicon.png">
+    <link rel="apple-touch-icon" href="../../assets/images/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog — Admin — Gungru Khangtsen</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="site-nav" id="siteNav">
+        <div class="site-nav__inner">
+            <a href="../index.html" class="site-nav__brand">
+                <img src="../../assets/images/logo.png" alt="Gungru Khangtsen">
+                <span data-i18n="nav.brand">Gungru Khangtsen</span>
+            </a>
+            <button class="nav-toggle" onclick="document.querySelector('.site-nav__links').classList.toggle('open')" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="site-nav__links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../general-understanding.html">General Understanding</a></li>
+                <li><a href="../donate.html" class="site-nav__cta">
+                    <span>&#9825;</span>
+                    <span>Donate</span>
+                </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Admin Topbar -->
+    <div class="admin-topbar">
+        <span class="admin-topbar__label">&#128274; Admin Panel</span>
+        <nav class="admin-topbar__nav">
+            <a href="index.html">Dashboard</a>
+            <a href="members.html">Members</a>
+            <a href="events.html">Events</a>
+            <a href="transactions.html">Transactions</a>
+            <a href="analytics.html">Analytics</a>
+            <a href="contacts.html">Contacts</a>
+            <a href="blog.html" class="active">Blog</a>
+            <a href="rsvps.html">RSVPs</a>
+            <a href="activity.html">Activity</a>
+            <a href="settings.html">Settings</a>
+        </nav>
+        <div class="admin-topbar__right">
+            <div class="admin-global-search" style="position:relative;">
+                <input type="text" id="globalSearchInput" placeholder="Search... (Ctrl+K)" style="width:180px;padding:5px 12px;border:1px solid rgba(255,255,255,0.15);border-radius:100px;background:rgba(255,255,255,0.08);color:#fff;font-size:12px;font-family:DM Sans,sans-serif;outline:none;height:28px;">
+                <div id="globalSearchResults" style="display:none;position:absolute;top:34px;right:0;width:380px;max-height:400px;overflow-y:auto;background:#fff;border:1px solid #e5e7eb;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.15);z-index:10002;"></div>
+            </div>
+            <div id="notifBell" style="position:relative;cursor:pointer;">
+                <span style="font-size:18px;opacity:0.7;">&#128276;</span>
+                <span id="notifBadge" style="display:none;position:absolute;top:-4px;right:-6px;background:#dc2626;color:#fff;font-size:10px;font-weight:700;min-width:16px;height:16px;border-radius:50%;align-items:center;justify-content:center;line-height:1;">0</span>
+            </div>
+            <div id="notifDropdown" style="display:none;position:absolute;top:36px;right:0;width:320px;max-height:400px;overflow-y:auto;background:#fff;border:1px solid #e5e7eb;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.15);z-index:10001;padding:8px 0;">
+                <div style="padding:12px 16px;font-size:13px;font-weight:700;color:#374151;border-bottom:1px solid #f3f4f6;">Notifications</div>
+                <div id="notifList"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Content -->
+    <div class="admin-layout">
+        <div class="admin-container">
+            <div class="admin-page-header">
+                <h1>Blog Posts</h1>
+                <p>Create and manage blog content</p>
+            </div>
+
+            <div class="admin-toolbar">
+                <input type="text" class="admin-toolbar__search" id="postSearch" placeholder="Search posts...">
+                <div class="admin-toolbar__actions">
+                    <button class="btn-sm" id="exportCsvBtn" style="background:#f3f4f6;color:#374151;border:1px solid #d1d5db;cursor:pointer;margin-right:8px;">Export CSV</button>
+                    <button class="btn-sm btn-primary" id="addPostBtn">+ Add Post</button>
+                </div>
+            </div>
+
+            <div class="admin-filters" id="postFilters">
+                <button class="admin-filter-btn active" data-filter="all">All</button>
+                <button class="admin-filter-btn" data-filter="draft">Draft</button>
+                <button class="admin-filter-btn" data-filter="published">Published</button>
+                <button class="admin-filter-btn" data-filter="archived">Archived</button>
+            </div>
+
+            <div class="admin-table-wrap">
+                <table class="admin-table" id="postsTable">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Status</th>
+                            <th>Published</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="postsBody">
+                        <tr><td colspan="5" class="admin-empty"><div class="admin-empty__icon">&#128221;</div><div class="admin-empty__text">Loading posts...</div></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Post Modal -->
+    <div class="admin-modal" id="postModal">
+        <div class="admin-modal__backdrop" id="postModalBackdrop"></div>
+        <div class="admin-modal__card">
+            <h2 class="admin-modal__title" id="postModalTitle">Add Post</h2>
+            <form class="admin-modal__form" id="postForm">
+                <input type="hidden" id="postId">
+                <div class="admin-modal__field">
+                    <label for="postTitle">Title</label>
+                    <input type="text" id="postTitle" required placeholder="Post title">
+                </div>
+                <div class="admin-modal__row">
+                    <div class="admin-modal__field">
+                        <label for="postSlug">Slug</label>
+                        <input type="text" id="postSlug" required placeholder="auto-generated-slug">
+                    </div>
+                    <div class="admin-modal__field">
+                        <label for="postCategory">Category</label>
+                        <select id="postCategory">
+                            <option value="news">News</option>
+                            <option value="teachings">Teachings</option>
+                            <option value="community">Community</option>
+                            <option value="events">Events</option>
+                            <option value="announcement">Announcement</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="admin-modal__row">
+                    <div class="admin-modal__field">
+                        <label for="postStatus">Status</label>
+                        <select id="postStatus">
+                            <option value="draft">Draft</option>
+                            <option value="published">Published</option>
+                            <option value="archived">Archived</option>
+                        </select>
+                    </div>
+                    <div class="admin-modal__field">
+                        <label for="postAuthor">Author</label>
+                        <input type="text" id="postAuthor" placeholder="Author name" value="Gungru Khangtsen">
+                    </div>
+                </div>
+                <div class="admin-modal__field">
+                    <label for="postCoverImage">Cover Image URL</label>
+                    <input type="text" id="postCoverImage" placeholder="https://example.com/image.jpg">
+                </div>
+                <div class="admin-modal__field">
+                    <label for="postExcerpt">Excerpt</label>
+                    <textarea id="postExcerpt" rows="2" placeholder="Short summary of the post..."></textarea>
+                </div>
+                <div class="admin-modal__field">
+                    <label for="postBody">Body</label>
+                    <textarea id="postBody" rows="10" placeholder="Full post content..."></textarea>
+                </div>
+                <div class="admin-modal__field">
+                    <label for="postTags">Tags (comma-separated)</label>
+                    <input type="text" id="postTags" placeholder="dharma, teachings, community">
+                </div>
+                <div class="admin-modal__actions">
+                    <button type="button" class="btn-cancel" id="postCancel">Cancel</button>
+                    <button type="submit" class="btn-sm btn-primary" id="postSaveBtn">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <img class="footer-wheel" src="../../assets/images/favicon.svg" alt="Gungru Khangtsen">
+            <h3 class="footer-name">Gaden Shartse Gungru Khangtsen Monastery</h3>
+            <div class="footer-badges">
+                <div class="footer-badge"><span>&#128421;</span><span>Built with AlpacApps Infrastructure</span></div>
+                <div class="footer-badge"><span>&#10024;</span><span>Powered by Claude</span></div>
+            </div>
+            <div class="footer-version">Admin</div>
+        </div>
+    </footer>
+
+    <script>const nav=document.getElementById('siteNav');window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>20);});</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script src="../../assets/js/admin-notifications.js"></script>
+    <script src="../../assets/js/admin-search.js"></script>
+    <script>
+        requireAuth(function(user) {
+            var sb = window.adminSupabase;
+            var allPosts = [];
+            var currentFilter = 'all';
+
+            // Toast
+            function showToast(msg, type) {
+                var existing = document.querySelector('.toast-notification');
+                if (existing) existing.remove();
+                var t = document.createElement('div');
+                t.className = 'toast-notification';
+                t.style.cssText = 'position:fixed;top:80px;left:50%;transform:translateX(-50%) translateY(-10px);z-index:10000;padding:14px 24px;border-radius:12px;font-size:14px;font-weight:500;font-family:DM Sans,sans-serif;max-width:90vw;text-align:center;opacity:0;transition:all 0.3s ease;box-shadow:0 8px 32px rgba(0,0,0,0.12);';
+                if (type === 'success') { t.style.background = '#f0fdf4'; t.style.color = '#166534'; t.style.border = '1px solid #bbf7d0'; }
+                else { t.style.background = '#fef2f2'; t.style.color = '#991b1b'; t.style.border = '1px solid #fecaca'; }
+                t.textContent = msg; document.body.appendChild(t);
+                requestAnimationFrame(function() { t.style.opacity = '1'; t.style.transform = 'translateX(-50%) translateY(0)'; });
+                setTimeout(function() { t.style.opacity = '0'; setTimeout(function() { t.remove(); }, 300); }, 4000);
+            }
+
+            function escapeHtml(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+            // Activity logging (fire-and-forget)
+            function logActivity(action, entityType, entityId, details) {
+                sb.from('activity_log').insert({
+                    action: action,
+                    entity_type: entityType,
+                    entity_id: entityId,
+                    details: details || {},
+                    user_email: user.email || null
+                }).then(function() {});
+            }
+
+            // CSV export
+            function downloadCSV(data, columns, filename) {
+                var header = columns.map(function(c) { return c.label; }).join(',');
+                var rows = data.map(function(row) {
+                    return columns.map(function(c) {
+                        var val = row[c.key];
+                        if (val === null || val === undefined) val = '';
+                        if (Array.isArray(val)) val = val.join('; ');
+                        val = String(val).replace(/"/g, '""');
+                        return '"' + val + '"';
+                    }).join(',');
+                });
+                var csv = header + '\n' + rows.join('\n');
+                var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+                var link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = filename;
+                link.click();
+                URL.revokeObjectURL(link.href);
+            }
+
+            function formatDate(d) {
+                if (!d) return '';
+                return new Date(d).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+            }
+
+            // Load posts
+            function loadPosts() {
+                sb.from('blog_posts').select('*').order('created_at', { ascending: false }).then(function(result) {
+                    if (result.error) { showToast('Failed to load posts', 'error'); return; }
+                    allPosts = result.data || [];
+                    renderPosts();
+                });
+            }
+
+            function renderPosts() {
+                var search = document.getElementById('postSearch').value.toLowerCase();
+                var filtered = allPosts.filter(function(p) {
+                    if (currentFilter !== 'all' && p.status !== currentFilter) return false;
+                    if (search && !(p.title || '').toLowerCase().includes(search) && !(p.category || '').toLowerCase().includes(search) && !(p.excerpt || '').toLowerCase().includes(search)) return false;
+                    return true;
+                });
+
+                var tbody = document.getElementById('postsBody');
+                if (!filtered.length) {
+                    tbody.innerHTML = '<tr><td colspan="5" class="admin-empty"><div class="admin-empty__icon">&#128221;</div><div class="admin-empty__text">No posts found</div></td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = filtered.map(function(p) {
+                    var badgeClass = p.status === 'published' ? 'admin-badge--active' : p.status === 'draft' ? 'admin-badge--pending' : 'admin-badge--inactive';
+                    return '<tr>' +
+                        '<td><strong>' + escapeHtml(p.title || '') + '</strong>' +
+                            (p.excerpt ? '<br><small style="color:#888;">' + escapeHtml(p.excerpt.substring(0, 80)) + (p.excerpt.length > 80 ? '...' : '') + '</small>' : '') +
+                        '</td>' +
+                        '<td>' + escapeHtml(p.category || '') + '</td>' +
+                        '<td><span class="admin-badge ' + badgeClass + '">' + escapeHtml(p.status || 'draft') + '</span></td>' +
+                        '<td>' + (p.published_at ? formatDate(p.published_at) : '') + '</td>' +
+                        '<td><div class="admin-table__actions">' +
+                            '<button onclick="editPost(\'' + p.id + '\')">Edit</button>' +
+                        '</div></td>' +
+                    '</tr>';
+                }).join('');
+            }
+
+            // Auto-slug from title
+            document.getElementById('postTitle').addEventListener('input', function() {
+                var slug = this.value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+                document.getElementById('postSlug').value = slug;
+            });
+
+            // Search
+            document.getElementById('postSearch').addEventListener('input', renderPosts);
+
+            // Filters
+            document.getElementById('postFilters').addEventListener('click', function(e) {
+                if (!e.target.classList.contains('admin-filter-btn')) return;
+                document.querySelectorAll('.admin-filter-btn').forEach(function(b) { b.classList.remove('active'); });
+                e.target.classList.add('active');
+                currentFilter = e.target.dataset.filter;
+                renderPosts();
+            });
+
+            // Modal
+            var modal = document.getElementById('postModal');
+            function openModal(title) {
+                document.getElementById('postModalTitle').textContent = title;
+                modal.classList.add('admin-modal--open');
+            }
+            function closeModal() {
+                modal.classList.remove('admin-modal--open');
+                document.getElementById('postForm').reset();
+                document.getElementById('postId').value = '';
+                document.getElementById('postAuthor').value = 'Gungru Khangtsen';
+            }
+
+            document.getElementById('postModalBackdrop').addEventListener('click', closeModal);
+            document.getElementById('postCancel').addEventListener('click', closeModal);
+
+            // Add
+            document.getElementById('addPostBtn').addEventListener('click', function() {
+                openModal('Add Post');
+            });
+
+            // Edit
+            window.editPost = function(id) {
+                var p = allPosts.find(function(x) { return x.id === id; });
+                if (!p) return;
+                document.getElementById('postId').value = p.id;
+                document.getElementById('postTitle').value = p.title || '';
+                document.getElementById('postSlug').value = p.slug || '';
+                document.getElementById('postCategory').value = p.category || 'news';
+                document.getElementById('postStatus').value = p.status || 'draft';
+                document.getElementById('postAuthor').value = p.author || 'Gungru Khangtsen';
+                document.getElementById('postCoverImage').value = p.cover_image_url || '';
+                document.getElementById('postExcerpt').value = p.excerpt || '';
+                document.getElementById('postBody').value = p.body || '';
+                document.getElementById('postTags').value = (p.tags || []).join(', ');
+                openModal('Edit Post');
+            };
+
+            // Save
+            document.getElementById('postForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                var id = document.getElementById('postId').value;
+                var status = document.getElementById('postStatus').value;
+                var tagsRaw = document.getElementById('postTags').value.trim();
+                var tags = tagsRaw ? tagsRaw.split(',').map(function(t) { return t.trim(); }).filter(function(t) { return t; }) : [];
+
+                var data = {
+                    title: document.getElementById('postTitle').value.trim(),
+                    slug: document.getElementById('postSlug').value.trim(),
+                    category: document.getElementById('postCategory').value,
+                    status: status,
+                    author: document.getElementById('postAuthor').value.trim() || 'Gungru Khangtsen',
+                    cover_image_url: document.getElementById('postCoverImage').value.trim() || null,
+                    excerpt: document.getElementById('postExcerpt').value.trim() || null,
+                    body: document.getElementById('postBody').value.trim() || null,
+                    tags: tags.length ? tags : null
+                };
+
+                // Auto-set published_at when publishing for the first time
+                if (status === 'published') {
+                    var existing = allPosts.find(function(x) { return x.id === id; });
+                    if (!existing || !existing.published_at) {
+                        data.published_at = new Date().toISOString();
+                    }
+                }
+
+                var saveBtn = document.getElementById('postSaveBtn');
+                saveBtn.disabled = true; saveBtn.textContent = 'Saving...';
+
+                var query = id
+                    ? sb.from('blog_posts').update(data).eq('id', id)
+                    : sb.from('blog_posts').insert(data);
+
+                query.then(function(result) {
+                    saveBtn.disabled = false; saveBtn.textContent = 'Save';
+                    if (result.error) { showToast(result.error.message || 'Save failed', 'error'); return; }
+                    closeModal();
+                    showToast(id ? 'Post updated' : 'Post created', 'success');
+                    logActivity(id ? 'updated' : 'created', 'blog_post', id || null, { title: data.title, status: data.status });
+                    loadPosts();
+                });
+            });
+
+            // Export CSV
+            document.getElementById('exportCsvBtn').addEventListener('click', function() {
+                if (!allPosts.length) { showToast('No posts to export', 'error'); return; }
+                downloadCSV(allPosts, [
+                    { key: 'title', label: 'Title' },
+                    { key: 'slug', label: 'Slug' },
+                    { key: 'category', label: 'Category' },
+                    { key: 'status', label: 'Status' },
+                    { key: 'author', label: 'Author' },
+                    { key: 'excerpt', label: 'Excerpt' },
+                    { key: 'tags', label: 'Tags' },
+                    { key: 'published_at', label: 'Published' },
+                    { key: 'created_at', label: 'Created' }
+                ], 'blog-posts.csv');
+                showToast('CSV exported', 'success');
+            });
+
+            loadPosts();
+        });
+    </script>
+    <script src="../../assets/js/version.js"></script>
+</body>
+</html>
