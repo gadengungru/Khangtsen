@@ -231,7 +231,7 @@ function handleFormSubmit(e) {
             'Content-Type': 'application/json',
             'apikey': 'sb_publishable_pFwy1o_CK9ps98dK-yDyTQ_zXaCU2_y',
             'Authorization': 'Bearer sb_publishable_pFwy1o_CK9ps98dK-yDyTQ_zXaCU2_y',
-            'Prefer': 'resolution=merge-duplicates,return=minimal'
+            'Prefer': 'return=minimal'
         },
         body: JSON.stringify(data)
     }).then(function(r) {

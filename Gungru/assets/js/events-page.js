@@ -501,7 +501,7 @@ async function loadEvents() {
     var pastTimeline = document.getElementById('pastTimeline');
 
     try {
-        var res = await fetch(SUPABASE_URL + '/rest/v1/events?select=*&order=start_date.asc', {
+        var res = await fetch(SUPABASE_URL + '/rest/v1/events?select=id,title,description,event_type,location,start_date,end_date,status,suggested_offering,metadata&order=start_date.asc', {
             headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
         });
         if (!res.ok) throw new Error('Failed to fetch events');

@@ -109,6 +109,24 @@
         document.documentElement.lang = lang;
     }
 
+    // Sanitize translation HTML — strip scripts and event handlers
+    function sanitizeHtml(html) {
+        var tmp = document.createElement('div');
+        tmp.innerHTML = html;
+        // Remove script tags
+        var scripts = tmp.querySelectorAll('script');
+        for (var i = 0; i < scripts.length; i++) scripts[i].remove();
+        // Remove event handler attributes
+        var all = tmp.querySelectorAll('*');
+        for (var j = 0; j < all.length; j++) {
+            var attrs = all[j].attributes;
+            for (var k = attrs.length - 1; k >= 0; k--) {
+                if (attrs[k].name.indexOf('on') === 0) all[j].removeAttribute(attrs[k].name);
+            }
+        }
+        return tmp.innerHTML;
+    }
+
     // Apply translations to DOM
     function applyTranslations(dict) {
         document.querySelectorAll('[data-i18n]').forEach(function(el) {
@@ -119,7 +137,7 @@
                 if (attr) {
                     el.setAttribute(attr, val);
                 } else {
-                    el.innerHTML = val;
+                    el.innerHTML = sanitizeHtml(val);
                 }
             }
         });

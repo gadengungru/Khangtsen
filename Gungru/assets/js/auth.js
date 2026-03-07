@@ -227,9 +227,18 @@
     // ADMIN PAGE GUARD
     // =============================================
 
+    // Admin email allowlist — only these users can access admin pages
+    var ADMIN_EMAILS = ['gadengungru@gmail.com'];
+
     window.requireAuth = function(callback) {
         sb.auth.getSession().then(function(result) {
             if (result.data.session && result.data.session.user) {
+                var userEmail = result.data.session.user.email;
+                if (ADMIN_EMAILS.indexOf(userEmail) === -1) {
+                    sb.auth.signOut();
+                    window.location.href = '../index.html';
+                    return;
+                }
                 currentUser = result.data.session.user;
                 if (callback) callback(currentUser, sb);
             } else {

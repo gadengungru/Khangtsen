@@ -2,8 +2,10 @@ import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 
 const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY')
 
+const ALLOWED_ORIGINS = ['https://gadengungru.github.io']
+
 const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Origin': 'https://gadengungru.github.io',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
@@ -32,6 +34,17 @@ serve(async (req) => {
 
     const recipients = Array.isArray(to) ? to : [to]
 
+    // Limit recipients to prevent mass emailing
+    if (recipients.length > 5) {
+      return new Response(
+        JSON.stringify({ error: 'Maximum 5 recipients per request' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
+
+    // Sanitize body — strip HTML tags to prevent injection
+    const sanitizedBody = body.replace(/<[^>]*>/g, '')
+
     // Build HTML email with monastery branding
     const htmlBody = `
       <div style="font-family: 'Georgia', serif; max-width: 600px; margin: 0 auto; padding: 20px;">
@@ -40,7 +53,7 @@ serve(async (req) => {
           <p style="color: #666; font-size: 14px; margin: 4px 0 0;">Monastery</p>
         </div>
         <div style="padding: 24px 0; font-size: 16px; line-height: 1.6; color: #333;">
-          ${body.replace(/\n/g, '<br>')}
+          ${sanitizedBody.replace(/\n/g, '<br>')}
         </div>
         <div style="border-top: 1px solid #ddd; padding-top: 16px; text-align: center; font-size: 12px; color: #999;">
           <p>Gaden Shartse Gungru Khangtsen Monastery</p>
