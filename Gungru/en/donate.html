@@ -517,8 +517,8 @@
         var eventId = params.get('event');
         if (!eventId) return;
 
-        var SUPABASE_URL = 'https://axnongwefdafwflekysk.supabase.co';
-        var SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF4bm9uZ3dlZmRhZndmbGVreXNrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk1MTE5NTIsImV4cCI6MjA1NTA4Nzk1Mn0.sb_publishable_pFwy1o_CK9ps98dK-yDyTQ_zXaCU2_y';
+        var SUPABASE_URL = window.GUNGRU_SUPABASE_URL || 'https://axnongwefdafwflekysk.supabase.co';
+        var SUPABASE_ANON = window.GUNGRU_SUPABASE_KEY || 'sb_publishable_pFwy1o_CK9ps98dK-yDyTQ_zXaCU2_y';
 
         fetch(SUPABASE_URL + '/rest/v1/events?id=eq.' + encodeURIComponent(eventId) + '&select=title,suggested_offering', {
             headers: { 'apikey': SUPABASE_ANON, 'Authorization': 'Bearer ' + SUPABASE_ANON }

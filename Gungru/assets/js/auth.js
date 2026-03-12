@@ -247,8 +247,10 @@
         });
     };
 
-    // Expose supabase client for admin pages
+    // Expose supabase client and config for other scripts
     window.adminSupabase = sb;
+    window.GUNGRU_SUPABASE_URL = 'https://axnongwefdafwflekysk.supabase.co';
+    window.GUNGRU_SUPABASE_KEY = 'sb_publishable_pFwy1o_CK9ps98dK-yDyTQ_zXaCU2_y';
 
     // =============================================
     // INIT

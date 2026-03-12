@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://axnongwefdafwflekysk.supabase.co; img-src 'self' https://axnongwefdafwflekysk.supabase.co https://*.cdninstagram.com data:; frame-ancestors 'none';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://axnongwefdafwflekysk.supabase.co; img-src 'self' https://axnongwefdafwflekysk.supabase.co https://*.cdninstagram.com data:; frame-src https://www.openstreetmap.org; frame-ancestors 'none';">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -421,7 +421,7 @@
             <iframe
                 src="https://www.openstreetmap.org/export/embed.html?bbox=74.9980%2C14.9878%2C75.0080%2C14.9978&layer=mapnik&marker=14.992851312469814%2C75.00300923973248"
                 width="100%" height="250" style="border:0;"
-                allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                sandbox="allow-scripts" allowfullscreen loading="lazy" referrerpolicy="no-referrer">
             </iframe>
             <div class="map-actions">
                 <a href="https://www.google.com/maps?q=14.992851312469814,75.00300923973248" target="_blank" rel="noopener" class="btn btn-secondary map-btn">

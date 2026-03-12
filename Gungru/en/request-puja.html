@@ -418,8 +418,8 @@
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'apikey': 'sb_publishable_pFwy1o_CK9ps98dK-yDyTQ_zXaCU2_y',
-                    'Authorization': 'Bearer sb_publishable_pFwy1o_CK9ps98dK-yDyTQ_zXaCU2_y',
+                    'apikey': window.GUNGRU_SUPABASE_KEY || 'sb_publishable_pFwy1o_CK9ps98dK-yDyTQ_zXaCU2_y',
+                    'Authorization': 'Bearer ' + (window.GUNGRU_SUPABASE_KEY || 'sb_publishable_pFwy1o_CK9ps98dK-yDyTQ_zXaCU2_y'),
                     'Prefer': 'return=minimal'
                 },
                 body: JSON.stringify(data)
