@@ -28,7 +28,7 @@ Khangtsen is a community/organization management platform. It manages members, c
 ### Direct Database Access (for Claude)
 
 ```bash
-/opt/homebrew/opt/libpq/bin/psql "postgresql://postgres.axnongwefdafwflekysk:canmUq-tuvvet-4ticza@aws-1-ap-southeast-2.pooler.supabase.com:5432/postgres" -c "SQL HERE"
+/opt/homebrew/opt/libpq/bin/psql "postgresql://postgres.axnongwefdafwflekysk:ripfes-gobqox-9mUwty@aws-1-ap-southeast-2.pooler.supabase.com:5432/postgres" -c "SQL HERE"
 ```
 
 ### Database Schema
