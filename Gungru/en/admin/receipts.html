@@ -176,29 +176,44 @@
                                     <span>Date: </span><strong id="previewDate">—</strong>
                                 </div>
                             </div>
-                            <div class="receipt-body">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Received From</th>
-                                            <th>Purpose</th>
-                                            <th style="text-align:right;">Amount</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td id="previewName">—</td>
-                                            <td id="previewPurpose">—</td>
-                                            <td id="previewAmount" style="text-align:right;font-weight:600;">—</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <div class="receipt-total">
-                                    <span>Total:</span>
-                                    <strong id="previewTotal">—</strong>
-                                </div>
+                            <!-- Thank You Letter -->
+                            <div style="font-size:14px;line-height:1.8;color:#2A1F1A;margin-bottom:28px;">
+                                <p>Dear <strong id="previewNameLetter">—</strong>,</p>
+                                <p style="margin-top:12px;">On behalf of Gaden Shartse Gungru Khangtsen Monastery, we would like to express our heartfelt gratitude for your generous donation of <strong id="previewAmountLetter">—</strong> towards <strong id="previewPurposeLetter">—</strong>.</p>
+                                <p style="margin-top:12px;">Your kindness and generosity directly support our monks' spiritual practice, education, and the preservation of the Tibetan Buddhist tradition. Through your contribution, you are helping sustain a living tradition that benefits all sentient beings.</p>
+                                <p style="margin-top:12px;">May the merit of your offering bring you and your family good health, happiness, and spiritual progress. The monks of Gungru Khangtsen will keep you in their prayers.</p>
+                                <p style="margin-top:12px;">With deep appreciation and prayers,</p>
                             </div>
-                            <div style="margin-top:40px;display:flex;justify-content:space-between;align-items:flex-end;">
+
+                            <!-- Receipt Details -->
+                            <div style="background:#FDF5ED;border-radius:12px;padding:20px;margin-bottom:24px;">
+                                <div style="font-size:13px;font-weight:600;color:#7B1A2C;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">Donation Details</div>
+                                <table style="width:100%;border-collapse:collapse;">
+                                    <tr>
+                                        <td style="padding:8px 0;font-size:13px;color:#5C4A3E;width:140px;">Receipt No:</td>
+                                        <td style="padding:8px 0;font-size:13px;font-weight:600;" id="previewNumberDetail">—</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding:8px 0;font-size:13px;color:#5C4A3E;">Date:</td>
+                                        <td style="padding:8px 0;font-size:13px;font-weight:600;" id="previewDateDetail">—</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding:8px 0;font-size:13px;color:#5C4A3E;">Received From:</td>
+                                        <td style="padding:8px 0;font-size:13px;font-weight:600;" id="previewNameDetail">—</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding:8px 0;font-size:13px;color:#5C4A3E;">Purpose:</td>
+                                        <td style="padding:8px 0;font-size:13px;font-weight:600;" id="previewPurposeDetail">—</td>
+                                    </tr>
+                                    <tr style="border-top:1px solid #ECDCCA;">
+                                        <td style="padding:12px 0 8px;font-size:14px;font-weight:600;color:#5C4A3E;">Amount:</td>
+                                        <td style="padding:12px 0 8px;font-size:18px;font-weight:700;color:#7B1A2C;" id="previewAmountDetail">—</td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <!-- Signature -->
+                            <div style="margin-top:32px;display:flex;justify-content:space-between;align-items:flex-end;">
                                 <div style="font-size:12px;color:#5C4A3E;">
                                     <div style="width:180px;border-top:1px solid #2A1F1A;padding-top:6px;margin-top:40px;">Authorized Signature</div>
                                 </div>
@@ -207,7 +222,7 @@
                                 </div>
                             </div>
                             <div class="receipt-footer">
-                                This is a computer-generated receipt.<br>
+                                This is a computer-generated receipt and acknowledgement letter.<br>
                                 Gaden Shartse Gungru Khangtsen Monastery &bull; Mundgod, Karnataka 581411, India
                             </div>
                         </div>
@@ -281,10 +296,19 @@
                 var date = document.getElementById('rcptDate').value;
                 var number = document.getElementById('rcptNumber').value.trim();
 
-                document.getElementById('previewName').textContent = name || '\u2014';
-                document.getElementById('previewPurpose').textContent = purpose || '\u2014';
-                document.getElementById('previewAmount').textContent = formatAmount(amount, currency);
-                document.getElementById('previewTotal').textContent = formatAmount(amount, currency);
+                // Letter fields
+                document.getElementById('previewNameLetter').textContent = name || '\u2014';
+                document.getElementById('previewAmountLetter').textContent = formatAmount(amount, currency);
+                document.getElementById('previewPurposeLetter').textContent = purpose || '\u2014';
+
+                // Detail box fields
+                document.getElementById('previewNumberDetail').textContent = number || '\u2014';
+                document.getElementById('previewDateDetail').textContent = formatDate(date);
+                document.getElementById('previewNameDetail').textContent = name || '\u2014';
+                document.getElementById('previewPurposeDetail').textContent = purpose || '\u2014';
+                document.getElementById('previewAmountDetail').textContent = formatAmount(amount, currency);
+
+                // Header meta
                 document.getElementById('previewDate').textContent = formatDate(date);
                 document.getElementById('previewNumber').textContent = number || '\u2014';
 
