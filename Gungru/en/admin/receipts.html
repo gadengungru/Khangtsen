@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://axnongwefdafwflekysk.supabase.co; img-src 'self' https://axnongwefdafwflekysk.supabase.co https://*.cdninstagram.com data: blob:; frame-ancestors 'none';">
+    <link rel="icon" type="image/png" href="../../assets/images/favicon.png">
+    <link rel="apple-touch-icon" href="../../assets/images/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receipt Generator — Admin — Gungru Khangtsen</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <style>
+        .receipt-layout { display: grid; grid-template-columns: 380px 1fr; gap: 32px; align-items: start; }
+        .receipt-form { background: #fff; border: 1px solid #ECDCCA; border-radius: 16px; padding: 28px; }
+        .receipt-form__field { margin-bottom: 16px; }
+        .receipt-form__field label { display: block; font-size: 13px; font-weight: 600; color: #5C4A3E; margin-bottom: 6px; }
+        .receipt-form__field input,
+        .receipt-form__field select { width: 100%; padding: 10px 14px; border: 1px solid #E5D5C3; border-radius: 10px; font-size: 14px; font-family: 'DM Sans', sans-serif; background: #FDFAF7; color: #2A1F1A; outline: none; transition: border 0.2s; }
+        .receipt-form__field input:focus,
+        .receipt-form__field select:focus { border-color: #7B1A2C; }
+        .receipt-form__row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .receipt-preview-wrap { background: #f3f4f6; border-radius: 16px; padding: 24px; min-height: 600px; }
+        .receipt-preview-wrap h3 { font-size: 14px; font-weight: 600; color: #5C4A3E; margin-bottom: 16px; }
+        .btn-download { display: inline-flex; align-items: center; gap: 8px; padding: 12px 28px; background: #7B1A2C; color: #fff; border: none; border-radius: 100px; font-size: 14px; font-weight: 600; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all 0.25s; margin-top: 16px; }
+        .btn-download:hover { background: #5A0F1E; transform: translateY(-1px); }
+        .btn-download:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+        /* Receipt PDF Styles */
+        .receipt-paper { background: #fff; width: 210mm; min-height: 280mm; padding: 40px 48px; box-shadow: 0 2px 16px rgba(0,0,0,0.08); font-family: 'DM Sans', sans-serif; color: #2A1F1A; }
+        .receipt-header { text-align: center; border-bottom: 2px solid #7B1A2C; padding-bottom: 20px; margin-bottom: 28px; }
+        .receipt-header img { width: 56px; height: 56px; margin-bottom: 8px; }
+        .receipt-header h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 24px; font-weight: 700; color: #7B1A2C; margin: 0 0 4px; }
+        .receipt-header p { font-size: 12px; color: #8A7668; margin: 0; line-height: 1.6; }
+        .receipt-title { text-align: center; margin-bottom: 28px; }
+        .receipt-title h2 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 20px; font-weight: 600; color: #2A1F1A; text-transform: uppercase; letter-spacing: 2px; margin: 0; }
+        .receipt-meta { display: flex; justify-content: space-between; margin-bottom: 24px; font-size: 13px; }
+        .receipt-meta span { color: #5C4A3E; }
+        .receipt-meta strong { color: #2A1F1A; }
+        .receipt-body { margin-bottom: 32px; }
+        .receipt-body table { width: 100%; border-collapse: collapse; }
+        .receipt-body th { text-align: left; padding: 10px 14px; background: #FDF5ED; font-size: 12px; font-weight: 600; color: #5C4A3E; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #ECDCCA; }
+        .receipt-body td { padding: 14px; font-size: 14px; border-bottom: 1px solid #f0e8df; }
+        .receipt-total { text-align: right; padding: 16px 0; border-top: 2px solid #7B1A2C; margin-top: 8px; }
+        .receipt-total span { font-size: 13px; color: #5C4A3E; margin-right: 12px; }
+        .receipt-total strong { font-size: 20px; color: #7B1A2C; font-weight: 700; }
+        .receipt-footer { text-align: center; margin-top: 48px; padding-top: 20px; border-top: 1px solid #ECDCCA; font-size: 11px; color: #8A7668; line-height: 1.8; }
+
+        @media (max-width: 900px) {
+            .receipt-layout { grid-template-columns: 1fr; }
+            .receipt-paper { width: 100%; min-height: auto; padding: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="site-nav" id="siteNav">
+        <div class="site-nav__inner">
+            <a href="../index.html" class="site-nav__brand">
+                <img src="../../assets/images/logo.png" alt="Gungru Khangtsen">
+                <span data-i18n="nav.brand">Gungru Khangtsen</span>
+            </a>
+            <button class="nav-toggle" onclick="document.querySelector('.site-nav__links').classList.toggle('open')" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="site-nav__links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../general-understanding.html">General Understanding</a></li>
+                <li><a href="../donate.html" class="site-nav__cta">
+                    <span>&#9825;</span>
+                    <span>Donate</span>
+                </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Admin Topbar -->
+    <div class="admin-topbar">
+        <span class="admin-topbar__label">&#128274; Admin Panel</span>
+        <nav class="admin-topbar__nav">
+            <a href="index.html">Dashboard</a>
+            <a href="members.html">Members</a>
+            <a href="events.html">Events</a>
+            <a href="transactions.html">Transactions</a>
+            <a href="analytics.html">Analytics</a>
+            <a href="contacts.html">Contacts</a>
+            <a href="blog.html">Blog</a>
+            <a href="rsvps.html">RSVPs</a>
+            <a href="activity.html">Activity</a>
+            <a href="settings.html">Settings</a>
+            <a href="receipts.html" class="active">Receipts</a>
+        </nav>
+        <div class="admin-topbar__right">
+            <div class="admin-global-search" style="position:relative;">
+                <input type="text" id="globalSearchInput" placeholder="Search... (Ctrl+K)" style="width:180px;padding:5px 12px;border:1px solid rgba(255,255,255,0.15);border-radius:100px;background:rgba(255,255,255,0.08);color:#fff;font-size:12px;font-family:DM Sans,sans-serif;outline:none;height:28px;">
+                <div id="globalSearchResults" style="display:none;position:absolute;top:34px;right:0;width:380px;max-height:400px;overflow-y:auto;background:#fff;border:1px solid #e5e7eb;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.15);z-index:10002;"></div>
+            </div>
+            <div id="notifBell" style="position:relative;cursor:pointer;">
+                <span style="font-size:18px;opacity:0.7;">&#128276;</span>
+                <span id="notifBadge" style="display:none;position:absolute;top:-4px;right:-6px;background:#dc2626;color:#fff;font-size:10px;font-weight:700;min-width:16px;height:16px;border-radius:50%;align-items:center;justify-content:center;line-height:1;">0</span>
+            </div>
+            <div id="notifDropdown" style="display:none;position:absolute;top:36px;right:0;width:320px;max-height:400px;overflow-y:auto;background:#fff;border:1px solid #e5e7eb;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.15);z-index:10001;padding:8px 0;">
+                <div style="padding:12px 16px;font-size:13px;font-weight:700;color:#374151;border-bottom:1px solid #f3f4f6;">Notifications</div>
+                <div id="notifList"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Content -->
+    <div class="admin-layout">
+        <div class="admin-container">
+            <div class="admin-page-header">
+                <h1>Receipt Generator</h1>
+                <p>Generate and download donation receipts as PDF</p>
+            </div>
+
+            <div class="receipt-layout">
+                <!-- Form Panel -->
+                <div class="receipt-form">
+                    <div class="receipt-form__field">
+                        <label for="rcptName">Sponsor / Donor Name *</label>
+                        <input type="text" id="rcptName" placeholder="Enter full name" required>
+                    </div>
+                    <div class="receipt-form__row">
+                        <div class="receipt-form__field">
+                            <label for="rcptAmount">Amount *</label>
+                            <input type="number" id="rcptAmount" placeholder="0.00" step="0.01" min="0" required>
+                        </div>
+                        <div class="receipt-form__field">
+                            <label for="rcptCurrency">Currency</label>
+                            <select id="rcptCurrency">
+                                <option value="INR">INR (&#8377;)</option>
+                                <option value="USD">USD ($)</option>
+                                <option value="EUR">EUR (&euro;)</option>
+                                <option value="AUD">AUD (A$)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="receipt-form__field">
+                        <label for="rcptPurpose">Purpose / Description *</label>
+                        <input type="text" id="rcptPurpose" placeholder="e.g., Sponsorship for Butter Lamp Offering" required>
+                    </div>
+                    <div class="receipt-form__row">
+                        <div class="receipt-form__field">
+                            <label for="rcptDate">Date</label>
+                            <input type="date" id="rcptDate">
+                        </div>
+                        <div class="receipt-form__field">
+                            <label for="rcptNumber">Receipt Number</label>
+                            <input type="text" id="rcptNumber" placeholder="Auto-generated">
+                        </div>
+                    </div>
+                    <button class="btn-download" id="downloadPdfBtn" disabled>
+                        <span>&#128196;</span> Download PDF
+                    </button>
+                </div>
+
+                <!-- Preview Panel -->
+                <div class="receipt-preview-wrap">
+                    <h3>Receipt Preview</h3>
+                    <div id="receiptPreview">
+                        <div class="receipt-paper" id="receiptPaper">
+                            <div class="receipt-header">
+                                <img src="../../assets/images/logo.png" alt="Gungru Khangtsen" crossorigin="anonymous">
+                                <h1>Gaden Shartse Gungru Khangtsen Monastery</h1>
+                                <p>Mundgod, Karnataka, India</p>
+                            </div>
+                            <div class="receipt-title">
+                                <h2>Donation Receipt</h2>
+                            </div>
+                            <div class="receipt-meta">
+                                <div>
+                                    <span>Receipt No: </span><strong id="previewNumber">—</strong>
+                                </div>
+                                <div>
+                                    <span>Date: </span><strong id="previewDate">—</strong>
+                                </div>
+                            </div>
+                            <div class="receipt-body">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Received From</th>
+                                            <th>Purpose</th>
+                                            <th style="text-align:right;">Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td id="previewName">—</td>
+                                            <td id="previewPurpose">—</td>
+                                            <td id="previewAmount" style="text-align:right;font-weight:600;">—</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="receipt-total">
+                                    <span>Total:</span>
+                                    <strong id="previewTotal">—</strong>
+                                </div>
+                            </div>
+                            <div style="margin-top:40px;display:flex;justify-content:space-between;align-items:flex-end;">
+                                <div style="font-size:12px;color:#5C4A3E;">
+                                    <div style="width:180px;border-top:1px solid #2A1F1A;padding-top:6px;margin-top:40px;">Authorized Signature</div>
+                                </div>
+                                <div style="font-size:12px;color:#5C4A3E;">
+                                    <div style="width:140px;border-top:1px solid #2A1F1A;padding-top:6px;margin-top:40px;">Seal</div>
+                                </div>
+                            </div>
+                            <div class="receipt-footer">
+                                This is a computer-generated receipt.<br>
+                                Gaden Shartse Gungru Khangtsen Monastery &bull; Mundgod, Karnataka 581411, India
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <img class="footer-wheel" src="../../assets/images/favicon.svg" alt="Gungru Khangtsen">
+            <h3 class="footer-name">Gaden Shartse Gungru Khangtsen Monastery</h3>
+            <div class="footer-badges">
+                <div class="footer-badge"><span>&#128421;</span><span>Built with AlpacApps Infrastructure</span></div>
+                <div class="footer-badge"><span>&#10024;</span><span>Powered by Claude</span></div>
+            </div>
+            <div class="footer-version">Admin</div>
+        </div>
+    </footer>
+
+    <script>
+        const nav = document.getElementById('siteNav');
+        window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 20); });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js" integrity="sha384-YieCqqg9gQufX7+5HcFvCEg/n3KUEdl8/Jb+A6J0npf1mB740VayvwKjTrtCeUoy" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script src="../../assets/js/admin-notifications.js"></script>
+    <script src="../../assets/js/admin-search.js"></script>
+    <script>
+        requireAuth(function(user) {
+            var currencySymbol = { USD: '$', INR: '\u20B9', EUR: '\u20AC', AUD: 'A$' };
+
+            // Auto-generate receipt number
+            function generateReceiptNumber() {
+                var now = new Date();
+                var yy = String(now.getFullYear()).slice(2);
+                var mm = String(now.getMonth() + 1).padStart(2, '0');
+                var dd = String(now.getDate()).padStart(2, '0');
+                var rand = String(Math.floor(1000 + Math.random() * 9000));
+                return 'GK-' + yy + mm + dd + '-' + rand;
+            }
+
+            // Set defaults
+            var today = new Date().toISOString().split('T')[0];
+            document.getElementById('rcptDate').value = today;
+            document.getElementById('rcptNumber').value = generateReceiptNumber();
+
+            function escapeHtml(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+            function formatAmount(amount, currency) {
+                var sym = currencySymbol[currency] || currency || '';
+                var num = parseFloat(amount);
+                if (isNaN(num) || num === 0) return '\u2014';
+                return sym + num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            }
+
+            function formatDate(dateStr) {
+                if (!dateStr) return '\u2014';
+                var d = new Date(dateStr + 'T00:00:00');
+                return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+            }
+
+            function updatePreview() {
+                var name = document.getElementById('rcptName').value.trim();
+                var amount = document.getElementById('rcptAmount').value;
+                var currency = document.getElementById('rcptCurrency').value;
+                var purpose = document.getElementById('rcptPurpose').value.trim();
+                var date = document.getElementById('rcptDate').value;
+                var number = document.getElementById('rcptNumber').value.trim();
+
+                document.getElementById('previewName').textContent = name || '\u2014';
+                document.getElementById('previewPurpose').textContent = purpose || '\u2014';
+                document.getElementById('previewAmount').textContent = formatAmount(amount, currency);
+                document.getElementById('previewTotal').textContent = formatAmount(amount, currency);
+                document.getElementById('previewDate').textContent = formatDate(date);
+                document.getElementById('previewNumber').textContent = number || '\u2014';
+
+                // Enable download if required fields are filled
+                var valid = name && amount && parseFloat(amount) > 0 && purpose;
+                document.getElementById('downloadPdfBtn').disabled = !valid;
+            }
+
+            // Bind live preview
+            ['rcptName', 'rcptAmount', 'rcptCurrency', 'rcptPurpose', 'rcptDate', 'rcptNumber'].forEach(function(id) {
+                document.getElementById(id).addEventListener('input', updatePreview);
+                document.getElementById(id).addEventListener('change', updatePreview);
+            });
+
+            // Initial preview
+            updatePreview();
+
+            // Convert logo to base64 for PDF embedding
+            var logoBase64 = '';
+            var logoImg = new Image();
+            logoImg.crossOrigin = 'anonymous';
+            logoImg.onload = function() {
+                var canvas = document.createElement('canvas');
+                canvas.width = logoImg.naturalWidth;
+                canvas.height = logoImg.naturalHeight;
+                var ctx = canvas.getContext('2d');
+                ctx.drawImage(logoImg, 0, 0);
+                logoBase64 = canvas.toDataURL('image/png');
+            };
+            logoImg.src = '../../assets/images/logo.png';
+
+            // Download PDF
+            document.getElementById('downloadPdfBtn').addEventListener('click', function() {
+                var btn = this;
+                btn.disabled = true;
+                btn.innerHTML = '<span>&#9203;</span> Generating PDF...';
+
+                // Swap logo src to base64 for pdf rendering
+                var receiptLogo = document.querySelector('#receiptPaper .receipt-header img');
+                var origSrc = receiptLogo.src;
+                if (logoBase64) receiptLogo.src = logoBase64;
+
+                var element = document.getElementById('receiptPaper');
+                var rcptNum = document.getElementById('rcptNumber').value.trim() || 'receipt';
+
+                var opt = {
+                    margin: 0,
+                    filename: 'Receipt-' + rcptNum + '.pdf',
+                    image: { type: 'png', quality: 1 },
+                    html2canvas: { scale: 2, useCORS: true, letterRendering: true },
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                };
+
+                html2pdf().set(opt).from(element).save().then(function() {
+                    receiptLogo.src = origSrc;
+                    btn.disabled = false;
+                    btn.innerHTML = '<span>&#128196;</span> Download PDF';
+                }).catch(function() {
+                    receiptLogo.src = origSrc;
+                    btn.disabled = false;
+                    btn.innerHTML = '<span>&#128196;</span> Download PDF';
+                });
+            });
+        });
+    </script>
+    <script src="../../assets/js/version.js"></script>
+</body>
+</html>
